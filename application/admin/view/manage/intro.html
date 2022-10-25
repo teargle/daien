@@ -1,0 +1,89 @@
+<div id="intro_manage">
+	<form class="setting-manage-form" id="intro_form">
+		<div class="row form-group">
+			<label for="title" class="col-sm-2 control-label text-right">简介类别：</label>
+			<div class="col-sm-8">
+				<select class="form-control" id="intro-select">
+				</select>
+			</div>
+		</div>
+		<div class="row form-group">
+        <label for="description" class="col-md-2 control-label text-right">详细描述(zh) : </label>
+        <div class="col-sm-8">
+            <div id="description" name="description" style="width:100%;height: 100%;">
+            	123
+            </div>
+        </div>
+    </div>
+    <div class="row form-group">
+        <label for="description_en" class="col-md-2 control-label text-right">详细描述(en) : </label>
+        <div class="col-sm-8">
+            <div id="description_en" name="description_en" style="width:100%;height: 100%;">
+            	
+            </div>
+        </div>
+    </div>
+		<hr />
+		
+		<div class="row form-group">
+			<div class="col-sm-2"></div>
+			<div class="col-sm-6">
+				<a type="button" class="btn btn-primary" href="/admin/manage/index?main=intro">返回</a>
+			</div>
+			<div class="col-sm-2">
+				<button type="button" class="btn btn-primary" onclick="saveIntro()">保存</button>
+			</div>
+		</div>
+
+    </form>
+</div>
+<hr>
+<div class='row form-group'>
+		<label for="text_uploadimg" class="col-sm-2 control-label text-right">富文本图片</label>
+		<div class="col-sm-8">
+			<input class="btn btn-primary" type="file" id="text_uploadimg" multiple 
+				accept="*.gif, *.jpeg, *.png, *.jpg, *.bmp " />
+			<label for="text_uploadimg" class="col-sm-1 control-label text-right" >地址</label>
+			<input type="text" name="text_img_url" style="margin-left: 100px;width: 500px;" value=""><br /><br />
+			<img wdith="300" height="200" name="text_img_url" src="">
+			
+		</div>
+</div>
+<script type="text/javascript">
+function saveIntro() {
+	var params = {};
+  params.description = $("#description").text();
+  params.description_en = $("#description_en").text();
+  params.name = $("#intro-select").find("option:selected").val() ;
+  $.post("/admin/manage/saveIntro", params , function(data){
+        data = $.parseJSON(data);
+        if( data.result ) {
+        	bootbox.alert("保存成功",function() {});
+        } else {
+          bootbox.alert(data.message,function() {});
+        }
+  });
+}
+$("#intro-select").change(function (obj) {
+		var key = $("#intro-select").find("option:selected").val() ;
+		$("#description").html('') ;
+		$("#description_en").html('');
+		$.post("/admin/manage/getIntro?name=" + key, {} , function(data){
+				data = $.parseJSON(data);
+				//console.log( data.message ) ;
+			  $("#description").html( data.obj.description ) ;
+			  $("#description_en").html( data.obj.description_en ) ;
+    });
+});
+
+// 富文本编辑图片
+$("#text_uploadimg").change(function(){
+    var formData = new FormData();
+    var f = $('#text_uploadimg')[0].files[0];
+    formData.append('file', f); // 固定格式
+    uploadImg ( formData, function( data ) {
+    	$("img[name='text_img_url']").attr("src",data.obj.url);
+    	$("input[name='text_img_url']").val(data.obj.url);
+    } );
+});
+</script>

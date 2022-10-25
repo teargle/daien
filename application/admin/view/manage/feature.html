@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>编辑优势</title>
+	{include file="common/header" /}
+	 <style>
+        fieldset {
+            padding: .35em .625em .75em;
+            margin: 0 2px;
+            border: 1px solid silver;
+        }
+
+        legend {
+            padding: .5em;
+            border: 0;
+            width: auto;
+        }
+    </style>
+</head>
+<body>
+<div class="full-container">
+<form  class="form-horizontal" role="form" id="features-from">
+	<div class="page-header text-center ">
+	{if condition="!empty($feature) && !empty($feature['id'])"}
+	<h1>{$feature['title']}</h1>
+	<input type="hidden" name="id" value="{$feature['id']}">
+	{else /}
+	<h1>创建优势信息</h1>
+	{/if}
+	</div>
+	<div class="row form-group">
+		<label for="title" class="col-sm-2 control-label text-right">标题：</label>
+		<div class="col-sm-8">
+			<input type="text" class="form-control" name="title" placeholder="请输入名称"
+			value='{if condition="!empty($feature)"}{$feature["title"]}{/if}'
+			>
+		</div>
+	</div>
+	<div class="row form-group">
+		<label for="description" class="col-sm-2 control-label text-right">短描述：</label>
+		<div class="col-sm-8">
+			<input type="text" class="form-control" name="description" placeholder="请输入短标题"
+			value='{if condition="!empty($feature)"}{$feature["description"]}{/if}'
+			>
+		</div>
+	</div>
+	<div class="row form-group">
+		<label for="img_url" class="col-sm-2 control-label text-right">图片(100*100)：</label>
+		<div class='col-sm-8'>
+			<input class="btn btn-primary" type="file" id="feature_uploadimg" multiple 
+				accept="*.gif, *.jpeg, *.png, *.jpg, *.bmp " /><br /><br />
+			<img wdith="100" height="100" name="img_url" src="{if condition="!empty($feature)"}{$feature["img_url"]}{/if}">
+			<input type="hidden" name="img_url" value="{if condition="!empty($feature)"}{$feature["img_url"]}{/if}">
+		</div>
+	</div>
+	<hr >
+	<div class="row form-group">
+		<div class="col-sm-1"></div>
+		<div class="col-sm-7">
+			<a type="button" class="btn btn-primary" href="/admin/manage/index?main=feature">返回</a>
+		</div>
+		<div class="col-sm-4">
+			<button type="button" class="btn btn-primary" onclick="savefeatures()">保存</button>
+			{if condition="!empty($feature)"}
+			<button type="button" class="btn btn-danger" onclick="delfeatures({$feature['id']})">删除</button>
+			{/if}
+		</div>
+	</div>
+</form>
+<br /><br /><br />
+
+</div>
+</body>
+<script type="text/javascript">
+function savefeatures() {
+  var params = $("#features-from").serializeArray();
+  $.post("/admin/manage/saveFeatures",  params ,
+      function(data){
+        data = $.parseJSON(data);
+        if( data.result ) {
+           bootbox.alert("保存成功",function() {});
+        } else {
+           bootbox.alert(data.message,function() {});
+        }
+  });
+}
+
+function delfeatures( id ) {
+  $.post("/admin/manage/delfeatures", {
+         id : id
+      } ,
+      function(data){
+        data = $.parseJSON(data);
+        if( data.result ) {
+           bootbox.alert("删除成功",function() {
+           		window.location.href = "/admin/manage/index?main=feature";
+           });
+        } else {
+           bootbox.alert(data.message,function() {});
+        }
+  });
+}
+
+$(function(){
+	$("#feature_uploadimg").change(function(){
+	    var formData = new FormData();
+	    var f = $('#feature_uploadimg')[0].files[0];
+	    formData.append('file', f); // 固定格式
+	    uploadImg ( formData, function( data ) {
+	    	$("img[name='img_url']").attr("src",data.obj.url);
+	    	$("input[name='img_url']").val(data.obj.url);
+	    } );
+	});
+});
+</script>
+</html>

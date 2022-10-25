@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Edit Product</title>
+	{include file="common/header" /}
+	 <style>
+        fieldset {
+            padding: .35em .625em .75em;
+            margin: 0 2px;
+            border: 1px solid silver;
+        }
+
+        legend {
+            padding: .5em;
+            border: 0;
+            width: auto;
+        }
+    </style>
+</head>
+<body>
+<div class="full-container">
+<form  class="form-horizontal" role="form" id="product-from">
+	<div class="page-header text-center ">
+	{if condition="!empty($product) && !empty($product['id'])"}
+	<h1>{$product['title']}</h1>
+	<input type="hidden" name="id" value="{$product['id']}">
+	{else /}
+	<h1>创建产品</h1>
+	{/if}
+	</div>
+	<div class="row form-group">
+		<label for="firstclass" class="col-sm-2 control-label text-right">分类：</label>
+		<div class="col-sm-2">
+			<select id="firstclass" name="firstclass" class="form-control" >
+			{foreach name="categorys" item="category" key="k" }
+			  {if condition="$category['parent'] eq 2"}
+			  <option value="{$category['id']}" 
+			  {if condition="$fcategory == $k"}selected{/if}
+			  >{$category['title']}</option>
+			  {/if}
+			{/foreach}
+			</select>
+		</div>
+	</div>
+	<div class="row form-group">
+		<label for="title" class="col-sm-2 control-label text-right">名称(zh)：</label>
+		<div class="col-sm-4">
+			<input type="text" class="form-control" name="title" placeholder="请输入名称"
+			value='{notempty name="product"}{$product["title"]}{/notempty}'
+			>
+		</div>
+		<label for="title_en" class="col-sm-1 control-label text-right">名称(en)：</label>
+		<div class="col-sm-4">
+			<input type="text" class="form-control" name="title_en" placeholder="请输入名称"
+			value='{notempty name="product"}{$product["title_en"]}{/notempty}'
+			>
+		</div>
+	</div>
+	<div class='row form-group'>
+		<label for="img" class="col-sm-2 control-label text-right">图片(1280*850)</label>
+		<div class="col-sm-8">
+			<input class="btn btn-primary" type="file" id="product_uploadimg" multiple 
+				accept="*.gif, *.jpeg, *.png, *.jpg, *.bmp " /><br /><br />
+			<img wdith="300" height="200" name="img_url" src="{notempty name='product'}{$product['img_url']}{/notempty}">
+			<input type="hidden" name="img_url" value="{notempty name='product'}{$product['img_url']}{/notempty}">
+		</div>
+	</div>
+	<div class="row form-group">
+        <label for="description" class="col-md-2 control-label text-right">详细描述(zh) : </label>
+        <div class="col-sm-8">
+            <div id="description" name="description" style="width:100%;height: 100%;">
+            {notempty name="product"}{$product["description"]}{/notempty}
+            </div>
+        </div>
+    </div>
+    <div class="row form-group">
+        <label for="description_en" class="col-md-2 control-label text-right">详细描述(en) : </label>
+        <div class="col-sm-8">
+            <div id="description_en" name="description_en" style="width:100%;height: 100%;">
+            {notempty name="product"}{$product["description_en"]}{/notempty}
+            </div>
+        </div>
+    </div>
+	<hr >
+	<div class="row form-group">
+		<div class="col-sm-1"></div>
+		<div class="col-sm-3">
+			<a type="button" class="btn btn-primary" href="/admin/manage/index?main=product">返回</a>
+		</div>
+		<div class="col-sm-6"></div>
+		<div class="col-sm-2">
+			<button type="button" class="btn btn-primary" onclick="saveProduct()">保存</button>
+			{if condition="!empty($product)"}
+			<button type="button" class="btn btn-danger" onclick="delProduct({$product['id']})">删除</button>
+			{/if}
+		</div>
+	</div>
+</form>
+<br />
+<hr />
+<div class='row form-group'>
+		<label for="text_uploadimg" class="col-sm-1 control-label text-right">图片</label>
+		<div class="col-sm-8">
+			<input class="btn btn-primary" type="file" id="text_uploadimg" multiple 
+				accept="*.gif, *.jpeg, *.png, *.jpg, *.bmp " />
+			<label for="text_uploadimg" class="col-sm-1 control-label" >地址</label>
+			<input type="text" name="text_img_url" style="margin-left: 10px;width: 500px;" value=""><br /><br />
+			<img wdith="300" height="200" name="text_img_url" src="">
+			
+		</div>
+	</div>
+</div>
+<br /><br /><br /><br />
+<script type="text/javascript">
+$(document).ready( function(){
+	$("#product_uploadimg").change(function(){
+	    var formData = new FormData();
+	    var f = $('#product_uploadimg')[0].files[0];
+	    formData.append('file', f); // 固定格式
+	    uploadImg ( formData, function( data ) {
+	    	$("img[name='img_url']").attr("src",data.obj.url);
+	    	$("input[name='img_url']").val(data.obj.url);
+	    } );
+	});
+
+	// 富文本编辑图片
+	$("#text_uploadimg").change(function(){
+	    var formData = new FormData();
+	    var f = $('#text_uploadimg')[0].files[0];
+	    formData.append('file', f); // 固定格式
+	    uploadImg ( formData, function( data ) {
+	    	$("img[name='text_img_url']").attr("src",data.obj.url);
+	    	$("input[name='text_img_url']").val(data.obj.url);
+	    } );
+	});
+});
+
+function saveProduct() {
+  var params = $("#product-from").serializeArray();
+  $.post("/admin/manage/saveProduct", {
+         params : params
+      } ,
+      function(data){
+        data = $.parseJSON(data);
+        if( data.result ) {
+        	bootbox.alert("保存成功",function() {});
+        } else {
+        	bootbox.alert(data.message,function() {});
+        }
+  });
+}
+
+function delProduct( id ) {
+  $.post("/admin/manage/delProduct", {
+         id : id
+      } ,
+      function(data){
+        data = $.parseJSON(data);
+        if( data.result ) {
+        	bootbox.alert("删除成功",function() {
+        		window.location.href = "/admin/manage/index?main=product";
+        	});
+        } else {
+           bootbox.alert(data.message,function() {});
+        }
+  });
+}
+</script>
+</body>
+</html>

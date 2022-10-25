@@ -1,0 +1,132 @@
+
+
+{include file="common/header" /}
+<link rel="stylesheet" type="text/css" href="__CSS__/mobile_index.css">
+
+{notempty name="crumbs_title"}
+<div class="nav-title">
+	<a href="{$crumbs_url}">{$crumbs_title}</a>
+	{present name="crumbs_sub_title"} 
+	>> <a href="{$crumbs_sub_url}">{$crumbs_sub_title}</a>
+	{/present}
+	{present name="crumbs_next_title"} 
+	>> {$crumbs_next_title}
+	{/present}
+</div>
+<hr class="category-hr">
+{/notempty}
+
+{if condition="$cid eq 2" }
+{if condition="$pid == 0 AND $did == 0"}
+<div class="product_category">
+	<ul class="product_cate_list">
+		{volist name="cates" id="cate"}
+		<li class="product_cate_pot">
+			<a href="/mobile/index?cid=2&did={$cate ['id']}">
+			<div class="category_img"><img src="{$cate ['img_url']}"></div>
+			<div class="category_text">
+				<div class="category_title"><h5>{$cate ['title']}</h5></div>
+				<div class="category_description">{$cate ['description']}<span>&nbsp;&nbsp;查看更多>></span></div>
+			</div>
+			</a>
+		</li>
+		{/volist}
+	</ul>
+</div>
+{elseif condition="$did > 0 AND $pid == 0" /}
+<div class="product-subCate">
+	<ul class="list_row">
+	{volist name="products" id="product"}
+		<li ><a href="/mobile/index?cid=2&did={$did}&pid={$product ['id']}"><img src="{$product ['img_url']}"><span>{$product ['title']}</span></a></li>
+	{/volist}
+	</ul>
+	<div class="clear"></div>
+	<div class="page">
+	<div class="diy_page">
+		{for start = "0" end="$total_page"}
+		<a href="?page={$i+1}&cid={$cid}&did={$did}" {if condition="$page eq $i + 1"}class="current"{/if}>{$i+1}</a>
+		{/for}
+		<span disabled="">第{$page}/{$total_page}页, 共{$total}条信息</span>
+	</div>
+	</div>
+</div>
+{else /}
+<div class="product-detail">
+	<div class="product-title"><h5>{$product_detail.title}</h5></div>
+	<div class="product-description">{$product_detail.description}</div>
+</div>
+{/if}
+{/if}
+
+{if condition="($cid eq 1) AND ($tid eq 4)"}
+<div class="intro-contact-us">
+	<div>
+		<label>公司名称: </label>
+		<span>{$home ['name'] ['value']}</span>
+	</div>
+	<div>
+		<label>公司地址: </label>
+		<span>{$home ['address'] ['value']}</span>
+	</div>
+	<div>
+		<label>公司电话: </label>
+		<span>{$home ['phone'] ['value']}</span>
+	</div>
+	<div>
+		<label>公司传真: </label>
+		<span>{$home ['fax'] ['value']}</span>
+	</div>
+	<div>
+		<label>公司邮编: </label>
+		<span>{$home ['zipcode'] ['value']}</span>
+	</div>
+	<div>
+		<label>公司EMAIL: </label>
+		<span>{$home ['email'] ['value']}</span>
+	</div>
+	<div>
+		<label>公司网址: </label>
+		<span>{$home ['web'] ['value']}</span>
+	</div>
+	<div class="qcode">
+		<span><img src="{$home ['qcode'] ['value']}"></span>
+	</div>
+</div>
+{elseif condition="($cid eq 1)" /}
+<div class="intro-content">
+	{$intro ['description']}
+</div>
+{/if}
+
+{if condition="$cid eq 3" }
+<div class="news-section">
+	{if condition="$pid neq 0"}
+	<div class="news-detail">
+		<div class="news-title"><h5>{present name="news_detail"}{$news_detail.title}{/present}</h5></div>
+		<div class="news-description">{present name="news_detail"}{$news_detail.description}{/present}</div>
+	</div>
+	{else /}
+	<div class="news-content">
+		<ul class="news_list">
+			{volist name="news" id="n"}
+			<li class="news_pot">
+				<div class="news_img"><img src="{$n ['img_url']}"></div>
+				<div class="news_text">
+					<a href="/mobile/index?cid=3&pid={$n ['id']}">
+					<div class="news_title"><h5>{$n ['title']}</h5></div>
+					<div class="news_description">{$n ['description']|strip_tags}</div>
+					<div>查看更多>></div>
+					</a>
+				</div>
+			</li>
+			{/volist}
+		</ul>
+	</div>
+	{/if}
+</div>
+{/if}
+
+
+
+
+{include file="common/footer" /}

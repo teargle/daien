@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Admin</title>
+	{include file="common/header" /}
+</head>
+<body>
+	<!-- Header 说明 start -->
+	<div class="navbar navbar-static-top" style="background-color:#8DEEEE;"   role="navigation">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#" id="logo">岱恩后台管理</a>
+			</div>
+		</div>
+	</div>
+	<div id="main" class="row">
+        <div id="nav" class="col-md-2">
+			<!-- Links -->
+			<ul class="navbar-nav">
+				<li>
+					<a class="nav-link" href="javascript:revertSetting()">基本配置</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="javascript:revertIntro()">公司简介</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="javascript:revertCategory()">产品分类</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="javascript:revertProduct()">产品数据</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="javascript:revertProject()">工程案例</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="javascript:revertNews()">新闻中心</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="javascript:revertCooperate()">合作伙伴</a>
+				</li>
+			</ul>
+        </div>
+    
+
+		<div id="content" class="col-md-10">
+			<div id="btn-new" class="hidden">
+				<a class="btn btn-primary">新增</a>
+				<hr />
+			</div>
+			<table id="manage_list" width="100%"></table>
+		</div>
+
+		<div id="home_setting" class="col-md-10">
+			<div class="hidden home_content">
+			{include file="manage/home" /}
+			</div>
+
+			<div class="hidden setting_content">
+			{include file="manage/setting" /}
+			</div>
+
+			<div class="hidden intro_content">
+			{include file="manage/intro" /}
+			</div>
+
+			<div class="hidden category_content">
+			{include file="manage/category" /}
+			</div>
+		</div>
+	</div>	
+	<div class="row footer">
+	</div>
+</body>
+<script type="text/javascript">
+$(function(){
+	if( "{$main}" != "" || "{$main}" != null) {
+		revert{$main}();
+	}
+	
+});
+function revert(){}
+</script>
+</html>

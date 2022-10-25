@@ -1,0 +1,12 @@
+<div class="links">
+	<span style=" padding:0 30px; color:#000; float:left;">{$Think.lang.cooperative_partner}</span>
+	<div class="link-imgs" id="sy_marquee">
+	<ul style="width: 10000px;">
+		{volist name="cooperates" id="cooperate"}
+		<li style="float:left;margin-left: 1px;">
+			<a href="{$cooperate.link}" target="_blank"><img src="{$cooperate.img_url}" style="height:50px;"></a>
+		</li>
+		{/volist}
+	</ul>
+	</div>
+</div>

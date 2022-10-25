@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="__DIST_CSS__/bootstrap.min.css">
+	<link rel="stylesheet" href="__CSS__/mobile_header.css">
+	<script type="text/javascript" src="__DIST_JS__/jquery.min.js"></script>
+	<script type="text/javascript" src="__DIST_JS__/bootstrap.min.js"></script>
+	<title>岱恩</title>
+</head>
+<body>
+	<div class="header">
+		<div class="title-container">
+			<div class="header-left"><h2>DN</h2>
+			</div>
+			<div class="header-right">
+				<a id="aclick" data-toggle="collapse" data-parent="#accordion" 
+				   href="#collapse_menu"></a>
+			</div>
+		</div>
+		<div id="collapse_menu" class="collapse-menu panel-collapse collapse in">
+			<ul class="nav navbar-nav" >
+				<li>
+					<a href="/mobile/index?cid=1&tid=1"><div>公司简介</div></a>
+				</li>
+				<li>
+					<a href="/mobile/index?cid=2&did=0"><div>产品中心</div></a>
+				</li>
+				<li>
+					<a href="/mobile/index?cid=3"><div>新闻中心</div></a>
+				</li>
+				<li>
+					<a href="/mobile/index?cid=1&tid=3"><div>人才招聘</div></a>
+				</li>
+				<li>
+					<a href="/mobile/index?cid=1&tid=4"><div>联系我们</div></a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<script type="text/javascript">
+	var expandedFlag = true;
+	$(function () {
+		$("#aclick").click(function(){
+			var collapse = $('#collapse_menu');
+			collapse.collapse('hide');
+			console.log( $(this).attr('aria-expanded') );
+			if( expandedFlag ) {
+				$(this).append("<style>#aclick::before{content:'\\ea02'}</style>");
+				expandedFlag = false;
+			} else {
+				$(this).append("<style>#aclick::before{content:'\\e98f'}</style>");
+				expandedFlag = true;
+			}
+		});
+		
+	});
+	</script>
+</body>
+</html>

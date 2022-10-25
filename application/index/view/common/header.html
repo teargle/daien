@@ -1,0 +1,41 @@
+<div class="head">
+	<div class="head-top">
+		<div class="logo" >
+			<a href="/" style="background: url({$home ['logo']['value']}) no-repeat 0 0;">logo</a>
+		</div>
+		<div class="head_right">
+			<p>{$Think.lang.category_contact_us} : {$home ['phone'] ['value']}</p>
+			<p class="languages">
+				<span>LANGUAGE</span>
+				<select class="selectpicker" id="languages" onchange="changeLang()">
+				  <option value="zh-cn" {if condition="$language == 'zh-cn'"}selected{/if}>简体中文</option>
+				  <option value="en-us" {if condition="$language == 'en-us'"}selected{/if}>English</option>
+				</select>
+			</p>
+		</div>
+	</div>
+	<div class="clear"></div>
+	<ul class="nav">
+		<li><a href="/">{$Think.lang.category_index}</a></li>
+		<li><a href="/?cid=1&tid=1">{$Think.lang.category_company_profile}</a></li>
+		<li><a href="/?cid=2&did=0">{$Think.lang.category_product_center}</a></li>
+		<li><a href="/?cid=3&did=0">{$Think.lang.category_news_center}</a></li>
+		<li><a href="/?cid=4&did=45">{$Think.lang.category_engineering_case}</a></li>
+		<li><a href="/?cid=1&tid=3">{$Think.lang.category_talent_recruitment}</a></li>
+		<li><a href="/?cid=1&tid=4">{$Think.lang.category_contact_us}</a></li>
+	</ul>
+</div>
+<script type="text/javascript">
+function changeLang() {
+	var params = {};
+	params.lang = $("#languages option:selected").val() ;
+	$.post("/index/index/changeLang", params , function(data){
+        data = $.parseJSON(data);
+        if( data.result ) {
+        	location.reload();
+        } else {
+          	alter("") ;
+        }
+  	});
+}
+</script>

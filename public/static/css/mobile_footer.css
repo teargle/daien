@@ -1,0 +1,49 @@
+
+
+.footBox {
+	padding-top: 15px;
+	padding-bottom: 15px;
+    background: #0b446e url(../img/bg_foot.gif) repeat-x;
+}
+
+.footBox .foot-commpany-info {
+	text-align: center;
+	color: #FFF;
+}
+
+.footBox .foot-commpany-info .copyright {
+	color: #FFF;
+}
+
+.footBox .foot-commpany-info .foot-commpany {
+	font-weight:bold;
+	color: #FFF;
+}
+
+.footBox .foot-commpany-info a {
+	text-align: center;
+	color: #FFF;
+}
+
+.footBox .foot-put-on-record {
+	text-align: center;
+}
+
+.footBox .foot-put-on-record a {
+	display:inline-block;
+	text-decoration:none;
+	height:20px;
+	line-height:20px;
+}
+
+.footBox .foot-put-on-record img {
+	float:left;
+}
+
+.footBox .foot-put-on-record p {
+	float:left;
+	height:20px;
+	line-height:20px;
+	margin: 0px 0px 0px 5px; 
+	color:#FFF;
+}

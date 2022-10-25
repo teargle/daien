@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{$title}</title>
+	<link rel="stylesheet" href="__CSS__/bootstrap.min.css">
+	<link rel="stylesheet" href="__CSS__/signin.css">
+	<script type="text/javascript" src="__JS__/jquery.min.js"></script>
+	<script type="text/javascript" src="__JS__/bootstrap.min.js"></script>
+</head>
+<body class="text-center">
+	<form class="form-signin">
+      <h1 class="h3 mb-3 font-weight-normal">请登录</h1>
+      <h1 class="h3 mb-3 font-weight-normal {php}isset($msg) ? '' : 'hidden'{/php} text-danger">{php}isset($msg) ? $msg : ''{/php}</h1>
+      <label for="username" class="sr-only">Username</label>
+      <input type="text" id="username" name="username" class="form-control" placeholder="Username" required autofocus>
+      <label for="password" class="sr-only">Password</label>
+      <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+      <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
+    </form>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<div class="sideBox">
+	<div class="sider">
+		<h2 class="products">{$title}</h2>
+		{volist name="cates" id="data"}
+		<div class="product_title" data-id={$data.id}><a href="{$data.link}" >{$data.title}</a></div>
+		{/volist}
+	</div>
+	<div class="sign_up">
+		<h3 class="contact-us">{$Think.lang.category_contact_us}</h3>
+		<span>{$home ['name']['value']}</span>
+		<span>{$Think.lang.common_phone}：{$home ['phone']['value']}</span>
+		<span>{$Think.lang.common_tel}：{$home ['tel']['value']}</span>
+		<span>{$Think.lang.common_fax}：{$home ['fax']['value']}</span>
+		<span>{$Think.lang.common_email}：{$home ['email']['value']}</span>
+		<span>{$Think.lang.common_zipcode}：{$home ['zipcode']['value']}</span>
+		<span>{$Think.lang.common_address}：{$home ['address']['value']}</span>
+		<span>{$Think.lang.common_web}：{$home ['web']['value']}</span>
+		<span>{$Think.lang.common_wx}：</span>
+		<span><img class="sideqcode" src="{$home ['qcode']['value']}"/></span>
+	</div>
+</div>

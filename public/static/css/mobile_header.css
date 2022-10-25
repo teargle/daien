@@ -1,0 +1,141 @@
+
+.* , ::after, ::before {
+	box-sizing: inherit;
+}
+
+a {
+	color: #03c4eb;
+    text-decoration: none;
+    outline: 0;
+}
+
+p {
+	margin: 0;
+    font-size: 14px;
+    color: #777;
+}
+
+.clear {
+	clear: both;
+}
+
+@font-face{  
+	font-family:'icomoon';  
+	src:url('icomoon.eot');  
+	src:url('/static/fonts/icomoon.eot?#iefix') format('embedded-opentype'),  
+    url('/static/fonts/icomoon.woff') format('woff'),  
+    url('/static/fonts/icomoon.ttf')  format('truetype'),    
+    url('/static/fonts/icomoon.svg#SofiaProLight')  format('svg');  
+    font-weight:normal;  
+    font-style:normal;
+}  
+
+body {
+	font-family: "Open Sans",Helvetica,Arial,sans-serif;
+	color: #777;
+	background-color: #EEEEEE;
+}
+
+body, button, input, select, textarea {
+    font-size: 14px;
+    line-height: 1.7;
+    color: #777;
+}
+
+img {
+    height: auto;
+    max-width: 100%;
+    vertical-align: middle;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    clear: both;
+    font-family: "Raleway",Helvetica,Arial,sans-serif;
+    font-weight: 600;
+    margin-bottom: 15px;
+    margin-bottom: 15px;
+    margin-bottom: .9375rem;
+    margin-top: 0;
+    color: #333;
+}
+
+.container {
+	padding-left: 0;
+	padding-right: 0;
+}
+
+.header {
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 76px;
+	width: 100%;
+	background-color: #fff;
+	line-height: 76px;
+	z-index: 100;
+	box-shadow: 0 5px 10px 0 rgba(50,50,50,.06);
+	overflow:hidden;
+}
+
+.header-left {
+	float: left;
+	text-align: center;
+	margin: 0 auto;
+	margin-left: 30px;
+	list-style: none;
+}
+
+.header-left h2 {
+	line-height: 76px;
+}
+
+#aclick:before {
+	content: '\e98f';
+	font-variant: normal;
+}
+
+#aclick {
+	font-family: 'icomoon';
+	font-size: 40px;
+	text-decoration:none;
+}
+
+.header-right {
+	float: right;
+	list-style: none;
+	background-color: #fff;
+	margin-right: 30px;
+	line-height: 76px;
+}
+
+.collapse-menu {
+	position: fixed;
+	margin-top: 76px;
+	z-index: 100;
+	width: 100%;
+}
+
+.collapse-menu ul {
+	width: 80px;
+    float: right;
+}
+
+.collapse-menu ul li {
+	height: 40px;
+	line-height: 24px;
+	padding: 8px;
+	background-color: #fff;
+	width: 80px;
+	border: 1px solid #216b9a;
+	background-color: #216b9a;
+	font: #FFF;
+}
+
+.collapse-menu ul li a { 
+	text-decoration: none;
+	color: #FFF;
+	padding: auto;
+	font-size: 13px;
+    font-weight: 600;
+    float: right;
+}

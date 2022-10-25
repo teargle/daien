@@ -1,0 +1,169 @@
+<div id="home_manage">
+	<form class="home-manage-form">
+		<br /><div style="text-align: center;"><h1>首页配置</h1></div><br />
+		<hr />
+		<div class="row form-group" id="web_logo">
+			<label for="web_logo" class="col-sm-2 control-label text-right">网站LOGO(160 * 36)：</label>
+			<div class="col-sm-10 inputs">
+				<input class="btn btn-primary uploadimg" type="file" multiple 
+					accept="*.gif, *.jpeg, *.png, *.jpg, *.bmp" /><br /><br />
+				<img wdith="300" height="100" src="">
+				<input type="hidden" name="setting_web_logo" class="hidden-name" value="">
+			</div>
+		</div>
+		<hr />
+		<div>
+		<div class="text-center"><label><h3>添加网页首页图片</h3></label></div>
+		<table class="table table-striped table-bordered">
+			<thead>
+				<tr>
+					<td class="col-sm-5 control-label text-center"><h3>PC图片(1280*500)</h3></td>
+					<td class="col-sm-5 control-label text-center"><h3>图片地址</h3></td>
+					<td class="col-sm-2 control-label text-center"><h3>操作</h3></td>
+				</tr>
+			</thead>
+			<tbody id="web_banner_area">
+				
+			</tbody>
+		</table>
+		<hr id="web_banner_hr" />
+		</div>
+		<div>
+		<div class="text-center"><label><h3>添加手机首页图片</h3></label></div>
+		<table class="table table-striped table-bordered">
+			<thead>
+				<tr>
+					<td class="col-sm-5 control-label text-center"><h3>Mobile图片(375*750)</h3></td>
+					<td class="col-sm-5 control-label text-center"><h3>图片地址</h3></td>
+					<td class="col-sm-2 control-label text-center"><h3>操作</h3></td>
+				</tr>
+			</thead>
+			<tbody id="mobile_banner_area">
+				
+			</tbody>
+		</table>
+		<hr id="mobile_banner_hr" />
+		</div>
+		<div class="row form-group">
+			<div class="col-sm-2">
+				<button type="button" class="btn btn-primary" onclick="addBannerImg('web')">添加网页首页图片</button>
+			</div>
+			<div class="col-sm-2">
+				<button type="button" class="btn btn-primary" onclick="addBannerImg('mobile')">添加手机首页图片</button>
+			</div>
+			<div class="col-sm-2 pull-right">
+				<!-- <button type="button" class="btn btn-primary" onclick="saveImg()">保存</button> -->
+			</div>
+		</div>
+  </form>
+</div>
+
+<!-- 添加图片模板 -->
+<table class="hidden" id="web_input_template_table">
+<tr id="web_input_template">
+	<td class="col-sm-5 inputs">
+		<input class="btn btn-primary uploadimg" type="file" multiple 
+			accept="*.gif, *.jpeg, *.png, *.jpg, *.bmp" /><br /><br />
+		<img wdith="300" height="100" src="">
+		<input type="hidden" class="hidden-name" value="">
+	</td>
+	<td class="col-sm-5">
+		<input type="text" class="form-control pull-center img-url" value="" />
+	</td>
+	<td class="col-sm-2 pull-center">
+		<button type="button" class="btn btn-primary pull-center" onclick="delBannerImg(this)">删除</button>
+		<button type="button" class="btn btn-primary pull-center" onclick="saveHomeBanner(this)">保存</button>
+	</td>
+</tr>
+</table>
+
+<script type="text/javascript">
+function addBannerImg(type, num ,src, url) {
+	console.log( "type = " + type + " , num = " + num + ", src = " + src + ", url = " + url ) ;
+	if( type == 'mobile' ) {
+		maxMobileBannerId = num || maxMobileBannerId + 1;
+		var name_num = 'banner_mobile_img__' + maxMobileBannerId ;
+		var insertHere = "#mobile_banner_area";
+	} else {
+		maxWebBannerId = num || maxWebBannerId + 1;
+		var name_num = 'banner_web_img__' + maxWebBannerId ;
+		var insertHere = "#web_banner_area";
+	}
+	var homebanner = $("#web_input_template_table").clone();
+	homebanner = homebanner.find("#web_input_template") ;
+	homebanner.removeAttr('id');
+	homebanner.find(".inputs .hidden-name").attr('name' , name_num );
+	homebanner.find(".inputs .hidden-name").attr('value' , src );
+	homebanner.find(".inputs img").attr("src", src || '');
+	homebanner.find(".img-url").attr("value", url || '');
+	$(insertHere).append("<tr>" + homebanner.html() + "</tr>") ;
+	setChange(homebanner);
+}
+function saveImg() {
+  $.post("/admin/manage/saveIndex",  $(".home-manage-form").serialize(),
+      function(data){
+        data = $.parseJSON(data);
+        if( data.result ) {
+           bootbox.alert("保存成功",function() {});
+        } else {
+           bootbox.alert(data.message,function() {});
+        }
+  });
+}
+
+function saveHomeBanner( button ) {
+	var imgInfo = $(button).closest("tr") ;
+	$.post("/admin/manage/saveHomeBanner",  {
+		name : imgInfo.find(".hidden-name").attr("name"),
+		value : imgInfo.find(".hidden-name").val(),
+		url : imgInfo.find(".img-url").val()
+	},function(data){
+        data = $.parseJSON(data);
+        if( data.result ) {
+           bootbox.alert("保存成功",function() {});
+        } else {
+           bootbox.alert(data.message,function() {});
+        }
+  });
+}
+
+function setChange( $select ) {
+	$select.find(".uploadimg").change(function(){
+	    var formData = new FormData();
+	    var f = $select.find(".uploadimg")[0].files[0];
+	    formData.append('file', f); // 固定格式
+	    uploadImg ( formData, function( data ) {
+	    	$select.find(".inputs img").attr("src",data.obj.url);
+	    	$select.find(".inputs .hidden-name").val(data.obj.url);
+	    } );
+	});
+}
+
+function delBannerImg(obj) {
+	var banner_name = $(obj).closest(".row").find(".hidden-name").attr('name');
+	$.post("/admin/manage/delBannerImg", {
+         name : banner_name
+      } ,
+      function(data){
+        data = $.parseJSON(data);
+        if( data.result ) {
+           bootbox.alert("删除成功",function() {
+           		$(obj).closest(".form-group").remove();
+           });
+        } else {
+           bootbox.alert(data.message,function() {});
+        }
+  });
+}
+$(function() {
+	$("#web_logo").find(".uploadimg").change(function(){
+	    var formData = new FormData();
+	    var f = $("#web_logo").find(".uploadimg")[0].files[0];
+	    formData.append('file', f); // 固定格式
+	    uploadImg ( formData, function( data ) {
+	    	$("#web_logo").find(".inputs img").attr("src",data.obj.url);
+	    	$("#web_logo").find(".inputs .hidden-name").val(data.obj.url);
+	    } );
+	});
+}) ;
+</script>

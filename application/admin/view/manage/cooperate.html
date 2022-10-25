@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Edit cooperate</title>
+	{include file="common/header" /}
+	 <style>
+        fieldset {
+            padding: .35em .625em .75em;
+            margin: 0 2px;
+            border: 1px solid silver;
+        }
+
+        legend {
+            padding: .5em;
+            border: 0;
+            width: auto;
+        }
+    </style>
+</head>
+<body>
+<div class="full-container">
+<form  class="form-horizontal" role="form" id="cooperate-from">
+	<div class="page-header text-center ">
+	{if condition="!empty($cooperate) && !empty($cooperate['id'])"}
+	<h1>{$cooperate['title']}</h1>
+	<input type="hidden" name="id" value="{$cooperate['id']}">
+	{else /}
+	<h1>创建产品</h1>
+	{/if}
+	</div>
+	<div class="row form-group">
+		<label for="title" class="col-sm-2 control-label text-right">名称：</label>
+		<div class="col-sm-8">
+			<input type="text" class="form-control" name="title" placeholder="请输入名称"
+			value='{if condition="!empty($cooperate)"}{$cooperate["title"]}{/if}'
+			>
+		</div>
+	</div>
+	<div class='row form-group'>
+		<label for="img" class="col-sm-2 control-label text-right">图片(1280*850)</label>
+		<div class="col-sm-8">
+			<input class="btn btn-primary" type="file" id="cooperate_uploadimg" multiple 
+				accept="*.gif, *.jpeg, *.png, *.jpg, *.bmp " /><br /><br />
+			<img wdith="300" height="200" name="img_url" src="{notempty name='cooperate'}{$cooperate['img_url']}{/notempty}">
+			<input type="hidden" name="img_url" value="{notempty name='cooperate'}{$cooperate['img_url']}{/notempty}">
+		</div>
+	</div>
+	<div class="row form-group">
+		<label for="link" class="col-sm-2 control-label text-right">网址：</label>
+		<div class="col-sm-8">
+			<input type="text" class="form-control" name="link" placeholder="请输入名称"
+			value='{if condition="!empty($cooperate)"}{$cooperate["link"]}{/if}'
+			>
+		</div>
+	</div>
+	<hr >
+	<div class="row form-group">
+		<div class="col-sm-1"></div>
+		<div class="col-sm-3">
+			<a type="button" class="btn btn-primary" href="/admin/manage/index?main=cooperate">返回</a>
+		</div>
+		<div class="col-sm-6"></div>
+		<div class="col-sm-2">
+			<button type="button" class="btn btn-primary" onclick="savecooperate()">保存</button>
+			{if condition="!empty($cooperate)"}
+			<button type="button" class="btn btn-danger" onclick="delcooperate({$cooperate['id']})">删除</button>
+			{/if}
+		</div>
+	</div>
+</form>
+<br /><br /><br />
+
+</div>
+<script type="text/javascript">
+$(document).ready( function(){
+	$("#cooperate_uploadimg").change(function(){
+	    var formData = new FormData();
+	    var f = $('#cooperate_uploadimg')[0].files[0];
+	    formData.append('file', f); // 固定格式
+	    uploadImg ( formData, function( data ) {
+	    	$("img[name='img_url']").attr("src",data.obj.url);
+	    	$("input[name='img_url']").val(data.obj.url);
+	    } );
+	});
+});
+
+function savecooperate() {
+  var params = $("#cooperate-from").serializeArray();
+  $.post("/admin/manage/savecooperate", {
+         params : params
+      } ,
+      function(data){
+        data = $.parseJSON(data);
+        if( data.result ) {
+        	bootbox.alert("保存成功",function() {});
+        } else {
+        	bootbox.alert(data.message,function() {});
+        }
+  });
+}
+
+function delcooperate( id ) {
+  $.post("/admin/manage/delcooperate", {
+         id : id
+      } ,
+      function(data){
+        data = $.parseJSON(data);
+        if( data.result ) {
+        	bootbox.alert("删除成功",function() {
+        		window.location.href = "/admin/manage/index?main=cooperate";
+        	});
+        } else {
+           bootbox.alert(data.message,function() {});
+        }
+  });
+}
+</script>
+</body>
+</html>
