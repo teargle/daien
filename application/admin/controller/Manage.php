@@ -199,7 +199,7 @@ class Manage extends Common
         $img_url = $request->post('img_url');
         $description = $request->post('description');
         if( empty($title) || empty($rank) ) {
-            echo $this->output_json("OK", "请输入标题和排序" ) ;
+            echo $this->output_json(false, "请输入标题和排序" ) ;
             exit ;
         }
         $category = new Category ;
@@ -214,7 +214,7 @@ class Manage extends Common
         $this->saveI18n( 'dn_category', 'en-us', 'description', $id, $description_en ) ;
         $this->saveI18n( 'dn_category', 'en-us', 'title',  $id, $title_en ) ;
 
-        echo $this->output_json("OK", "", null ) ;
+        echo $this->output_json(true, "OK", null ) ;
     }
 
     public function updateCategoryProduct() {
