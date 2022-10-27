@@ -52,8 +52,8 @@
 <script type="text/javascript">
 function saveIntro() {
 	var params = {};
-  params.description = $("#description").text();
-  params.description_en = $("#description_en").text();
+  params.description = $("#description").trumbowyg('html');
+  params.description_en = $("#description_en").text('html');
   params.name = $("#intro-select").find("option:selected").val() ;
   $.post("/admin/manage/saveIntro", params , function(data){
         data = $.parseJSON(data);
