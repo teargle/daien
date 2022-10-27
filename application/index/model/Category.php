@@ -45,7 +45,7 @@ class Category extends Model
     }
 
     public function saveCategory($parent, $title, $rank, $img_url, $description) {
-        Db::query("insert into dn_category (`parent`,`title`,`rank`,`img_url`,`description`) values ({$parent},'{$title}',{$rank},'{$img_url}',{$description}) ");
+        Db::query("insert into dn_category (`parent`,`title`,`rank`,`img_url`,`description`) values ({$parent},'{$title}',{$rank},'{$img_url}','{$description}') ");
         $id = Db::name("dn_category")->getLastInsID();
         return $this->get_category_info($id) ;
     }
