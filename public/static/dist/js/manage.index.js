@@ -402,6 +402,7 @@ function revertSetting() {
           $("input[name='name_en']").val(data.obj.name_en);
           $("input[name='zipcode']").val(data.obj.zipcode);
           $("input[name='phone']").val(data.obj.phone);
+          $("input[name='tel']").val(data.obj.tel);
 
           $("input[name='address']").val(data.obj.address);
           $("input[name='address_en']").val(data.obj.address_en);
