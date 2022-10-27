@@ -110,6 +110,9 @@ function updateCategory() {
 $("#firstclass").change(function (obj) {
 		var params = {};
 		params.id = $("#firstclass").val();
+		if( params.id == "" ) {
+			 return ;
+		}
 		$.post("/admin/manage/get_category_info", params , function(data){
         data = $.parseJSON(data);
         if( data.result ) {
