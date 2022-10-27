@@ -76,8 +76,8 @@ function saveCategory() {
   params.title_en = $("#title_en").val();
   params.first = $("#firstclass").find("option:selected").val() ;
   params.img_url = $("input[name='img_url']").val();
-  params.description = $("#description_mobile").val();
-  params.description_en = $("#description_mobile_en").val();
+  params.description = $("#description_mobile").trumbowyg('html');
+  params.description_en = $("#description_mobile_en").trumbowyg('html');
   $.post("/admin/manage/saveCategoryProduct", params , function(data){
         data = $.parseJSON(data);
         if( data.result ) {
@@ -95,8 +95,8 @@ function updateCategory() {
   params.title_en = $("#title_en").val();
   params.first = $("#firstclass").find("option:selected").val() ;
   params.img_url = $("input[name='img_url']").val();
-  params.description = $("#description_mobile").val();
-  params.description_en = $("#description_mobile_en").val();
+  params.description = $("#description_mobile").trumbowyg('html');
+  params.description_en = $("#description_mobile_en").trumbowyg('html');
   $.post("/admin/manage/updateCategoryProduct", params , function(data){
         data = $.parseJSON(data);
         if( data.result ) {
