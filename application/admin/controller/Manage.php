@@ -203,7 +203,7 @@ class Manage extends Common
             exit ;
         }
         $category = new Category ;
-        $result = $category->saveCategory($parent, $title, $rank, $img_url, $description) ;
+        $result = $category->saveCategory(PRODUCT_CATEGORY, $title, $rank, $img_url, $description) ;
         
         $link = "/?cid=" . PRODUCT_CATEGORY . "&did=" . $result ['id'] ;
         $category->updateCategoryLink( $result ['id'], $link ) ;
