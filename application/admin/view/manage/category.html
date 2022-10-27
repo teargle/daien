@@ -111,7 +111,14 @@ $("#firstclass").change(function (obj) {
 		var params = {};
 		params.id = $("#firstclass").val();
 		if( params.id == "" ) {
-			 return ;
+			$("#rank").val( "" );
+    	$("#title").val( "" );
+    	$("#title_en").val( "" );
+    	$("img[name='img_url']").attr("src", "" );
+    	$("input[name='img_url']").val( "" );
+    	$("#description_mobile").val( "" );
+    	$("#description_mobile_en").val( "" );
+			return ;
 		}
 		$.post("/admin/manage/get_category_info", params , function(data){
         data = $.parseJSON(data);
