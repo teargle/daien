@@ -53,7 +53,7 @@
 function saveIntro() {
 	var params = {};
   params.description = $("#description").trumbowyg('html');
-  params.description_en = $("#description_en").text('html');
+  params.description_en = $("#description_en").trumbowyg('html');
   params.name = $("#intro-select").find("option:selected").val() ;
   $.post("/admin/manage/saveIntro", params , function(data){
         data = $.parseJSON(data);
