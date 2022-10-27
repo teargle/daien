@@ -205,7 +205,8 @@ class Manage extends Common
         $category = new Category ;
         $result = $category->saveCategory(PRODUCT_CATEGORY, $title, $rank, $img_url, $description) ;
         
-        $link = "/?cid=" . PRODUCT_CATEGORY . "&did=" . $result ['id'] ;
+        $id = $result ['id'];
+        $link = "/?cid=" . PRODUCT_CATEGORY . "&did=" . $id ;
         $category->updateCategoryLink( $result ['id'], $link ) ;
         
         //保存多语言信息
@@ -234,8 +235,8 @@ class Manage extends Common
         // 多语言
         $title_en = $request->post('title_en');
         $description_en = $request->post('description_en');
-        $this->saveI18n( 'dn_category', 'description', 'en-us', $id, $description_en ) ;
-        $this->saveI18n( 'dn_category', 'title', 'en-us', $id, $title_en ) ;
+        $this->saveI18n( 'dn_category', 'en-us', 'description',  $id, $description_en ) ;
+        $this->saveI18n( 'dn_category', 'en-us', 'title',  $id, $title_en ) ;
 
         echo $this->output_json("OK", "", null ) ;
     }
