@@ -195,6 +195,7 @@ class Index extends Controller
                 $intro ['description'] = $i18ninfo ['text'];
             }
         }
+        $intro ['description'] = str_replace( "\\", "", $intro ['description']) ;
         $this->assign('intro' , $intro );
         $this->assign('tid', $this->tid );
 
