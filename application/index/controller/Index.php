@@ -234,7 +234,7 @@ class Index extends Controller
         } else {
             $offset = ($this->page - 1)  * $this->project_limit ;
             $projects = $project->get_project_by_category( $this->did, $offset , $this->project_limit );
-            if( $this->language != 'zh-cn' ) {
+            if( $this->language != 'zh-cn' && !empty($projects) ) {
                 $I18n = new I18n;
                 $I18n->replace_info ($projects, 'dn_project', $this->language, 'title' ) ;
                 $I18n->replace_info ($projects, 'dn_project', $this->language, 'description' ) ;
