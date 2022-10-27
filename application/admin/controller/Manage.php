@@ -14,7 +14,7 @@ use app\index\model\News;
 use app\index\model\Cooperate;
 use app\index\model\I18n;
 
-define("UPLOAD_IMAGE_PATH", "/home/dn_comm/imgs/") ;
+define("UPLOAD_IMAGE_PATH", "/home/daien/imgs/") ;
 //define("UPLOAD_IMAGE_PATH", "D:/wnmp/www/uploads/") ;
 define("PRODUCT_CATEGORY" , 2);
 define("NEWS_CATEGORY" , 3);
