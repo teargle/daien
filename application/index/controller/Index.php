@@ -103,6 +103,9 @@ class Index extends Controller
             }
         }
 
+        $webs = explode(";", $home ['web']['value']) ;
+        $home ['web']['values'] = $webs;
+        
         $this->assign('home' , $home);
 
     }

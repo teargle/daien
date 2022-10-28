@@ -14,7 +14,13 @@
 		<span>{$Think.lang.common_email}：{$home ['email']['value']}</span>
 		<span>{$Think.lang.common_zipcode}：{$home ['zipcode']['value']}</span>
 		<span>{$Think.lang.common_address}：{$home ['address']['value']}</span>
-		<span>{$Think.lang.common_web}：{$home ['web']['value']}</span>
+		{volist name="$home ['web']['values']" id="data" key="k"}
+			{if condition="$k eq 1"}
+				<span>{$Think.lang.common_web}：{$data}</span>
+			{else}
+				<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$data}</span>
+			{/if}
+		{/volist}
 		<span>{$Think.lang.common_wx}：</span>
 		<span><img class="sideqcode" src="{$home ['qcode']['value']}"/></span>
 	</div>
