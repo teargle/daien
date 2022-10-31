@@ -325,9 +325,16 @@ function revertCategory() {
         data = $.parseJSON(data);
         if( data.result ) {
           $("#firstclass").html("") ;
-          $("#firstclass").append("<option value=''>无</option>") ;
-          $.each(data.obj, function(index, e){
+          $("#firstclass").append("<option value=-1>增加一级分类</option>");
+          $.each(data.obj [0], function(index, e){
              $("#firstclass").append("<option value='" + e.id + "'> " + e.title + "</option>") ;
+          });
+
+          $("#secondclass").html("") ;
+          $("#secondclass").append("<option value=-1>增加二级分类</option>") ;
+          $("#secondclass").append("<option value=0>修改一级分类</option>") ;
+          $.each(data.obj [1], function(index, e){
+             $("#secondclass").append("<option value='" + e.id + "'> " + e.title + "</option>") ;
           });
         }
   });

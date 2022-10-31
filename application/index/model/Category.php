@@ -26,8 +26,16 @@ class Category extends Model
         Db::connect( Config::get("database") );
     }
 
+    public function get_all_with_products () {
+        return Db::query('select * from dn_category where id > 45');
+    }
+
     public function get_category( $parent = 1) {
         return Db::query('select * from dn_category where parent=:parent', ['parent' => $parent]);
+    }
+
+    public function get_category_by_parents( $ids ) {
+        return Db::query('select * from dn_category where parent in (' + implode(',', $ids) + ') ');
     }
 
     public function get_category_info( $id ) {

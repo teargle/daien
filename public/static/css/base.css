@@ -188,7 +188,7 @@ ol, ul {
     border-bottom: 1px solid #ecf5ff;
     line-height: 32px;
     cursor: pointer;
-    background: url(../img/category_1.png) no-repeat;
+    background: url(../img/20221031150209.png) no-repeat;
 }
 
 .layout .containerBox .container .contentBox .sideBox .sider .product_title a {
@@ -196,9 +196,38 @@ ol, ul {
     width: 150px;
     height: 1005;
     padding-left: 16px;
+    color: #000;
+    text-decoration: none;
+    float: left;
+}
+
+.layout .containerBox .container .contentBox .sideBox .sider .product_title a:hover {
+    text-decoration: underline;
+    font-weight:  bold;
+}
+
+.layout .containerBox .container .contentBox .sideBox .sider .product_sub_title {
+    height: 32px;
+    font-size: 14px;
+    border-bottom: 1px solid #ecf5ff;
+    line-height: 32px;
+    cursor: pointer;
+    background: url(../img/category_1.png) no-repeat;
+}
+
+.layout .containerBox .container .contentBox .sideBox .sider .product_sub_title a {
+    display: block;
+    width: 150px;
+    height: 1005;
+    padding-left: 32px;
     color: #666;
     text-decoration: none;
     float: left;
+}
+
+.layout .containerBox .container .contentBox .sideBox .sider .product_sub_title a:hover {
+    text-decoration: underline;
+    font-weight:  bold;
 }
 
 .layout .containerBox .container .contentBox .sideBox .sider .product_title:hover {

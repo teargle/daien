@@ -39,6 +39,8 @@ class Index extends Controller
     // 当前语言
     private $language = 'zh-cn';
 
+    private $product_category = 2;
+
     public function __construct()
     {
         //初始化用户浏览器
@@ -114,11 +116,31 @@ class Index extends Controller
         $category = new Category ;
         $i18n = new I18n ;
 
-        $cates = $category->get_category( $this->cid ) ;
-        if( $cates ) {
-            $i18n->replace_info( $cates, 'dn_category', $this->language, 'title' ) ;
+        $cations = [] ;
+        if( $this->cid == $this->product_category ) {
+            $cates = $category->get_all_with_products( $this->cid ) ;
+            if( $cates ) {
+                $i18n->replace_info( $cates, 'dn_category', $this->language, 'title' ) ;
+            }
+            
+            foreach( $cates as $cate ) {
+                if( $cate ['parent'] == $this->product_category ) {
+                    $cations [$cate ['id']] = $cate ;
+                } else {
+                    if( empty($cations [$cate ['parent']] ['sub']) ) {
+                        $cations [$cate ['parent']] ['sub'] = [];
+                    } 
+                    array_push($cations [$cate ['parent']] ['sub'], $cate);
+                }
+            }
+        } else {
+            $cates = $category->get_category( $this->cid ) ;
+            if( $cates ) {
+                $i18n->replace_info( $cates, 'dn_category', $this->language, 'title' ) ;
+            }
+            $cations = $cates;
         }
-        $this->assign('cates' , $cates);
+        $this->assign('cates' , $cations);
 
         
         $category_title = $category->get_main_category( $this->cid );
@@ -164,15 +186,31 @@ class Index extends Controller
             $this->assign('product_detail' , $product_detail );
         } else {
             $offset = ($this->page - 1)  * $this->product_limit ;
-            $products = $product->get_product_by_category( $this->did, $offset , $this->product_limit );
-
+            $category = new Category ;
+            $cate = [] ;
+            if( !empty($this->did) && $this->did != 14 ){
+                $cate = $category->get_category_info( $this->did );
+            }
+            
+            if( $cate && $cate['parent'] == $this->product_category) {
+                $cates = $category->get_category( $this->did ) ;
+                $cate_ids = array_column( $cates, "id" ) ;
+                $total = 0 ;
+                $projects = [];
+                if( $cate_ids ) {
+                    $products = $product->get_product_by_categorys( $cate_ids, $offset , $this->product_limit );
+                }
+                $total = $product->get_product_num_by_categorys( $cate_ids );
+            } else {
+                $products = $product->get_product_by_category( $this->did, $offset , $this->product_limit );
+                $total = $product->get_product_num_by_category( $this->did );
+            }
             if( $this->language != 'zh-cn' && $products ) {
                 $I18n = new I18n;
                 $I18n->replace_info ($products, 'dn_product', $this->language, 'title' ) ;
                 $I18n->replace_info ($products, 'dn_product', $this->language, 'description' ) ;
             }
 
-            $total = $product->get_product_num_by_category( $this->did );
             $total_page = ceil($total / $this->product_limit );
             $this->assign('products' , $products );
             $this->assign('page' , $this->page );
@@ -236,22 +274,24 @@ class Index extends Controller
             }
             $this->assign('project_detail' , $project_detail );
         } else {
+
             $offset = ($this->page - 1)  * $this->project_limit ;
             $projects = $project->get_project_by_category( $this->did, $offset , $this->project_limit );
+
+            $total = $project->get_project_num_by_category( $this->did );
+        
             if( $this->language != 'zh-cn' && !empty($projects) ) {
                 $I18n = new I18n;
                 $I18n->replace_info ($projects, 'dn_project', $this->language, 'title' ) ;
                 $I18n->replace_info ($projects, 'dn_project', $this->language, 'description' ) ;
             }
-            $total = $project->get_project_num_by_category( $this->did );
+            
             $total_page = ceil($total / $this->project_limit );
             $this->assign('projects' , $projects );
             $this->assign('page' , $this->page );
             $this->assign('total' , $total );
             $this->assign('total_page' , $total_page );
         }
-
-
     }
 
     public function _get_news_info() {

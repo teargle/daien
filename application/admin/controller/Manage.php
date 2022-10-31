@@ -161,15 +161,20 @@ class Manage extends Common
 
     public function get_category () {
         $request = Request::instance();
-        $parent = $request->post('id') ? $request->post('id') : PRODUCT_CATEGORY;
+        $parent = $request->post('id') ;
         $category = new Category ;
-        $cates = $category->get_category( $parent ) ;
-        echo $this->output_json("OK", "", $cates ) ;
+        $cates [0] = $category->get_category( PRODUCT_CATEGORY ) ;
+        if( $parent ) {
+            $cates [1] = $category->get_category( $parent ) ;
+        }
+        echo $this->output_json(true, "", $cates ) ;
     }
 
     public function get_category_info() {
         $request = Request::instance();
-        $id = $request->post('id') ? $request->post('id') : PRODUCT_CATEGORY;
+        $secondclass = $request->post('secondclass');
+        $firstclass = $request->post('firstclass');
+        $id = $secondclass != -1 && $secondclass != 0 ? $secondclass : $firstclass;
         $category = new Category ;
         $cates = $category->get_category_info( $id ) ;
 
@@ -183,14 +188,20 @@ class Manage extends Common
         if( $i18ninfo ) {
             $cates ['description_en'] = $i18ninfo ['text'];
         }
+        $result [0] = $cates;
+        if( $firstclass ) {
+            $result [1] = $category->get_category( $firstclass ) ;
+        }
 
-        echo $this->output_json("OK", "", $cates ) ;
+        echo $this->output_json(true, "", $result ) ;
     }
 
     public function saveCategoryProduct() {
         $request = Request::instance();
-        $id = $request->post('first') ? $request->post('first') : PRODUCT_CATEGORY ;
-        if( $id != PRODUCT_CATEGORY) {
+        $secondclass = $request->post('secondclass');
+        $firstclass = $request->post('firstclass') ;
+
+        if( !($firstclass == -1 || $secondclass == -1) ) {
             $this->updateCategoryProduct();
             exit ;
         }
@@ -202,8 +213,10 @@ class Manage extends Common
             echo $this->output_json(false, "请输入标题和排序" ) ;
             exit ;
         }
+
+        $parent_id = empty($firstclass) || $firstclass == -1 ? PRODUCT_CATEGORY : $firstclass;
         $category = new Category ;
-        $result = $category->saveCategory(PRODUCT_CATEGORY, $title, $rank, $img_url, $description) ;
+        $result = $category->saveCategory($parent_id, $title, $rank, $img_url, $description) ;
         
         $id = $result ['id'];
         $link = "/?cid=" . PRODUCT_CATEGORY . "&did=" . $id ;
@@ -220,13 +233,15 @@ class Manage extends Common
 
     public function updateCategoryProduct() {
         $request = Request::instance();
-        $id = $request->post('first') ? $request->post('first') : $id;
+        $secondclass = $request->post('secondclass');
+        $firstclass = $request->post('firstclass') ;
+        $id = empty($secondclass) ? $firstclass : $secondclass ;
         $title = $request->post('title');
         $rank = $request->post('rank');
         $img_url = $request->post('img_url');
         $description = $request->post('description');
         if( $id == PRODUCT_CATEGORY || empty($title) || empty($rank) ) {
-            echo $this->output_json("OK", "请输入标题和排序,或者选择种类" ) ;
+            echo $this->output_json(false, "请输入标题和排序,或者选择种类" ) ;
             exit ;
         }
         $category = new Category ;
@@ -238,7 +253,7 @@ class Manage extends Common
         $this->saveI18n( 'dn_category', 'en-us', 'description',  $id, $description_en ) ;
         $this->saveI18n( 'dn_category', 'en-us', 'title',  $id, $title_en ) ;
 
-        echo $this->output_json("OK", "", null ) ;
+        echo $this->output_json(true, "修改成功", null ) ;
     }
     
 

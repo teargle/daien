@@ -37,6 +37,15 @@ class Product extends Model
         return $total [0] ['num'] ;
     }
  
+    public function get_product_by_categorys( $category_ids = [], $offset = 0, $limit = 12 ) {
+        $list = Db::query('select * from dn_product where `status` = \'A\' and category_id in (' . implode(',', $category_ids) . ') order by id asc limit ' . $offset . ',' . $limit );
+        return $list ;
+    }
+
+    public function get_product_num_by_categorys( $category_ids ) {
+        $total = Db::query('select count(*) as num from dn_product where `status` = \'A\' and category_id in (' . implode(',', $category_ids) . ')');
+        return $total [0] ['num'] ;
+    }
 
     public function get_product_by_id ( $id ) {
 		$details = Db::query('select * from dn_product where id = :id', ['id' => $id]);
