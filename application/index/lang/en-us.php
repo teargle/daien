@@ -26,5 +26,12 @@ return [
 	'product_name' => "Product Name",
 	'cooperative_brands' => "Cooperative Brands",
 	'cooperative_partner' => "Partner",
+
+	'contact_us' => 'Contact Us',
+	'contact_type' => 'Contact Us',
+	'contact_type_placeholder' => 'Your contact information',
+	'contact_message' => "CONTACT",
+	'contact_message_placeholder' => "Message",
+	'contact_send' => "Send"
 ];
 

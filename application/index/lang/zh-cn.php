@@ -26,4 +26,12 @@ return [
 	'product_name' => "产品名称",
 	'cooperative_brands' => "合作品牌",
 	'cooperative_partner' => "合作伙伴",
+
+	
+	'contact_us' => '联系我们',
+	'contact_type' => '联系信息',
+	'contact_type_placeholder' => '您的联系方式',
+	'contact_message' => "留言给我们",
+	'contact_message_placeholder' => "留言内容",
+	'contact_send' => "发送"
 ];

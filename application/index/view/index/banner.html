@@ -1,0 +1,32 @@
+<script type="text/javascript" src="__DIST_JS__/swiper.min.js"></script>
+<link rel="stylesheet" href="__DIST_CSS__/swiper.min.css">
+<div class="banner-container">
+	<div class="swiper-container">
+		<div class="swiper-wrapper">
+			{volist name="banners" id="banner"}
+			<div class="swiper-slide"><img src="{$banner}" alt=""></div>
+			{/volist}
+		</div>
+		<!-- 如果需要分页器 -->
+    	<div class="swiper-pagination"></div>
+
+	</div>
+</div>
+<script type="text/javascript">
+$(function(){
+	var swiper = new Swiper('.swiper-container',{
+    	    direction: 'horizontal', // 垂直切换选项
+		    loop: true, // 循环模式选项
+		    autoplay: true,
+		    // 如果需要分页器
+		    pagination: {
+		      el: '.swiper-pagination',
+		    },
+		    
+		    // 如果需要滚动条
+		    scrollbar: {
+		      el: '.swiper-scrollbar',
+		    }
+    });
+});
+</script>

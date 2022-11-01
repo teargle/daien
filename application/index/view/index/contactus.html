@@ -1,0 +1,71 @@
+
+{if condition="($cid eq 1) AND ($tid eq 4)"}
+<div class="intro-contact-us">
+	<div>
+		<span>{$home ['name'] ['value']}</span>
+	</div>
+	<div>
+		<label>{$Think.lang.common_address}: </label>
+		<span>{$home ['address'] ['value']}</span>
+	</div>
+	<div>
+		<label>{$Think.lang.common_phone}: </label>
+		<span>{$home ['phone'] ['value']}</span>
+	</div>
+	<div>
+		<label>{$Think.lang.common_tel}: </label>
+		<span>{$home ['tel'] ['value']}</span>
+	</div>
+	<div>
+		<label>{$Think.lang.common_fax}: </label>
+		<span>{$home ['fax'] ['value']}</span>
+	</div>
+	<div>
+		<label>{$Think.lang.common_zipcode}: </label>
+		<span>{$home ['zipcode'] ['value']}</span>
+	</div>
+	<div>
+		<label>{$Think.lang.common_email}: </label>
+		<span>{$home ['email'] ['value']}</span>
+	</div>
+	<div>
+		<label>{$Think.lang.common_web}: </label>
+		<span>{$home['web']['values']|implode="&nbsp;&nbsp;&nbsp;&nbsp;",###}</span>
+	</div>
+	<div>
+		<label>{$Think.lang.common_wx}: </label>
+	</div>
+	<div class="qcode">
+		<span><img src="{$home ['qcode'] ['value']}"></span>
+	</div>
+	<form id="mesageForm" class="form-horizontal msg_form">
+		<div ><h2>{$Think.lang.contact_message}</h3><div>
+		<div class="row form-group">
+			<input type="text" class="form-control" name="linkinfo" placeholder="{$Think.lang.contact_type_placeholder}" />
+		</div>
+		<div class="row form-group">
+			<textarea class="form-control col-sm-8" rows="3" name="msginfo" 
+			placeholder="{$Think.lang.contact_message_placeholder}"></textarea>
+		</div>
+		<div>
+			<button type="button" class="btn btn-default" onclick="sendMessage();">{$Think.lang.contact_send}</button>
+		</div>
+	</form>
+</div>
+{elseif condition="($cid eq 1)" /}
+<div class="intro-content">
+	{$intro ['description']}
+</div>
+{/if}
+<script type="text/javascript">
+function sendMessage() {
+	$.post("/index/index/message", $("#mesageForm").serialize(), function (data){
+		data = $.parseJSON(data);
+		if( data.result ) {
+			alert(data.message) ;
+		} else {
+			alert(data.message);
+		}
+	}) ;
+}
+</script>

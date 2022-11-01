@@ -14,8 +14,12 @@ use app\index\model\Intro;
 use app\index\model\Project;
 use app\index\model\News;
 use app\index\model\Cooperate;
-
+use app\index\model\Message;
 use app\index\model\I18n;
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
 
 class Index extends Controller
 {
@@ -45,6 +49,7 @@ class Index extends Controller
     {
         //初始化用户浏览器
         parent::__construct();
+
         if( is_mobile_browser() ) {
             $this->redirect( "/mobile/index");
             exit;
@@ -76,6 +81,7 @@ class Index extends Controller
 
     public function index()
     {
+        $this->_get_banner();
         $this->_get_company_info() ;
         $this->_get_category_info() ;
         $this->_get_product_by_category() ;
@@ -87,6 +93,15 @@ class Index extends Controller
         return $this->fetch('index');
     }
 
+    private function _get_banner() {
+        $banners = [
+            '/static/img/banner_0.jpg',
+            '/static/img/banner_1.jpg',
+            '/static/img/banner_2.jpg',
+            '/static/img/banner_3.jpg'
+        ] ;
+        $this->assign('banners' , $banners);
+    }
     private function _get_company_info() {
         $dict = new Dict ;
         $home = $dict->get_info( 'home' ) ;
@@ -342,5 +357,57 @@ class Index extends Controller
             'obj' => $obj
         ] ;
         return json_encode($data) ;
+    }
+
+    public function message() {
+        $request = Request::instance();
+        $post = $request->post();
+
+        $linkinfo = empty($post ['linkinfo']) ? "" : $post ['linkinfo'];
+        $msginfo = empty($post ['msginfo']) ? "" : $post ['msginfo'];
+        $ip = $request->ip();
+
+        $Message = new Message;
+        $info = $Message->get_info_by_ip( $ip );
+
+        if( $info && strtotime($info ['create_time']) + 1 > time() ) {
+            echo $this->output_json ( false , "不要频繁留言", $post) ;
+            exit ;
+        }
+        $msg_id = $Message->saveInfo( $linkinfo, $msginfo, $ip );
+        $error = $this->_send_email( "from : " . $linkinfo . "<br/>message : " . $msginfo ) ;
+        echo $this->output_json ( true , $error, $post) ;
+    }
+
+    public function _send_email($content) {
+        $mail = new PHPMailer(true);
+        try {
+            //Server settings
+            $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+            $mail->isSMTP();                                            //Send using SMTP
+            $mail->Host       = 'smtp.163.com';                         //Set the SMTP server to send through
+            $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+            $mail->Username   = 'teargle@163.com';                     //SMTP username
+            $mail->Password   = 'JUFDNJODJLBHSPRC';                    //SMTP password
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
+            $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+
+            //Recipients
+            $mail->setFrom('teargle@163.com', 'xionglei');
+            $mail->addAddress('teargle@163.com', 'Tear');     //Add a recipient
+
+            //Content
+            $mail->isHTML(true);                                  //Set email format to HTML
+            $mail->Subject = '[important] a carstom from web';
+            $mail->Body    = $content;
+
+            $mail->send();
+        } catch (Exception $e) {
+            return print_r( $e );
+        }
+    }
+
+    public function info() {
+        phpinfo() ;
     }
 }

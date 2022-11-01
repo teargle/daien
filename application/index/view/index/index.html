@@ -16,9 +16,8 @@
 		<div class="containerBox">
 			<div class="container">
 				<div class="contentBox">
-					<div class="banner">
-						<a href="/"><img src="/static/img/banner2_banner_02.jpg"></a>
-					</div>
+					<!-- 大banner -->
+					{include file="index/banner" /}
  
 					<!-- 主体左边部分 -->
 					{include file="common/sider" /}
@@ -76,52 +75,8 @@
        					</div>
        					{/notempty}
 
-       					{if condition="($cid eq 1) AND ($tid eq 4)"}
-						<div class="intro-contact-us">
-							<div>
-								<span>{$home ['name'] ['value']}</span>
-							</div>
-							<div>
-								<label>{$Think.lang.common_address}: </label>
-								<span>{$home ['address'] ['value']}</span>
-							</div>
-							<div>
-								<label>{$Think.lang.common_phone}: </label>
-								<span>{$home ['phone'] ['value']}</span>
-							</div>
-							<div>
-								<label>{$Think.lang.common_tel}: </label>
-								<span>{$home ['tel'] ['value']}</span>
-							</div>
-							<div>
-								<label>{$Think.lang.common_fax}: </label>
-								<span>{$home ['fax'] ['value']}</span>
-							</div>
-							<div>
-								<label>{$Think.lang.common_zipcode}: </label>
-								<span>{$home ['zipcode'] ['value']}</span>
-							</div>
-							<div>
-								<label>{$Think.lang.common_email}: </label>
-								<span>{$home ['email'] ['value']}</span>
-							</div>
-							<div>
-								<label>{$Think.lang.common_web}: </label>
-								<span>{$home ['web'] ['value']}</span>
-							</div>
-							<div>
-								<label>{$Think.lang.common_wx}: </label>
-							</div>
-							<div class="qcode">
-								<span><img src="{$home ['qcode'] ['value']}"></span>
-							</div>
-						</div>
-						{elseif condition="($cid eq 1)" /}
-						<div class="intro-content">
-							{$intro ['description']}
-						</div>
-						{/if}
-
+       					<!-- 联系我们 公司介绍等-->
+       					{include file="index/contactus" /}
 
        					{notempty name="news_detail"}
 						<h1 style="text-align:center;">{$news_detail.title}</h1>
