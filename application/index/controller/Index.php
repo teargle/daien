@@ -393,8 +393,9 @@ class Index extends Controller
             $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
             //Recipients
-            $mail->setFrom('teargle@163.com', 'xionglei');
-            $mail->addAddress('teargle@163.com', 'Tear');     //Add a recipient
+            $mail->setFrom('teargle@163.com', 'xionglei' );
+            $mail->addAddress( 'shdaien@163.com', 'fory' ) ;
+            $mail->addAddress( 'xiong.lei@juneben.com', 'teargle');     //Add a recipient
 
             //Content
             $mail->isHTML(true);                                  //Set email format to HTML

@@ -266,6 +266,11 @@ ol, ul {
     font-size: 10px;
 }
 
+.layout .containerBox .container .contentBox .sign_up span i {
+    font-style: normal;
+    text-indent: 150px;
+}
+
 .layout .containerBox .container .contentBox .sign_up .sideqcode {
     width: 100px;
     height: 100px;
