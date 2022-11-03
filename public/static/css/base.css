@@ -472,6 +472,11 @@ ol, ul {
     padding:20px;
 }
 
+.layout .containerBox .container .contentBox .rightMain .content-image img {
+    width: 400px;
+    height: 400px;
+}
+
 .layout .containerBox .container .contentBox .rightMain .content-title {
     border-bottom: 1px dashed #CCC;
     height: 30px;
