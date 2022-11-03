@@ -414,6 +414,11 @@ ol, ul {
     color:#000;
 }
 
+.layout .containerBox .container .contentBox .rightMain .news_row a h4 {
+    margin-top: 10px;
+    margin-bottom: -8px;
+}
+
 .layout .containerBox .container .contentBox .rightMain .news_row div {
     width: 600px;
     display: -webkit-box;
@@ -422,6 +427,7 @@ ol, ul {
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     text-decoration: none;
+    font-size: 16px;
 }
 
 .layout .containerBox .container .contentBox .rightMain .news_row .new_check {
