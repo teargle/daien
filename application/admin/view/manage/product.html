@@ -41,6 +41,9 @@
 			{/foreach}
 			</select>
 		</div>
+		<div class="col-sm-2">
+			<select id="secondclass" name="secondclass" class="form-control" ></select>
+		</div>
 	</div>
 	<div class="row form-group">
 		<label for="title" class="col-sm-2 control-label text-right">名称(zh)：</label>
@@ -165,6 +168,25 @@ function delProduct( id ) {
         }
   });
 }
+
+$("#firstclass").change(function (obj) {
+		var params = {};
+		params.firstclass = $("#firstclass").val();
+		$.post("/admin/manage/get_category_info", params , function(data){
+        data = $.parseJSON(data);
+        if( data.result ) {
+        	// 设置二级分类
+        	if( data.obj [1] ) {
+        		$("#secondclass").html("");
+        		$.each( data.obj[1],function(index, item) {
+        			$("#secondclass").append("<option value=" + item.id + ">" + item.title + "</option>") ;
+        		});
+        	}
+        } else {
+          bootbox.alert(data.message,function() {});
+        }
+  });
+});
 </script>
 </body>
 </html>

@@ -116,7 +116,7 @@ class Manage extends Common
     		$data [$param['name']] = $param ['value'];
     	}
     	$Product = new Product;
-        $data ['category_id'] = isset($data ['firstclass']) ? $data ['firstclass'] : 0;
+        $data ['category_id'] = isset($data ['secondclass']) ? $data ['secondclass'] : 0;
         if( empty( $data ['category_id'] ) ) {
             echo $this->output_json ( false , "失败, 没有分类" , null) ; 
             exit ;
