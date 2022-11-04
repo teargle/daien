@@ -53,10 +53,12 @@ class I18n extends Model
     }
 
     public function saveI18n( $table, $column, $lang, $target_id, $text ) {
+        $text = addslashes($text) ;
         return Db::query( "insert into dn_i18n (`table`,`column`,`lang`,`target_id`,`text` ) values ('{$table}', '{$column}', '{$lang}', {$target_id}, '{$text}') " );
     }
 
     public function updateI18n( $id, $text ) {
+        $text = addslashes($text) ;
         return Db::query( "update dn_i18n set text=:text where id=:id " , [ 'id' => $id , 'text' => $text ] );
     }
  
