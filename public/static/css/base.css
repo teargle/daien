@@ -223,6 +223,7 @@ ol, ul {
     color: #666;
     text-decoration: none;
     float: left;
+    font-size: 12px;
 }
 
 .layout .containerBox .container .contentBox .sideBox .sider .product_sub_title a:hover {
