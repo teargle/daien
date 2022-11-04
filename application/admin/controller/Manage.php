@@ -50,7 +50,7 @@ class Manage extends Common
 		$products = $product->get_product($where, "id asc", $start, $limit);
 		$count = $product->get_count($where);
         $category = new Category;
-        $cates = $category->get_category( PRODUCT_CATEGORY ) ;
+        $cates = $category->get_all_with_products( ) ;
         $cates = array_combine(array_column($cates, 'id'), $cates);
         
         foreach ($products as $key => &$value) {
