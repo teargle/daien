@@ -540,7 +540,7 @@ class Manage extends Common
         $names = explode('.', $_FILES["file"]["name"]);
         $extension = end ( $names );
         $allowedExts = array("gif", "jpeg", "jpg", "png");
-        if(! in_array($extension, $allowedExts) ) {
+        if(! in_array(strtolower($extension), $allowedExts) ) {
             echo $this->output_json ( false , "不支持的文件" , null) ;
             exit ;
 
