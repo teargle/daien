@@ -59,7 +59,7 @@ class I18n extends Model
 
     public function updateI18n( $id, $text ) {
         $text = addslashes($text) ;
-        return Db::query( "update dn_i18n set text=:text where id=:id " , [ 'id' => $id , 'text' => $text ] );
+        return Db::query( "update dn_i18n set text='{$text}' where id={$id} ");
     }
  
 }
