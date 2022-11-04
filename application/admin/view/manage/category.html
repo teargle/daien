@@ -186,7 +186,10 @@ $("#secondclass").change(function (obj) {
 
 function deleteCategory() {
 	var params = {};
-  params.id = $("#firstclass").find("option:selected").val() ;
+	params.id = $("#secondclass").find("option:selected").val() ;
+	if( params.id < 1 ) {
+	  params.id = $("#firstclass").find("option:selected").val() ;
+	}
   $.post("/admin/manage/deleteCategoryProduct", params , function(data){
         data = $.parseJSON(data);
         if( data.result ) {
