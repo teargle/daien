@@ -14,8 +14,8 @@ use app\index\model\News;
 use app\index\model\Cooperate;
 use app\index\model\I18n;
 
-define("UPLOAD_IMAGE_PATH", "/home/daien/imgs/") ;
-//define("UPLOAD_IMAGE_PATH", "D:/wnmp/www/uploads/") ;
+//define("UPLOAD_IMAGE_PATH", "/home/daien/imgs/") ;
+define("UPLOAD_IMAGE_PATH", "D:/wnmp/www/uploads/") ;
 define("PRODUCT_CATEGORY" , 2);
 define("NEWS_CATEGORY" , 3);
 define("PROJECT_CATEGORY" , 4);
@@ -714,6 +714,66 @@ class Manage extends Common
         } else {
             $I18n->saveI18n( $table, $column, $lang, $target_id, $text );
         }
+    }
+
+    public function pictureList() {
+        $request = Request::instance();
+        $start = $request->get('offset') / 10 ;
+        
+        $dirs = scandir( UPLOAD_IMAGE_PATH ) ;
+
+        $section = $dirs;
+        foreach( $section as $k => $v ) {
+            $section [$k] = date("Y-m", strtotime($v) );
+        }
+        $usection = array_unique( $section );
+        rsort( $usection );
+        if( empty($usection [$start]) ) {
+            $data = [
+                'total' => 1, 
+                'rows' => [],
+            ]; exit ;
+        }
+        $month = $usection [$start];
+
+        $imgs = [] ;
+        $imgs_num = 1 ;
+        $total = 0;
+        foreach( $dirs as $key => $dir ) {
+            if($dir == "." || $dir == "..") {
+                continue;
+            }
+            if( date("Y-m", strtotime($dir) ) != $month  ) { 
+                $imgfiles = scandir( UPLOAD_IMAGE_PATH . $dir );
+                $total += count($imgfiles) - 2 ;
+                continue;
+            }
+            $imgfiles = scandir( UPLOAD_IMAGE_PATH . $dir );
+            foreach( $imgfiles as $imgfile ) {
+                if($imgfile == "." || $imgfile == "..") {
+                    continue;
+                } else {
+                    $total++;
+                    $img ['url'] = $request->domain() . "/img/" . $dir . "/" . $imgfile;
+                    $img ['id'] = $imgs_num++ ;
+                    array_push(  $imgs, $img );
+                }
+            }
+        }
+        $data = [
+                'total' => $total, 
+                'rows' => $imgs,
+        ] ;
+        echo json_encode($data) ;
+        exit;
+    }
+
+    function deletepic( ) {
+        $request = Request::instance();
+        $dt = $request->post ('dt') ;
+        $img = $request->post ('img') ;
+        unlink(UPLOAD_IMAGE_PATH . $dt . '/' . $img ) ;
+        echo $this->output_json ( true , "OK" , null);
     }
 
 }

@@ -35,7 +35,7 @@ class Index extends Controller
     private $page = 0;
 
     // 产品每页展示个数
-    private $product_limit = 8;
+    private $product_limit = 12;
     // 工程案例每页展示个数
     private $project_limit = 9;
     // 新闻展示数量
