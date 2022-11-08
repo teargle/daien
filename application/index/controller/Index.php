@@ -214,8 +214,8 @@ class Index extends Controller
                 $projects = [];
                 if( $cate_ids ) {
                     $products = $product->get_product_by_categorys( $cate_ids, $offset , $this->product_limit );
+                    $total = $product->get_product_num_by_categorys( $cate_ids );
                 }
-                $total = $product->get_product_num_by_categorys( $cate_ids );
             } else {
                 $products = $product->get_product_by_category( $this->did, $offset , $this->product_limit );
                 $total = $product->get_product_num_by_category( $this->did );
