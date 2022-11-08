@@ -86,4 +86,13 @@ class Product extends Model
     public function delete_product($id) {
         return Db::query( "update dn_product set `status` = 'X' where id = " . $id ) ;
     }
+
+    public function update_product_pv( $id ) {
+        return Db::query( "update dn_product set pv = pv + 1 where id = " . $id ) ;
+    }
+
+    public function get_product_by_pv( $limit = 12 ) {
+        $list = Db::query('select * from dn_product where `status` = \'A\' order by pv desc, id asc limit '. $limit );
+        return $list ;
+    }
 }

@@ -198,6 +198,8 @@ class Index extends Controller
                     $product_detail ['description'] = $i18ninfo ['text'];
                 }
             }
+            // 记录点击次数
+            $product->update_product_pv( $this->pid ) ;
             $this->assign('product_detail' , $product_detail );
         } else {
             $offset = ($this->page - 1)  * $this->product_limit ;
@@ -219,6 +221,11 @@ class Index extends Controller
             } else {
                 $products = $product->get_product_by_category( $this->did, $offset , $this->product_limit );
                 $total = $product->get_product_num_by_category( $this->did );
+            }
+
+            if( empty($products) && $this->did == 14) {
+                $products = $product->get_product_by_pv ( $this->product_limit );
+                $total = 12;
             }
             if( $this->language != 'zh-cn' && $products ) {
                 $I18n = new I18n;
