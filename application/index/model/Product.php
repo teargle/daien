@@ -95,4 +95,15 @@ class Product extends Model
         $list = Db::query('select * from dn_product where `status` = \'A\' order by pv desc, id asc limit '. $limit );
         return $list ;
     }
+
+    public function get_product_by_title( $search ) {
+        $list = Db::query("select * from dn_product where `title` like '%{$search}%'" );
+        return $list ;
+    }
+
+    public function get_product_by_ids($ids, $offset, $limit ) {
+        $list = Db::query('select * from dn_product where status = \'A\' and id in ( ' . implode(",", $ids ) .')
+            order by pv desc , id desc limit ' . $offset . ',' . $limit);
+        return $list ;
+    }
 }

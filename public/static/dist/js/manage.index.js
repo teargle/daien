@@ -518,6 +518,7 @@ function uploadImg( formData, cb) {
 
 
 function revertPictureList() {
+  resetContent( "PictureList" ) ;
   $("#manage_list").bootstrapTable({ // 对应table标签的id
         url: "/admin/manage/pictureList", // 获取表格数据的url
         cache: false, // 设置为 false 禁用 AJAX 数据缓存， 默认为true

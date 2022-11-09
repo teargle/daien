@@ -23,78 +23,29 @@
 					{include file="common/sider" /}
 					<!-- 主体右边部分 -->
 					<div class="rightMain">
-						<div class="crumb"><a href="/">{$Think.lang.category_index}</a><span>&gt;&gt;</span>{$category ['title']}</div>
+						<div>
+							<div class="crumb">
+								<a href="/">{$Think.lang.category_index}</a>
+								<span>&gt;&gt;</span><span>{$category ['title']}</span>
+							</div>
+							<div class="search">
+								<input type="text" class="form-control" id="search" placeholder="本站产品搜索">
+								<button type="button" onclick="search()">搜索</button>
+							</div>
+						</div>
 						<hr >
-						{notempty name="product_detail"}
-						<div class="content-image"><img src="{$product_detail.img_url}" alt="点击放大" title="点击放大"></div>
-						<div class="content-title">{$Think.lang.product_name}：{$product_detail.title}</div>
-						<div class="content-detail">
-						{$product_detail.description}
-                    	</div>
-       					{/notempty}
+						
+						<!-- 产品列表产值 -->
+						{include file="index/product" /}
 
-       					{notempty name="products"}
-                    	<ul class="list_row">
-							{volist name="products" id="product"}
-                       		<li><a href="/?cid=2&did={$did}&pid={$product.id}"><img src="{$product.img_url}"><span>{$product.title}</span></a></li>
-                       		{/volist}
-                        </ul>
-                        <div class="clear"></div>
-                        <div class="page">
-							<div class="diy_page">
-								{for start = "0" end="$total_page"}
-								<a href="?page={$i+1}&amp;cid={$cid}&amp;did={$did}" {if condition="$page eq $i + 1"}class="current"{/if}>{$i+1}</a>
-								{/for}
-								<span disabled="">{$Think.lang.common_page|sprintf=$page, $total_page, $total}</span>
-							</div>
-       					</div>
-       					{/notempty}
+       					<!-- 合作工程案例 -->
+						{include file="index/project" /}
 
-       					{notempty name="project_detail"}
-						<div class="content-image"><img src="{$project_detail.img_url}" style="width:30%;height:100%;" alt="点击放大" title="点击放大"></div>
-						<div class="content-title">{$Think.lang.cooperative_brands}：{$project_detail.title}</div>
-						<div class="content-detail">
-						{$project_detail.description}
-                    	</div>
-       					{/notempty}
-
-       					{notempty name="projects"}
-       					<ul class="case_row">
-							{volist name="projects" id="project"}
-                       		<li><a href="/?cid=4&did={$did}&pid={$project.id}"><img src="{$project.img_url}"><div>{$project.title}</div></a></li>
-                       		{/volist}
-                        </ul>
-                        <div class="clear"></div>
-                        <div class="page">
-							<div class="diy_page">
-								{for start = "0" end="$total_page"}
-								<a href="?page={$i+1}&amp;cid={$cid}&amp;did={$did}" {if condition="$page eq $i + 1"}class="current"{/if}>{$i+1}</a>
-								{/for}
-								<span disabled="">{$Think.lang.common_page|sprintf=$page, $total_page, $total}</span>
-							</div>
-       					</div>
-       					{/notempty}
-
-       					<!-- 联系我们 公司介绍等-->
+       					<!-- 联系我们 公司介绍等 -->
        					{include file="index/contactus" /}
 
-       					{notempty name="news_detail"}
-						<h1 style="text-align:center;">{$news_detail.title}</h1>
-						<div class="content-detail">
-						{$news_detail.description}
-                    	</div>
-       					{/notempty}
-
-       					{notempty name="news"}
-       					<ul class="news_row">
-       						{volist name="news" id="n"}
-                       		<li>
-                       			<a href="/?cid=3&pid={$n.id}"><h4>{$n.title}</h4></a>
-                       			<a href="/?cid=3&pid={$n.id}"><div>{$n.description}</div><div class="new_check">查看全文</div></a>
-                       		</li>
-                       		{/volist}
-       					</ul>
-       					{/notempty}
+       					<!-- 新闻展示 -->
+       					{include file="index/news" /}
 					</div>
 				</div>
 			</div>

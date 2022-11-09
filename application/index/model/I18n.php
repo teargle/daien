@@ -60,5 +60,11 @@ class I18n extends Model
         $str = "text = '" . $text . "'" ;
         return Db::query( "update dn_i18n set {$str} where id={$id} ");
     }
+
+    public function get_product_with_i18n_by_title( $search ) {
+        $infos = Db::query("select * from dn_i18n where `table` = 'dn_product' 
+                                and `lang`= 'en-us' and `column`='title' and text like '%{$search}%' ");
+        return $infos ;
+    }
  
 }

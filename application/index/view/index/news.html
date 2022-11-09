@@ -1,0 +1,17 @@
+{notempty name="news_detail"}
+<h1 style="text-align:center;">{$news_detail.title}</h1>
+<div class="content-detail">
+{$news_detail.description}
+</div>
+{/notempty}
+
+{notempty name="news"}
+<ul class="news_row">
+	{volist name="news" id="n"}
+	<li>
+		<a href="/?cid=3&pid={$n.id}"><h4>{$n.title}</h4></a>
+		<a href="/?cid=3&pid={$n.id}"><div>{$n.description}</div><div class="new_check">查看全文</div></a>
+	</li>
+	{/volist}
+</ul>
+{/notempty}

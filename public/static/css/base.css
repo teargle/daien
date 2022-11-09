@@ -295,9 +295,10 @@ ol, ul {
 }
 
 .layout .containerBox .container .contentBox .rightMain .crumb {
-    margin-top: 2px;
+    margin-top: 7px;
     color: #403d36;
     padding-bottom: 10px;
+    float: left;
 }
 
 .layout .containerBox .container .contentBox .rightMain .crumb a {
@@ -319,8 +320,19 @@ ol, ul {
     padding: 0 5px;
 }
 
-.layout .containerBox .container .contentBox .rightMain .crumb hr {
-    border-style: dotted;
+.layout .containerBox .container .contentBox .rightMain .search {
+    margin-top: 7px;
+    float: right;
+}
+
+.layout .containerBox .container .contentBox .rightMain .search button {
+    background-color: #216b9a;
+    color: #FFF;
+}
+
+.layout .containerBox .container .contentBox .rightMain hr {
+    border-style: inset;
+    margin-top: 40px;
 }
 
 /** 主体内容 开始 */

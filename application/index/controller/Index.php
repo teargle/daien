@@ -44,6 +44,8 @@ class Index extends Controller
     private $language = 'zh-cn';
 
     private $product_category = 2;
+    //搜索产品
+    private $search = "";
 
     public function __construct()
     {
@@ -65,10 +67,14 @@ class Index extends Controller
         $this->pid = !empty($_GET['pid']) ? $_GET['pid'] : 0 ;
         $this->did = !empty($_GET['did']) ? $_GET['did'] : 14 ;
         $this->page = !empty($_GET['page']) ? $_GET['page'] : 1 ;
+
+        $this->search = !empty($_GET['search']) ? $_GET['search'] : "" ;
+
         // 默认值
         $this->assign('tid' , $this->tid );
         $this->assign('did' , $this->did );
         $this->assign('cid' , $this->cid );
+        $this->assign('search' , $this->search );
     }
 
     private function setLang() {
@@ -183,10 +189,10 @@ class Index extends Controller
         if( $this->cid != 2 ) {
             return true ;
         }
-
-        $product = new Product ;
+        $I18n = new I18n;
+        $Product = new Product ;
         if( ! empty( $this->pid ) ) {
-            $product_detail = $product->get_product_by_id( $this->pid ) ;
+            $product_detail = $Product->get_product_by_id( $this->pid ) ;
             if( $this->language != 'zh-cn' && $product_detail ) {
                 $I18n = new I18n;
                 $i18ninfo = $I18n->get_info( 'dn_product', $this->language, 'title', $this->pid );
@@ -199,7 +205,7 @@ class Index extends Controller
                 }
             }
             // 记录点击次数
-            $product->update_product_pv( $this->pid ) ;
+            $Product->update_product_pv( $this->pid ) ;
             $this->assign('product_detail' , $product_detail );
         } else {
             $offset = ($this->page - 1)  * $this->product_limit ;
@@ -215,20 +221,29 @@ class Index extends Controller
                 $total = 0 ;
                 $projects = [];
                 if( $cate_ids ) {
-                    $products = $product->get_product_by_categorys( $cate_ids, $offset , $this->product_limit );
-                    $total = $product->get_product_num_by_categorys( $cate_ids );
+                    $products = $Product->get_product_by_categorys( $cate_ids, $offset , $this->product_limit );
+                    $total = $Product->get_product_num_by_categorys( $cate_ids );
                 }
+            } else if ( !empty($this->search) ) {
+                $products = $Product->get_product_by_title ( $this->search );
+                $m_ids = array_column($products, 'id') ;
+                $products = $I18n->get_product_with_i18n_by_title ( $this->search );
+                $n_ids = array_column($products, 'target_id') ;
+                $ids = array_merge($m_ids, $n_ids) ;
+                $ids = array_unique($ids) ;
+                $products = $Product->get_product_by_ids ($ids, $offset , $this->product_limit) ;
+
+                $total = count($ids);
             } else {
-                $products = $product->get_product_by_category( $this->did, $offset , $this->product_limit );
-                $total = $product->get_product_num_by_category( $this->did );
+                $products = $Product->get_product_by_category ( $this->did, $offset , $this->product_limit );
+                $total = $Product->get_product_num_by_category ( $this->did );
             }
 
             if( empty($products) && $this->did == 14) {
-                $products = $product->get_product_by_pv ( $this->product_limit );
+                $products = $Product->get_product_by_pv ( $this->product_limit );
                 $total = 12;
             }
             if( $this->language != 'zh-cn' && $products ) {
-                $I18n = new I18n;
                 $I18n->replace_info ($products, 'dn_product', $this->language, 'title' ) ;
                 $I18n->replace_info ($products, 'dn_product', $this->language, 'description' ) ;
             }
