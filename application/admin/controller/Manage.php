@@ -263,9 +263,15 @@ class Manage extends Common
     	if( ! $id ) {
     		echo $this->output_json(false, "ERROR param" ) ;
     	}
-    	$category = new Category;
-		$category->where('id='.$id)->delete();
-		echo $this->output_json ( true , "OK" , null) ;
+    	$Category = new Category;
+        $cates = $Category->get_category( $id ) ;
+        if( $cates ) {
+            $c = $Category->get_category_info( $id ) ;
+            echo $this->output_json ( false , $c ['title'] . "有下级分类不能删除" , null) ;
+        } else {
+    		$Category->where('id='.$id)->delete();
+    		echo $this->output_json ( true , "OK" , null) ;
+        }
     }
 
     public function test() {
