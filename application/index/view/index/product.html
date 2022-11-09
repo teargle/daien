@@ -16,7 +16,7 @@
 <div class="page">
 <div class="diy_page">
 	{for start = "0" end="$total_page"}
-	<a href="?page={$i+1}&amp;cid={$cid}&amp;did={$did}" {if condition="$page eq $i + 1"}class="current"{/if}>{$i+1}</a>
+	<a href="?page={$i+1}&amp;cid={$cid}&amp;did={$did}&search={$search}" {if condition="$page eq $i + 1"}class="current"{/if}>{$i+1}</a>
 	{/for}
 	<span disabled="">{$Think.lang.common_page|sprintf=$page, $total_page, $total}</span>
 </div>
