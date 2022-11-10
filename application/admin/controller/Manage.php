@@ -56,6 +56,7 @@ class Manage extends Common
         foreach ($products as $key => &$value) {
             $value ['category_title'] = $cates [$value ['category_id']] ['title'];
             $value ['title'] = trim(strip_tags($value ['title']));
+            $value ['recommend'] = $value ['recommend'] == 1 ? true : false;
         }
         
 		$data = [
@@ -780,6 +781,26 @@ class Manage extends Common
         $img = $request->post ('img') ;
         unlink(UPLOAD_IMAGE_PATH . $dt . '/' . $img ) ;
         echo $this->output_json ( true , "OK" , null);
+    }
+
+    public function recommend() {
+        $request = Request::instance();
+        $id = $request->post ('id') ;
+        $v = $request->post ('v') ;
+
+        $Product = new Product;
+        $product = $Product->get_product_by_id ($id ) ;
+        $recommend = $product ['recommend'] == 0 ? 'false' : 'true';
+        if( $recommend == $v ) {
+            echo $this->output_json ( true , "OK" , null );
+            exit ;
+        }
+        $result = $Product->update_product_recommend( $id , $v );
+        if( $result ) {
+            echo $this->output_json ( true , "OK" , null);
+        } else {
+            echo $this->output_json ( false , "更新失败" , $request->post ());
+        }
     }
 
 }

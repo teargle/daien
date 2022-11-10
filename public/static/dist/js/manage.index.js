@@ -83,10 +83,11 @@ $("#manage_list").bootstrapTable({ // 对应table标签的id
       cache: false, // 设置为 false 禁用 AJAX 数据缓存， 默认为true
       striped: true,  //表格显示条纹，默认为false
       pagination: true, // 在表格底部显示分页组件，默认false
-      pageList: [10, 20], // 设置页面可以显示的数据条数
-      pageSize: 10, // 页面数据条数
+      pageList: [25, 25], // 设置页面可以显示的数据条数
+      pageSize: 25, // 页面数据条数
       pageNumber: 1, // 首页页码
       sidePagination: 'server', // 设置为服务器端分页
+      height:900,
       queryParams: function (params) { // 请求服务器数据时发送的参数，可以在这里添加额外的查询参数，返回false则终止请求
      	 // Add params
      	 return {
@@ -114,8 +115,17 @@ $("#manage_list").bootstrapTable({ // 对应table标签的id
               title: '分类',
               align: 'left',
               valign: 'middle'
-          }, {
-               title: "操作",
+          },{
+              field : "recommend",
+              title : "推荐",
+              width: 100,
+              valign: 'middle',
+              formatter: function (value, row, index) {
+                return "<input type='checkbox' id='recommend_" + row.id + "' " 
+                        + " onclick='recommend(this," + row.id + ")' />";
+              }
+          },{
+              title: "操作",
               align: 'center',
               valign: 'middle',
               width: 160, // 定义列的宽度，单位为像素px
@@ -125,16 +135,35 @@ $("#manage_list").bootstrapTable({ // 对应table标签的id
           }
       ],
       onLoadSuccess: function(data){  //加载成功时执行
-            console.info("加载成功");
-            console.log(data);
+          $.each( data.rows , function(index, row ) {
+            var v = row.recommend == true ? true : false;
+            $("#recommend_" + row.id).prop("checked", v ) ;
+          });
       },
       onLoadError: function(){  //加载失败时执行
-            console.info("加载数据失败");
+          
       }
 
 }) ;
 }
 
+function recommend( obj, product_id ) {
+  var $v = $("#recommend_" + product_id).prop("checked");
+  var $value = $v === true ? false : true ;
+  $("#recommend_" + product_id).attr("checked", $value );
+  
+  $.post("/admin/manage/recommend", {
+    'id' : product_id,
+    'v' : $v
+  } , function(data){
+        data = $.parseJSON(data);
+        if( data.result ) {
+           console.log( "OK" ) ;
+        } else {
+           $("#recommend_" + product_id).attr("checked", $v == true ? false : true);
+        }
+  });
+}
 
 function revertProject() {
 resetTable('/admin/manage/edit_project/id/0');

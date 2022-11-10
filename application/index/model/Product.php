@@ -106,4 +106,8 @@ class Product extends Model
             order by pv desc , id desc limit ' . $offset . ',' . $limit);
         return $list ;
     }
+
+    public function update_product_recommend($id, $v ) {
+        return Db::query( "update dn_product set recommend = {$v} where id = " . $id ) ;
+    }
 }
