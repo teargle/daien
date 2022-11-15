@@ -42,20 +42,21 @@ class Homeproduct extends Model
         return $num [0] ['num'] ;
     }
 
-    public function insert_homeproduct ($status, $title, $img_url, $description, $url) {
-        Db::query("insert into dn_homeproduct (`status`, `title`, `img_url`, `description`, `url` ) values 
-            ('{$status}', '{$title}', '{$img_url}', '{$description}', '{$url}') ") ;
+    public function insert_homeproduct ($status, $title, $img_url, $description, $url, $product_ids) {
+        Db::query("insert into dn_homeproduct (`status`, `title`, `img_url`, `description`, `url`, `product_ids` ) values 
+            ('{$status}', '{$title}', '{$img_url}', '{$description}', '{$url}', '{$product_ids}') ") ;
         $id = Db::name("dn_product")->getLastInsID();
         return $this->get_homeproduct_by_id($id) ;
     }
 
-    public function update_homeproduct ($id , $status = null, $title = null, $img_url = null, $description = null, $url = null) {
+    public function update_homeproduct ($id , $status = null, $title = null, $img_url = null, $description = null, $url = null, $product_ids = null) {
         $str = "" ;
         $str .= "`status` = '" . ($status ? $status : 'A') . "'" ;
         if( $title ) $str .= ", title = '" . $title . "'" ;
         if( $img_url ) $str .= ", img_url = '" . $img_url . "'";
         if( $url ) $url .= ", url = '" . $url . "'" ;
         if( $description ) $str .= ", description = '" . $description . "'";
+        if( $product_ids ) $str .= ", product_ids = '" . $product_ids . "'";
         return Db::query( "update dn_homeproduct set {$str} where id = " . $id ) ; 
     }
 

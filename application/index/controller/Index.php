@@ -251,6 +251,22 @@ class Index extends Controller
                     $I18n->replace_info ($homeproducts, 'dn_homeproduct', $this->language, 'title' ) ;
                     $I18n->replace_info ($homeproducts, 'dn_homeproduct', $this->language, 'description' ) ;
                 }
+                 // 产品的子产品图
+                $Product = new Product;
+                foreach ( $homeproducts as &$hp ) {
+                    if( ! empty( $hp ['product_ids'] ) ) {
+                        $products = $Product->get_product_by_ids( explode(",", $hp ['product_ids'] ) , 0, 100 ) ;
+                        if( $products ) {
+                            $hp ['imgs'] = [] ;
+                            foreach( $products as $p ) {
+                                array_push($hp ['imgs'], [
+                                    'url' => '?cid=2&did=' . $p ['category_id'] . '&pid=' . $p ['id'],
+                                    'img' => $p ['img_url']
+                                ]) ;
+                            }
+                        }
+                    }
+                }
                 $homearea = [
                     'products' => $homeproducts,
                     'num' => count($homeproducts),

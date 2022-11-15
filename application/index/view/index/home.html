@@ -29,6 +29,13 @@
 			          <div class="tabs_left" ><img src="{$m ['img_url']}" /></div>
 			          <div class="tabs_right">{$m ['description']}</div>
 		        	</a>
+		        	{notempty name="$m.imgs"}
+		        	<div class="product-imgs">
+		        		 {volist name="$m.imgs" id="img"}
+		        		 <a href="{$img.url}"><img src="{$img.img}" ></a>
+		        		 {/volist}
+		        	</div>
+		        	{/notempty}
 		        </div>
 		      </div>
 		      {/volist}
@@ -59,12 +66,23 @@ $(function(){
 	var i = 0; ;
 	var num = {if condition="!empty($homearea)"}{$homearea.num}{else}0{/if};
 	if( num > 0 ) {
+		var stop = false;
+		$(".swiper-container").mouseover( function( event ) {
+			var s = event.toElement || event.relatedTarget;
+			stop = true ;
+		});
+		$(".swiper-container").mouseout( function( event ) {
+			var s = event.toElement || event.relatedTarget;
+			stop = false ;
+		});
 		setInterval(function(){
-			$(".tabs a").removeClass('active');
-			$(".tabs a").eq( i % num ).addClass('active');
-			tabsSwiper.swipeTo( i % num  );
-			i ++;
-		}, 5000);
+			if( stop == false ) {
+				$(".tabs a").removeClass('active');
+				$(".tabs a").eq( i % num ).addClass('active');
+				tabsSwiper.swipeTo( i % num  );
+				i ++;
+			}
+		}, 3000);
 	}
 });
 </script>
