@@ -853,7 +853,7 @@ class Manage extends Common
         $Homeproduct = new Homeproduct;
 
         if(array_key_exists('id', $data)) {
-            $homeproduct->update_homeproduct($data ['id'], 'A', $data ['title'], $data ['img_url'], $data ['description'], $data ['url']);
+            $Homeproduct->update_homeproduct($data ['id'], 'A', $data ['title'], $data ['img_url'], $data ['description'], $data ['url']);
             $id = $data ['id'];
         } else {
             $homeproduct = $Homeproduct->insert_homeproduct('A', $data ['title'], $data ['img_url'], $data ['description'], $data ['url']);
