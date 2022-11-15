@@ -833,7 +833,7 @@ class Manage extends Common
                 if( $i18ninfo ) {
                     $product ['title_en'] = $i18ninfo ['text'];
                 }
-                $i18ninfo = $I18n->get_info( 'dn_product', 'en-us', 'description', $id );
+                $i18ninfo = $I18n->get_info( 'dn_homeproduct', 'en-us', 'description', $id );
                 if( $i18ninfo ) {
                     $product ['description_en'] = $i18ninfo ['text'];
                 }
