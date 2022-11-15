@@ -33,5 +33,9 @@ return [
 	'contact_type_placeholder' => '您的联系方式',
 	'contact_message' => "留言给我们",
 	'contact_message_placeholder' => "留言内容",
-	'contact_send' => "发送"
+	'contact_send' => "发送",
+
+	'news_view' => '查看全文',
+	'search_placeholder' => '站内搜索',
+	'search_query' => "搜索",
 ];

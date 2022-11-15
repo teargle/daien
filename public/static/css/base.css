@@ -157,12 +157,13 @@ ol, ul {
     display: inline;
     width: 220px;
     float: left;
+    margin-top: 10px;
 }
 
 
 .layout .containerBox .container .contentBox .sideBox .sider {
     float: left;
-    width: 210px;
+    width: 220px;
     padding-right: 10px;
     overflow: hidden;
     background: url(../img/bg_sider.png) no-repeat 100% 15px;
@@ -289,7 +290,7 @@ ol, ul {
 /** 主体右边部分 开始 */
 .layout .containerBox .container .contentBox .rightMain {
     display: inline;
-    width: 705px;
+    width: 690px;
     float: right;
     min-height: 500px;
 }
@@ -321,13 +322,26 @@ ol, ul {
 }
 
 .layout .containerBox .container .contentBox .rightMain .search {
-    margin-top: 7px;
+    margin-top: 5px;
     float: right;
 }
 
-.layout .containerBox .container .contentBox .rightMain .search button {
+
+.layout .containerBox .container .contentBox .rightMain input {
+    width: 200px;
+    margin-top: 5px;
+    float:right;
+    margin-right: 15px;
+    height: 30px;
+}
+
+.layout .containerBox .container .contentBox .rightMain button {
     background-color: #216b9a;
     color: #FFF;
+    margin-top: 7px;
+    float:right;
+    margin-right: 25px;
+    height: 28px;
 }
 
 .layout .containerBox .container .contentBox .rightMain hr {
@@ -336,6 +350,18 @@ ol, ul {
 }
 
 /** 主体内容 开始 */
+
+/** 首页展示区 开始 **/
+.layout .containerBox .container .contentBox .rightMain .homearea_products {
+    overflow: hidden;
+    margin-top: 20px;
+    margin-left: 5px;
+}
+
+.layout .containerBox .container .contentBox .rightMain .homearea_products .swiper-product-container {
+    
+}
+/** 首页展示区 结束 **/
 
 /** 产品展示 */
 .layout .containerBox .container .contentBox .rightMain .list_row {
@@ -441,11 +467,13 @@ ol, ul {
     -webkit-box-orient: vertical;
     text-decoration: none;
     font-size: 16px;
+    margin-top:14px;
 }
 
 .layout .containerBox .container .contentBox .rightMain .news_row .new_check {
     text-decoration: underline;
-    color:#090
+    color:#090;
+    margin-top:0px;
 }
 
 /** 分页展示 */

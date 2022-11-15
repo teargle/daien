@@ -32,6 +32,11 @@ return [
 	'contact_type_placeholder' => 'Your contact information',
 	'contact_message' => "CONTACT",
 	'contact_message_placeholder' => "Message",
-	'contact_send' => "Send"
+	'contact_send' => "Send",
+
+	'news_view' => 'View',
+
+	'search_placeholder' => 'Website search',
+	'search_query' => "Query",
 ];
 

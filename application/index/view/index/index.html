@@ -4,9 +4,11 @@
 	<meta charset="utf-8"> 
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="__CSS__/base.css">
-	<link rel="stylesheet" type="text/css" href="__CSS__/base.css">
-	<script type="text/javascript" src="__JS__/jquery.min.js"></script>
-	<script type="text/javascript" src="static/dist/js/bootstrap.bundle.min.js"></script>
+	<link rel="stylesheet" href="__DIST_CSS__/bootstrap.min.css">
+	<script type="text/javascript" src="__JS__/jquery-1.10.1.min.js"></script>
+	<script type="text/javascript" src="__DIST_JS__/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="__DIST_CSS__/idangerous.swiper.css">
+	<script src="__DIST_JS__/idangerous.swiper.js"></script>
 	<title>首页</title>
 </head>
 <body>
@@ -14,11 +16,11 @@
 		{include file="common/header" /}
 
 		<div class="containerBox">
-			<div class="container">
+			<div class="container" style="padding-left: 3px;">
 				<div class="contentBox">
 					<!-- 大banner -->
 					{include file="index/banner" /}
- 
+
 					<!-- 主体左边部分 -->
 					{include file="common/sider" /}
 					<!-- 主体右边部分 -->
@@ -28,13 +30,16 @@
 								<a href="/">{$Think.lang.category_index}</a>
 								<span>&gt;&gt;</span><span>{$category ['title']}</span>
 							</div>
-							<div class="search">
-								<input type="text" class="form-control" id="search" placeholder="本站产品搜索">
-								<button type="button" onclick="search()">搜索</button>
-							</div>
+							<button type="button" onclick="search()">{$Think.lang.search_query}</button>
+							<input type="text" class="form-control" id="search" placeholder="{$Think.lang.search_placeholder}">
+								
+							
 						</div>
 						<hr >
 						
+						<!-- 产品列表产值 -->
+						{include file="index/home" /}
+
 						<!-- 产品列表产值 -->
 						{include file="index/product" /}
 

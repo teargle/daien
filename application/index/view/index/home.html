@@ -1,0 +1,66 @@
+<link rel="stylesheet" type="text/css" href="/static/css/homeproduct.css">
+{notempty name="homearea"}
+	{notempty name="homearea.news"}
+	<div class="homearea_news">
+		<ul class="news_row">
+			{volist name="homearea.news" id="n"}
+			<li>
+				<a href="/?cid=3&pid={$n.id}"><h4>{$n.title}</h4></a>
+				<a href="/?cid=3&pid={$n.id}"><div>{$n.description}</div><div class="new_check">{$Think.lang.news_view}</div></a>
+			</li>
+			{/volist}
+		</ul>
+	</div>
+	{/notempty}
+
+	{notempty name="homearea.products"}
+	<div class="homearea_products">
+		<div class="tabs">
+			{volist name="homearea.products" id="n"}
+			<a href="#"><h6>{$n ['title']}</h6></a>
+			{/volist}
+		</div>    
+		<div class="swiper-container">
+		    <div class="swiper-wrapper">
+		    	{volist name="homearea.products" id="m"}
+		      <div class="swiper-slide">
+		        <div class="content-slide">
+		        	<a href="{$m ['url']}" >
+			          <div class="tabs_left" ><img src="{$m ['img_url']}" /></div>
+			          <div class="tabs_right">{$m ['description']}</div>
+		        	</a>
+		        </div>
+		      </div>
+		      {/volist}
+		    </div>
+		</div>
+	</div>
+	{/notempty}
+
+{/notempty}
+
+<script type="text/javascript">
+$(function(){
+	var tabsSwiper = new Swiper('.swiper-container',{
+		onlyExternal : true,
+		speed:1000
+	});
+	$(".tabs a").on('touchstart mousedown',function(e){
+		e.preventDefault();
+		$(".tabs .active").removeClass('active')
+		$(this).addClass('active');
+		tabsSwiper.swipeTo( $(this).index() );
+	});
+	$(".tabs a").click(function(e){
+		e.preventDefault();
+	});
+
+	var i = 0; ;
+	var num = {if condition="!empty($homearea)"}{$homearea.num}{else}0{/if};
+	setInterval(function(){
+		tabsSwiper.swipeTo( i % num  );
+		i ++;
+	}, 3000);
+
+});
+</script>

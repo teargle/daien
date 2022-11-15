@@ -13,6 +13,7 @@ use app\index\model\Project;
 use app\index\model\News;
 use app\index\model\Cooperate;
 use app\index\model\I18n;
+use app\index\model\Homeproduct;
 
 define("UPLOAD_IMAGE_PATH", "/home/daien/imgs/") ;
 //define("UPLOAD_IMAGE_PATH", "D:/wnmp/www/uploads/") ;
@@ -801,6 +802,80 @@ class Manage extends Common
         } else {
             echo $this->output_json ( false , "更新失败" , $request->post ());
         }
+    }
+
+    public function homeproduct () {
+        $request = Request::instance();
+        $orderby = $request->get('sort') ;
+        $limit = $request->get('pageSize');
+        $start = $request->get('offset') ; 
+        $Homeproduct = new Homeproduct ;
+        $homeproduct = $Homeproduct->get_homeproduct( $start, $limit);
+        $count = $Homeproduct->get_count();
+        
+        $data = [
+                'total' => $count , 
+                'rows' => $homeproduct,
+        ] ;
+        echo json_encode($data) ;
+        exit;
+    }
+
+    public function edit_homeproduct( $id = 0) {
+        $product = null;
+        if( $id ) {
+            $Homeproduct = new Homeproduct;
+            $product = $Homeproduct->get_homeproduct_by_id($id) ;
+            if( $product ) {
+                $product ['title_en'] =  $product ['description_en'] = "" ;
+                $I18n = new I18n;
+                $i18ninfo = $I18n->get_info( 'dn_homeproduct', 'en-us', 'title', $id );
+                if( $i18ninfo ) {
+                    $product ['title_en'] = $i18ninfo ['text'];
+                }
+                $i18ninfo = $I18n->get_info( 'dn_product', 'en-us', 'description', $id );
+                if( $i18ninfo ) {
+                    $product ['description_en'] = $i18ninfo ['text'];
+                }
+            }
+        }
+        View::share('product',$product);
+        return view('admin@manage/homeproduct');
+    }
+
+    public function saveHomeproduct() {
+        $request = Request::instance();
+        $post = $request->post();
+        $data = [] ;
+        foreach( $post ['params'] as $param ) {
+            $data [$param['name']] = $param ['value'];
+        }
+        $Homeproduct = new Homeproduct;
+
+        if(array_key_exists('id', $data)) {
+            $homeproduct->update_homeproduct($data ['id'], 'A', $data ['title'], $data ['img_url'], $data ['description'], $data ['url']);
+            $id = $data ['id'];
+        } else {
+            $homeproduct = $Homeproduct->insert_homeproduct('A', $data ['title'], $data ['img_url'], $data ['description'], $data ['url']);
+            $id = $homeproduct ['id'] ;
+        }
+
+        // 多语言
+        $this->saveI18n( 'dn_homeproduct', 'en-us', 'description',  $id, $data ['description_en'] ) ;
+        $this->saveI18n( 'dn_homeproduct', 'en-us', 'title',  $id, $data ['title_en'] ) ;
+
+        echo $this->output_json ( true , "OK" , null) ;
+    }
+
+    public function delHomeproduct() {
+        $request = Request::instance();
+        $id = $request->param('id');
+        if( ! $id ) {
+            echo $this->output_json(false, "ERROR param" ) ;
+        }
+        $Homeproduct = new Homeproduct;
+        $Homeproduct->delete_homeproduct( $id );
+        echo $this->output_json ( true , "OK" , null);
     }
 
 }

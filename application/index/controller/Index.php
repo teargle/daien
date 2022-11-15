@@ -16,6 +16,7 @@ use app\index\model\News;
 use app\index\model\Cooperate;
 use app\index\model\Message;
 use app\index\model\I18n;
+use app\index\model\Homeproduct;
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
@@ -185,7 +186,7 @@ class Index extends Controller
         }
     }
 
-    private function _get_product_by_category() {
+    private function _get_product_by_category () {
         if( $this->cid != 2 ) {
             return true ;
         }
@@ -214,11 +215,12 @@ class Index extends Controller
             if( !empty($this->did) && $this->did != 14 ){
                 $cate = $category->get_category_info( $this->did );
             }
-            
+
+            $total = 0 ;
             if( $cate && $cate['parent'] == $this->product_category) {
                 $cates = $category->get_category( $this->did ) ;
                 $cate_ids = array_column( $cates, "id" ) ;
-                $total = 0 ;
+                
                 $projects = [];
                 if( $cate_ids ) {
                     $products = $Product->get_product_by_categorys( $cate_ids, $offset , $this->product_limit );
@@ -234,15 +236,33 @@ class Index extends Controller
                 $products = $Product->get_product_by_ids ($ids, $offset , $this->product_limit) ;
 
                 $total = count($ids);
+            } else if ( $this->did == 14 ) {
+                // 约定： 产品分类不会小于45， 如果有那么一定是14. 即首页
+                $News = new News;
+                $where = ['status' => 'A' ] ;
+                $news = $News->get_news($where, '', 0, 2 ) ;
+                if( $this->language != 'zh-cn' && $news ) {
+                    $I18n->replace_info ($news, 'dn_news', $this->language, 'title' ) ;
+                    $I18n->replace_info ($news, 'dn_news', $this->language, 'description' ) ;
+                }
+                $Homeproduct = new Homeproduct;
+                $homeproducts = $Homeproduct->get_homeproduct ( 0, 100 );
+                if( $this->language != 'zh-cn' && $homeproducts ) {
+                    $I18n->replace_info ($homeproducts, 'dn_homeproduct', $this->language, 'title' ) ;
+                    $I18n->replace_info ($homeproducts, 'dn_homeproduct', $this->language, 'description' ) ;
+                }
+                $homearea = [
+                    'products' => $homeproducts,
+                    'num' => count($homeproducts),
+                    'news' => $news
+                ] ;
+                $this->assign( 'homearea' , $homearea );
+                $products = [] ;
             } else {
                 $products = $Product->get_product_by_category ( $this->did, $offset , $this->product_limit );
                 $total = $Product->get_product_num_by_category ( $this->did );
             }
-
-            if( empty($products) && $this->did == 14) {
-                $products = $Product->get_product_by_pv ( $this->product_limit );
-                $total = 12;
-            }
+            
             if( $this->language != 'zh-cn' && $products ) {
                 $I18n->replace_info ($products, 'dn_product', $this->language, 'title' ) ;
                 $I18n->replace_info ($products, 'dn_product', $this->language, 'description' ) ;

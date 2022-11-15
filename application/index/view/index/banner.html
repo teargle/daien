@@ -1,32 +1,22 @@
-<script type="text/javascript" src="__DIST_JS__/swiper.min.js"></script>
-<link rel="stylesheet" href="__DIST_CSS__/swiper.min.css">
-<div class="banner-container">
-	<div class="swiper-container">
-		<div class="swiper-wrapper">
-			{volist name="banners" id="banner"}
-			<div class="swiper-slide"><img src="{$banner}" alt=""></div>
+<style type="text/css">
+/*.carousel, .carousel img {
+    width: 100px;
+    height: 100px !important;
+}*/
+</style>
+<div class="container" style="padding:0px;width:900px;margin:0px;height: 255px;">
+	<div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+		<div class="carousel-inner">
+			{volist name="banners" id="banner" key="d"}
+			<div class="carousel-item {if condition='$d eq 1'}active{/if}" style="height: 255px;">
+				<img src="{$banner}" class="d-block w-100" alt="">
+			</div>
 			{/volist}
 		</div>
-		<!-- 如果需要分页器 -->
-    	<div class="swiper-pagination"></div>
-
 	</div>
 </div>
-<script type="text/javascript">
-$(function(){
-	var swiper = new Swiper('.swiper-container',{
-    	    direction: 'horizontal', // 垂直切换选项
-		    loop: true, // 循环模式选项
-		    autoplay: true,
-		    // 如果需要分页器
-		    pagination: {
-		      el: '.swiper-pagination',
-		    },
-		    
-		    // 如果需要滚动条
-		    scrollbar: {
-		      el: '.swiper-scrollbar',
-		    }
+<script>
+    $('.carousel-inner').carousel({
+        interval: 200000
     });
-});
 </script>

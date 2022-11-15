@@ -1,0 +1,78 @@
+/* 首页homneproduct 展示区 */
+.homearea_products .tabs {
+  width: 642px;
+  margin: 0 auto;
+}
+.homearea_products .tabs a {
+  display: block;
+  float: left;
+  width: 200px;
+  color: #333;
+  text-align: center;
+  border-radius: 5px 5px 0 0;
+  border: 1px solid #ccc;
+  background: #fff;
+  line-height: 0px;
+  font-size: 13px;
+  font-style: italic;
+  text-decoration: none;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#ddd)); /* Saf4+, Chrome */
+  background-image: -webkit-linear-gradient(top, #ffffff, #ddd); /* Chrome 10+, Saf5.1+, iOS 5+ */
+  background-image:    -moz-linear-gradient(top, #ffffff, #ddd); /* FF3.6 */
+  background-image:     -ms-linear-gradient(top, #ffffff, #ddd); /* IE10 */
+  background-image:      -o-linear-gradient(top, #ffffff, #ddd); /* Opera 11.10+ */
+  background-image:         linear-gradient(to bottom, #ffffff, #ddd);
+}
+.homearea_products .tabs a.active {
+  color: #fff;
+  background: #333;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#333), to(#000)); /* Saf4+, Chrome */
+  background-image: -webkit-linear-gradient(top, #333, #000); /* Chrome 10+, Saf5.1+, iOS 5+ */
+  background-image:    -moz-linear-gradient(top, #333, #000); /* FF3.6 */
+  background-image:     -ms-linear-gradient(top, #333, #000); /* IE10 */
+  background-image:      -o-linear-gradient(top, #333, #000); /* Opera 11.10+ */
+  background-image:         linear-gradient(to bottom, #333, #000);
+  border-bottom: 1px solid #000;
+}
+.homearea_products .swiper-container {
+  background: #333;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#000), to(#333)); /* Saf4+, Chrome */
+  background-image: -webkit-linear-gradient(top, #000, #333); /* Chrome 10+, Saf5.1+, iOS 5+ */
+  background-image:    -moz-linear-gradient(top, #000, #333); /* FF3.6 */
+  background-image:     -ms-linear-gradient(top, #000, #333); /* IE10 */
+  background-image:      -o-linear-gradient(top, #000, #333); /* Opera 11.10+ */
+  background-image:         linear-gradient(to bottom, #000, #333);
+  height: 250px;
+  border-radius: 0 0 5px 5px;
+  border: 1px solid #ccc;
+  
+  width: 640px;
+  border-top: 0;
+}
+.homearea_products .swiper-slide {
+  height: 250px;
+  width: 640px;
+  background: none;
+  color: #fff;
+}
+.homearea_products .content-slide {
+  padding: 20px;
+}
+
+.homearea_products .content-slide a {
+  color: #FFF;
+}
+
+.homearea_products .content-slide .tabs_left {
+  float: left;
+}
+
+.homearea_products .content-slide .tabs_left img {
+  width: 200px;
+  height: 200px;
+}
+
+.homearea_products .content-slide .tabs_right {
+  float: right;
+  width: 380px;
+}
