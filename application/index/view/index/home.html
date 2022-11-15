@@ -31,8 +31,8 @@
 		        	</a>
 		        	{notempty name="$m.imgs"}
 		        	<div class="product-imgs">
-		        		 {volist name="$m.imgs" id="img"}
-		        		 <a href="{$img.url}"><img src="{$img.img}" ></a>
+		        		 {volist name="$m.imgs" id="img" key="d"}
+		        		 <a href="{$img.url}"><img {if condition="count($m.imgs) == $d"}class="p-img"{/if} src="{$img.img}" ></a>
 		        		 {/volist}
 		        	</div>
 		        	{/notempty}
@@ -82,7 +82,7 @@ $(function(){
 				tabsSwiper.swipeTo( i % num  );
 				i ++;
 			}
-		}, 3000);
+		}, 113000);
 	}
 });
 </script>
