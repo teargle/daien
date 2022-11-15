@@ -6,7 +6,7 @@
 .homearea_products .tabs a {
   display: block;
   float: left;
-  width: 200px;
+  width: 100px;
   color: #333;
   text-align: center;
   border-radius: 5px 5px 0 0;
@@ -23,6 +23,14 @@
   background-image:      -o-linear-gradient(top, #ffffff, #ddd); /* Opera 11.10+ */
   background-image:         linear-gradient(to bottom, #ffffff, #ddd);
 }
+.homearea_products .tabs a h6 {
+  background-color: #edeeee;
+  color: #000;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-bottom: 0px;
+}
+
 .homearea_products .tabs a.active {
   color: #fff;
   background: #333;
@@ -34,6 +42,11 @@
   background-image:         linear-gradient(to bottom, #333, #000);
   border-bottom: 1px solid #000;
 }
+
+.homearea_products .tabs a.active h6 {
+  background: url(../img/20221115143856.png) center 0 repeat-x #ededed;
+}
+
 .homearea_products .swiper-container {
   background: #333;
   background-image: -webkit-gradient(linear, left top, left bottom, from(#000), to(#333)); /* Saf4+, Chrome */
@@ -60,7 +73,7 @@
 }
 
 .homearea_products .content-slide a {
-  color: #FFF;
+  color: #000;
 }
 
 .homearea_products .content-slide .tabs_left {

@@ -23,7 +23,7 @@
 		<div class="swiper-container">
 		    <div class="swiper-wrapper">
 		    	{volist name="homearea.products" id="m"}
-		      <div class="swiper-slide">
+		      <div class="swiper-slide" style="background-color: #F8F8F8;color: #000;">
 		        <div class="content-slide">
 		        	<a href="{$m ['url']}" >
 			          <div class="tabs_left" ><img src="{$m ['img_url']}" /></div>
@@ -50,6 +50,7 @@ $(function(){
 		$(".tabs .active").removeClass('active')
 		$(this).addClass('active');
 		tabsSwiper.swipeTo( $(this).index() );
+		i = $(this).index() ;
 	});
 	$(".tabs a").click(function(e){
 		e.preventDefault();
@@ -59,9 +60,11 @@ $(function(){
 	var num = {if condition="!empty($homearea)"}{$homearea.num}{else}0{/if};
 	if( num > 0 ) {
 		setInterval(function(){
+			$(".tabs a").removeClass('active');
+			$(".tabs a").eq( i % num ).addClass('active');
 			tabsSwiper.swipeTo( i % num  );
 			i ++;
-		}, 3000);
+		}, 5000);
 	}
 });
 </script>
