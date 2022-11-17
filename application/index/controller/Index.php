@@ -275,8 +275,13 @@ class Index extends Controller
                 $this->assign( 'homearea' , $homearea );
                 $products = [] ;
             } else {
+                // 小分类 查询该类所有商品
                 $products = $Product->get_product_by_category ( $this->did, $offset , $this->product_limit );
                 $total = $Product->get_product_num_by_category ( $this->did );
+                // 查询该类是否有介绍信息
+                $Homeproduct = new Homeproduct;
+                $homeproduct = $Homeproduct->get_homeproduct_by_category_id( $this->did );
+                $this->assign('homeproduct' , $homeproduct );
             }
             
             if( $this->language != 'zh-cn' && $products ) {

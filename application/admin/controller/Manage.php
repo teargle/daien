@@ -823,6 +823,7 @@ class Manage extends Common
 
     public function edit_homeproduct( $id = 0) {
         $product = null;
+        $fcategory = 0;
         if( $id ) {
             $Homeproduct = new Homeproduct;
             $product = $Homeproduct->get_homeproduct_by_id($id) ;
@@ -837,9 +838,13 @@ class Manage extends Common
                 if( $i18ninfo ) {
                     $product ['description_en'] = $i18ninfo ['text'];
                 }
+                // 归类
+                $fcategory = !empty($product ['category_id']) ? $product ['category_id'] : null;
             }
         }
+        View::share('fcategory', $fcategory );
         View::share('product',$product);
+        $this->_get_parent_category();
         return view('admin@manage/homeproduct');
     }
 
@@ -851,12 +856,19 @@ class Manage extends Common
             $data [$param['name']] = $param ['value'];
         }
         $Homeproduct = new Homeproduct;
-
+        $data ['category_id'] = $data ['secondclass'];
+        if( $data ['category_id'] ) {
+            $data ['url'] = $request->domain() . "?cid=2&did=" . $data ['category_id'] ;
+        } else {
+            $data ['url'] = "" ;
+        }
         if(array_key_exists('id', $data)) {
-            $Homeproduct->update_homeproduct($data ['id'], 'A', $data ['title'], $data ['img_url'], $data ['description'], $data ['url'], $data ['product_ids']);
+            $Homeproduct->update_homeproduct($data ['id'], 'A', $data ['title'], $data ['img_url'], 
+                $data ['description'], $data ['url'], $data ['product_ids'], $data ['category_id']);
             $id = $data ['id'];
         } else {
-            $homeproduct = $Homeproduct->insert_homeproduct('A', $data ['title'], $data ['img_url'], $data ['description'], $data ['url'], $data ['product_ids']);
+            $homeproduct = $Homeproduct->insert_homeproduct('A', $data ['title'], $data ['img_url'], 
+                $data ['description'], $data ['url'], $data ['product_ids'], $data ['category_id']);
             $id = $homeproduct ['id'] ;
         }
 

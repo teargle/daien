@@ -7,20 +7,33 @@
 {/notempty}
 
 {notempty name="products"}
-<ul class="list_row">
-{volist name="products" id="product"}
-	<li><a href="/?cid=2&did={$did}&pid={$product.id}"><img src="{$product.img_url}"><span>{$product.title}</span></a></li>
-	{/volist}
-</ul>
-<div class="clear"></div>
-<div class="page">
-<div class="diy_page">
-	{for start = "0" end="$total_page"}
-	<a href="?page={$i+1}&amp;cid={$cid}&amp;did={$did}&search={$search}" {if condition="$page eq $i + 1"}class="current"{/if}>{$i+1}</a>
-	{/for}
-	<span disabled="">{$Think.lang.common_page|sprintf=$page, $total_page, $total}</span>
-</div>
-</div>
+	{notempty name="homeproduct"}
+	<div class="home-product-category-info">
+		<img src="{$homeproduct.img_url}" /> 
+		<div style="">{$homeproduct.description}</div>
+	</div>
+	{notempty name="homeproduct.video_url"}
+	<div class="home-product-category-video">
+		<video src="{$homeproduct.video_url}" muted="muted" controls="controls" loop="loop"></video>
+	</div>
+	{/notempty}
+	{/notempty}
+
+	<ul class="list_row">
+		{volist name="products" id="product"}
+		<li><a href="/?cid=2&did={$did}&pid={$product.id}"><img src="{$product.img_url}"><span>{$product.title}</span></a></li>
+		{/volist}
+	</ul>
+	<div class="clear"></div>
+	<div class="page">
+		<div class="diy_page">
+			{for start = "0" end="$total_page"}
+			<a href="?page={$i+1}&amp;cid={$cid}&amp;did={$did}&search={$search}" {if condition="$page eq $i + 1"}class="current"{/if}>{$i+1}</a>
+			{/for}
+			<span disabled="">{$Think.lang.common_page|sprintf=$page, $total_page, $total}</span>
+		</div>
+	</div>
+
 {/notempty}
 
 <script type="text/javascript">
@@ -28,4 +41,5 @@
 function search() {
 	window.location.href = "/index/index/index?cid=2&did=0&search=" + $("#search").val();
 }
+
 </script>
