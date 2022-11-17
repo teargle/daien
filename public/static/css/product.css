@@ -63,3 +63,35 @@
     padding: 0;
     text-align: center;
 }
+
+/** 分页展示 */
+.layout .containerBox .container .contentBox .rightMain .page {
+    clear: both;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    padding: 10px 0px;
+    margin-bottom: 30px;
+}
+
+.layout .containerBox .container .contentBox .rightMain .page .diy_page {
+    font: 12px/21px;
+    clear: both;
+    margin: 0 auto;
+    text-align: center;
+    color: #999;
+}
+
+.layout .containerBox .container .contentBox .rightMain .page .diy_page a {
+    text-decoration: none;
+    color: #333;
+    border: 1px solid #FFBB55;
+    padding: 0 4px;
+    margin-right: 1px;
+}
+
+.layout .containerBox .container .contentBox .rightMain .page .diy_page a.current {
+    color: red;
+    border: 1px solid #FFBB55;
+    background: #F96;
+}
