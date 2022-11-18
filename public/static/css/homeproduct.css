@@ -4,8 +4,9 @@
   margin: 0 auto;
 }
 .homearea_products .tabs a {
-  display: block;
+  display: flex;
   float: left;
+  height: 34px;
   width: 100px;
   color: #333;
   text-align: center;
@@ -26,10 +27,16 @@
 .homearea_products .tabs a h6 {
   background-color: #edeeee;
   color: #000;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  width: 100px;
+  height: 33px;
+  padding-left: 1px;
+  padding-right: 1px;
   margin-bottom: 0px;
   font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
 }
 
 .homearea_products .tabs a.active {
@@ -45,7 +52,9 @@
 }
 
 .homearea_products .tabs a.active h6 {
-  background: url(../img/20221115143856.png) center 0 repeat-x #ededed;
+  background: url(../img/20221115143856.png) center 0 #ededed;
+  background-repeat:repeat;
+  text-align: center;
 }
 
 .homearea_products .swiper-container {
