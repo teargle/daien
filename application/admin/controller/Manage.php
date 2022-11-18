@@ -882,11 +882,11 @@ class Manage extends Common
         }
         if(array_key_exists('id', $data)) {
             $Homeproduct->update_homeproduct($data ['id'], 'A', $data ['title'], $data ['img_url'], 
-                $data ['description'], $data ['url'], $data ['product_ids'], $data ['category_id']);
+                $data ['description'], $data ['url'], $data ['product_ids'], $data ['category_id'], $data ['rank']);
             $id = $data ['id'];
         } else {
             $homeproduct = $Homeproduct->insert_homeproduct('A', $data ['title'], $data ['img_url'], 
-                $data ['description'], $data ['url'], $data ['product_ids'], $data ['category_id']);
+                $data ['description'], $data ['url'], $data ['product_ids'], $data ['category_id'], $data ['rank']);
             $id = $homeproduct ['id'] ;
         }
 

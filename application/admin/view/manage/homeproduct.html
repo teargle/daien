@@ -88,6 +88,12 @@
 			placeholder="关联产品英文逗号隔开，只能四个产品" >
 		</div>
 	</div>
+	<div class='row form-group'>
+		<label for="rank" class="col-sm-2 control-label text-right">排序:</label>
+		<div class="col-sm-8">
+			<input type="text" name="rank" class="form-control" value="{notempty name='product'}{$product['rank']}{/notempty}">
+		</div>
+	</div>
 	<div class="row form-group">
         <label for="description" class="col-md-2 control-label text-right">详细描述(zh) : </label>
         <div class="col-sm-8">
@@ -108,7 +114,7 @@
 	<div class="row form-group">
 		<div class="col-sm-1"></div>
 		<div class="col-sm-3">
-			<a type="button" class="btn btn-primary" href="/admin/manage/index?main=product">返回</a>
+			<a type="button" class="btn btn-primary" href="/admin/manage/index?main=homeList">返回</a>
 		</div>
 		<div class="col-sm-6"></div>
 		<div class="col-sm-2">

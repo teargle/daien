@@ -28,7 +28,7 @@ class Homeproduct extends Model
     }
 
     public function get_homeproduct ( $offset, $limit ) {
-        $list = Db::query('select * from dn_homeproduct where status = \'A\' order by id desc limit ' . $offset . ',' . $limit);
+        $list = Db::query('select * from dn_homeproduct where status = \'A\' order by `rank` desc limit ' . $offset . ',' . $limit);
         return $list ;
     }
 
@@ -47,15 +47,15 @@ class Homeproduct extends Model
         return $num [0] ['num'] ;
     }
 
-    public function insert_homeproduct ($status, $title, $img_url, $description, $url, $product_ids, $category_id) {
-        Db::query("insert into dn_homeproduct (`status`, `title`, `img_url`, `description`, `url`, `product_ids`, `category_id` ) values 
-            ('{$status}', '{$title}', '{$img_url}', '{$description}', '{$url}', '{$product_ids}', '{$category_id}') ") ;
+    public function insert_homeproduct ($status, $title, $img_url, $description, $url, $product_ids, $category_id, $rank) {
+        Db::query("insert into dn_homeproduct (`status`, `title`, `img_url`, `description`, `url`, `product_ids`, `category_id`, `rank` ) values 
+            ('{$status}', '{$title}', '{$img_url}', '{$description}', '{$url}', '{$product_ids}', '{$category_id}', {$rank}) ") ;
         $id = Db::name("dn_product")->getLastInsID();
         return $this->get_homeproduct_by_id($id) ;
     }
 
     public function update_homeproduct ($id , $status = null, $title = null, $img_url = null, 
-                $description = null, $url = null, $product_ids = null, $category_id = null) {
+                $description = null, $url = null, $product_ids = null, $category_id = null,$rank = null) {
         $str = "" ;
         $str .= "`status` = '" . ($status ? $status : 'A') . "'" ;
         if( $title ) $str .= ", title = '" . $title . "'" ;
@@ -64,6 +64,7 @@ class Homeproduct extends Model
         if( $description ) $str .= ", description = '" . $description . "'";
         if( $product_ids ) $str .= ", product_ids = '" . $product_ids . "'";
         if( $category_id ) $str .= ", category_id = " . $category_id ;
+        if( $rank ) $str .= ", `rank` = " . $rank ;
         return Db::query( "update dn_homeproduct set {$str} where id = " . $id ) ; 
     }
 

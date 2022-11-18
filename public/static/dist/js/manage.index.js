@@ -657,6 +657,11 @@ function revertHomeList() {
                 align: 'left',
                 valign: 'middle'
             },{
+                field: 'rank',
+                title: '排序',
+                align: 'left',
+                valign: 'middle'
+            }, {
                 title: "操作",
                 align: 'center',
                 valign: 'middle',

@@ -413,6 +413,7 @@ ol, ul {
 .layout .containerBox .container .contentBox .rightMain .news_row a h4 {
     margin-top: 10px;
     margin-bottom: -8px;
+    font-size: 16px;
 }
 
 .layout .containerBox .container .contentBox .rightMain .news_row div {
