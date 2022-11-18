@@ -54,8 +54,10 @@ class News extends Model
     }
 
     public function insert_news($status, $title, $img_url, $category_id, $description) {
-        return Db::query("insert into dn_news (`status`, `title`, `img_url`, `category_id`, `description`) values 
+        Db::query("insert into dn_news (`status`, `title`, `img_url`, `category_id`, `description`) values 
             ('{$status}', '{$title}', '{$img_url}', {$category_id}, '{$description}') ") ;
+        $id = Db::name("dn_news")->getLastInsID();
+        return $this->get_news_by_id($id) ;
     }
 
     public function update_news($id , $status = null, $title = null, $img_url = null, $category_id = null, $description = null) {

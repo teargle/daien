@@ -29,10 +29,16 @@
 	{/if}
 	</div>
 	<div class="row form-group">
-		<label for="title" class="col-sm-2 control-label text-right">名称：</label>
-		<div class="col-sm-8">
+		<label for="title" class="col-sm-2 control-label text-right">名称(zh)：</label>
+		<div class="col-sm-4">
 			<input type="text" class="form-control" name="title" placeholder="请输入名称"
 			value='{if condition="!empty($news)"}{$news["title"]}{/if}'
+			>
+		</div>
+		<label for="title_en" class="col-sm-2 control-label text-right">名称(en)：</label>
+		<div class="col-sm-4">
+			<input type="text" class="form-control" name="title_en" placeholder="请输入名称"
+			value='{if condition="!empty($news)"}{$news["title_en"]}{/if}'
 			>
 		</div>
 	</div>
@@ -46,10 +52,18 @@
 		</div>
 	</div>
 	<div class="row form-group">
-        <label for="description" class="col-md-2 control-label text-right">详细描述 : </label>
+        <label for="description" class="col-md-2 control-label text-right">详细描述(zh) : </label>
         <div class="col-sm-8">
             <div id="description" name="description">
             	{if condition="!empty($news)"}{$news['description']}{/if}
+            </div>
+        </div>
+    </div>
+    <div class="row form-group">
+        <label for="description_en" class="col-md-2 control-label text-right">详细描述(en) : </label>
+        <div class="col-sm-8">
+            <div id="description_en" name="description_en">
+            	{if condition="!empty($news)"}{$news['description_en']}{/if}
             </div>
         </div>
     </div>

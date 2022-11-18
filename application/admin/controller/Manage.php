@@ -422,10 +422,21 @@ class Manage extends Common
     public function edit_news($id = 0) {
         $data = null;
         if( $id ) {
-            $news = new News;
-            $data = $news->get_news_by_id($id) ;
+            $News = new News;
+            $news = $News->get_news_by_id($id) ;
+
+            $I18n = new I18n;
+            $i18ninfo = $I18n->get_info( 'dn_news', 'en-us', 'title', $id );
+            $news ['title_en'] = $news ['description_en'] = '';
+            if( $i18ninfo ) {
+                $news ['title_en'] = $i18ninfo ['text'];
+            }
+            $i18ninfo = $I18n->get_info( 'dn_news', 'en-us', 'description', $id );
+            if( $i18ninfo ) {
+                $news ['description_en'] = $i18ninfo ['text'];
+            }
         }
-        View::share('news',$data);
+        View::share('news',$news);
         return view('admin@manage/news');
     }
 
@@ -523,12 +534,19 @@ class Manage extends Common
     public function saveNews() {
         $request = Request::instance();
         $data = $request->post();
-        $news = new News;
+        $News = new News;
         if(array_key_exists('id', $data)) {
-            $news->update_news($data ['id'], 'A', $data ['title'], $data ['img_url'], NEWS_CATEGORY, $data ['description'] );
+            $News->update_news($data ['id'], 'A', $data ['title'], $data ['img_url'], NEWS_CATEGORY, $data ['description'] );
+            $id = $data ['id'];
         } else {
-            $news->insert_news('A', $data ['title'], $data ['img_url'], NEWS_CATEGORY, $data ['description']);
+            $news = $News->insert_news('A', $data ['title'], $data ['img_url'], NEWS_CATEGORY, $data ['description']);
+            $id = $news ['id'];
         }
+
+        // 多语言
+        $this->saveI18n( 'dn_news', 'en-us', 'description',  $id, $data ['description_en'] ) ;
+        $this->saveI18n( 'dn_news', 'en-us', 'title',  $id, $data ['title_en'] ) ;
+
         echo $this->output_json ( true , "OK" , null) ;
     }
 
