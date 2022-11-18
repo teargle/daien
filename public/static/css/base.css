@@ -260,6 +260,7 @@ ol, ul {
     margin-bottom: 12px;
     background: url(../img/email.png) no-repeat 10px 0px;
     height: 24px;
+    font-size: 22px;
 }
 
 .layout .containerBox .container .contentBox .sign_up span {
@@ -363,50 +364,6 @@ ol, ul {
 }
 /** 首页展示区 结束 **/
 
-/** 产品展示 */
-.layout .containerBox .container .contentBox .rightMain .list_row {
-    margin-bottom: 30px;
-    padding-left: 30px;
-    padding-top: 20px;
-    list-style: none;
-}
-
-.layout .containerBox .container .contentBox .rightMain .list_row li {
-    list-style: none;
-    float: left;
-    margin-right: 20px;
-    margin-bottom: 60px;
-}
-
-.layout .containerBox .container .contentBox .rightMain .list_row li a {
-    height: 140px;
-    width: 140px;
-    margin-right: 0px;
-    display: block;
-}
-
-.layout .containerBox .container .contentBox .rightMain .list_row li a:link, 
-.layout .containerBox .container .contentBox .rightMain .list_row li a:visited {
-    color: #666;
-    text-decoration: none;
-}
-
-.layout .containerBox .container .contentBox .rightMain .list_row li img {
-    width: 140px;
-    height: 140px;
-    margin: 0;
-    padding: 0;
-}
-
-.layout .containerBox .container .contentBox .rightMain .list_row li span {
-    display: block;
-    height: 30px;
-    line-height: 30px;
-    color: #000;
-    margin: 0;
-    padding: 0;
-    text-align: center;
-}
 
 /** 工程案例 */
 .layout .containerBox .container .contentBox .rightMain .case_row {
@@ -474,37 +431,6 @@ ol, ul {
     text-decoration: underline;
     color:#090;
     margin-top:0px;
-}
-
-/** 分页展示 */
-.layout .containerBox .container .contentBox .rightMain .page {
-    clear: both;
-    height: 30px;
-    line-height: 30px;
-    text-align: center;
-    padding: 10px 0px;
-}
-
-.layout .containerBox .container .contentBox .rightMain .page .diy_page {
-    font: 12px/21px;
-    clear: both;
-    margin: 0 auto;
-    text-align: center;
-    color: #999;
-}
-
-.layout .containerBox .container .contentBox .rightMain .page .diy_page a {
-    text-decoration: none;
-    color: #333;
-    border: 1px solid #FFBB55;
-    padding: 0 4px;
-    margin-right: 1px;
-}
-
-.layout .containerBox .container .contentBox .rightMain .page .diy_page a.current {
-    color: red;
-    border: 1px solid #FFBB55;
-    background: #F96;
 }
 
 
