@@ -382,6 +382,12 @@ class Index extends Controller
 
         if( $this->pid ) {
             $news_detail = $News->get_news_by_id( $this->pid ) ;
+            if( $this->language != 'zh-cn' && $news_detail ) {
+                $i18n_info = $I18n->get_info ( 'dn_news', $this->language, 'title', $news_detail ['id']  ) ;
+                $news_detail ['title'] = $i18n_info ? $i18n_info ['text'] : $news_detail ['title'];
+                $i18n_info = $I18n->get_info ( 'dn_news', $this->language, 'description', $news_detail ['id']  ) ;
+                $news_detail ['description'] = $i18n_info ? $i18n_info ['text'] : $news_detail ['description'];
+            }
             $this->assign('news_detail' , $news_detail );
         } else {
             $news = $News->get_news_by_category( $this->cid, 0, $this->news_limit ) ;
