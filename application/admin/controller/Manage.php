@@ -885,6 +885,10 @@ class Manage extends Common
         foreach( $post ['params'] as $param ) {
             $data [$param['name']] = $param ['value'];
         }
+        if( empty($data ['secondclass']) ) {
+            echo $this->output_json ( false , "没有分类" , null) ;
+            exit;
+        } 
         $Homeproduct = new Homeproduct;
         $data ['category_id'] = $data ['secondclass'];
         if( $data ['category_id'] ) {
