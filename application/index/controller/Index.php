@@ -391,6 +391,16 @@ class Index extends Controller
             $this->assign('news_detail' , $news_detail );
         } else {
             $news = $News->get_news_by_category( $this->cid, 0, $this->news_limit ) ;
+
+            if( $this->language != 'zh-cn' && $news ) {
+                foreach ( $news as &$n ) {
+                    $i18n_info = $I18n->get_info ( 'dn_news', $this->language, 'title', $n ['id']  ) ;
+                    $n ['title'] = $i18n_info ? $i18n_info ['text'] : $n ['title'];
+                    $i18n_info = $I18n->get_info ( 'dn_news', $this->language, 'description', $n ['id']  ) ;
+                    $n ['description'] = $i18n_info ? $i18n_info ['text'] : $n ['description'];
+                }
+            }
+
             $this->assign('news' , $news );
         }
         
