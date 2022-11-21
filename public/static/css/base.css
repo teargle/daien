@@ -53,7 +53,7 @@ ol, ul {
 .layout .head .head-top .head_right {
     display: inline;
     float: right;
-    margin: 20px 42px 0 0;
+    margin: 20px 20px 0 0;
     zoom: 1;
     background: url(../img/tel.gif) no-repeat 0px 20px;
     padding-left: 20px;
@@ -72,7 +72,7 @@ ol, ul {
 
 /** 头部上面部分 导航 */
 .layout .head .nav {
-    width: 900px;
+    width: 943px;
     height: 44px;
     margin: 11px auto 0;
     /*background: url(../img/nav.png) no-repeat 0 -44px;*/
@@ -140,6 +140,7 @@ ol, ul {
     margin: 0 auto;
     background-color: #fff;
     overflow: hidden;
+    padding-right: 0px;
 }
 
 .layout .containerBox .container .banner {
@@ -330,19 +331,20 @@ ol, ul {
 
 .layout .containerBox .container .contentBox .rightMain input {
     width: 200px;
-    margin-top: 5px;
+    margin-top: 8px;
     float:right;
     margin-right: 15px;
-    height: 30px;
+    height: 25px;
 }
 
 .layout .containerBox .container .contentBox .rightMain button {
     background-color: #216b9a;
     color: #FFF;
-    margin-top: 7px;
+    margin-top: 8px;
     float:right;
     margin-right: 25px;
-    height: 28px;
+    height: 24px;
+    font-size: 14px;
 }
 
 .layout .containerBox .container .contentBox .rightMain hr {
@@ -353,12 +355,6 @@ ol, ul {
 /** 主体内容 开始 */
 
 /** 首页展示区 开始 **/
-.layout .containerBox .container .contentBox .rightMain .homearea_products {
-    overflow: hidden;
-    margin-top: 20px;
-    margin-left: 5px;
-}
-
 .layout .containerBox .container .contentBox .rightMain .homearea_products .swiper-product-container {
     
 }
@@ -414,6 +410,7 @@ ol, ul {
     margin-top: 10px;
     margin-bottom: -8px;
     font-size: 16px;
+    font-weight: 900;
 }
 
 .layout .containerBox .container .contentBox .rightMain .news_row div {
@@ -432,6 +429,7 @@ ol, ul {
     text-decoration: underline;
     color:#090;
     margin-top:0px;
+    font-style: italic;
 }
 
 

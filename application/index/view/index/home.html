@@ -1,12 +1,13 @@
 <link rel="stylesheet" type="text/css" href="/static/css/homeproduct.css">
 {notempty name="homearea"}
 	{notempty name="homearea.news"}
+	<div class="home-hr margintop--20">新闻--------------------------------------------------------------------------------------------------------------------------------------</div>
 	<div class="homearea_news">
 		<ul class="news_row">
 			{volist name="homearea.news" id="n"}
 			<li>
 				<a href="/?cid=3&pid={$n.id}"><h4>{$n.title}</h4></a>
-				<a href="/?cid=3&pid={$n.id}"><div>{$n.description}</div><div class="new_check">{$Think.lang.news_view}</div></a>
+				<a href="/?cid=3&pid={$n.id}"><span class="description">{$n.description}</span></a>
 			</li>
 			{/volist}
 		</ul>
@@ -14,6 +15,7 @@
 	{/notempty}
 
 	{notempty name="homearea.products"}
+	<div class="home-hr margintop-100">推荐品牌---------------------------------------------------------------------------------------------------------------------------------</div>
 	<div class="homearea_products">
 		<div class="tabs">
 			{volist name="homearea.products" id="n"}
