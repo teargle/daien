@@ -8,6 +8,7 @@ function initSecondClass() {
 $("#firstclass").change(function (obj) {
 		var params = {};
 		params.firstclass = $("#firstclass").val();
+		console.log( "params.firstclass = " + params.firstclass );
 		$.post("/admin/manage/get_category_info", params , function(data){
         data = $.parseJSON(data);
         if( data.result ) {
