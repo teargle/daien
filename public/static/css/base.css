@@ -292,7 +292,7 @@ ol, ul {
 /** 主体右边部分 开始 */
 .layout .containerBox .container .contentBox .rightMain {
     display: inline;
-    width: 690px;
+    width: 712px;
     float: right;
     min-height: 500px;
 }
@@ -572,7 +572,7 @@ ol, ul {
 
 input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
     color: #aab2bd;
-    font-size: 16px;
+    font-size: 14px;
     font-family: monospace;
 }
 
