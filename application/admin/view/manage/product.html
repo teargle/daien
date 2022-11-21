@@ -35,7 +35,7 @@
 			{foreach name="categorys" item="category" key="k" }
 			  {if condition="$category['parent'] eq 2"}
 			  <option value="{$category['id']}" 
-			  {if condition="$fcategory == $k"}selected{/if}
+			  {if condition="$firstclass == $k"}selected{/if}
 			  >{$category['title']}</option>
 			  {/if}
 			{/foreach}
@@ -115,6 +115,8 @@
 </div>
 <br /><br /><br /><br />
 <script type="text/javascript">
+var init_secondclass = false;
+var secondclass = "" ;
 $(document).ready( function(){
 	$("#product_uploadimg").change(function(){
 	    var formData = new FormData();
@@ -137,8 +139,11 @@ $(document).ready( function(){
 	    } );
 	});
 
-	//二级分类触发
-	//$("#firstclass").trigger("change");
+	{notempty name="secondclass"}
+	init_secondclass = true ;
+	secondclass = {$secondclass};
+	{/notempty}
+	$("#firstclass").trigger("change");
 });
 
 function saveProduct() {
@@ -172,9 +177,18 @@ function delProduct( id ) {
   });
 }
 
+function initSecondClass() {
+	console.log( "secondclass = " + secondclass );
+	if( init_secondclass ) {
+		$("#secondclass").val( secondclass ) ;
+		init_secondclass = false ;
+	}
+}
+
 $("#firstclass").change(function (obj) {
 		var params = {};
 		params.firstclass = $("#firstclass").val();
+		console.log ( " params.firstclass = " + params.firstclass) ;
 		$.post("/admin/manage/get_category_info", params , function(data){
         data = $.parseJSON(data);
         if( data.result ) {
@@ -184,6 +198,7 @@ $("#firstclass").change(function (obj) {
         		$.each( data.obj[1],function(index, item) {
         			$("#secondclass").append("<option value=" + item.id + ">" + item.title + "</option>") ;
         		});
+				initSecondClass();
         	}
         } else {
           bootbox.alert(data.message,function() {});

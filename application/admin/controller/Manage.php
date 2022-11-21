@@ -70,7 +70,7 @@ class Manage extends Common
 
 	public function edit_product ( $id = 0) { 
 		$product = null;
-        $fcategory = 0 ;
+        $firstclass = $secondclass = 0 ;
 		if( $id ) {
 			$Product = new Product;
 	        $product = $Product->get_product_by_id($id) ;
@@ -87,10 +87,16 @@ class Manage extends Common
                 }
 
                 // 归类
-                $fcategory = !empty($product ['category_id']) ? $product ['category_id'] : null;
+                $secondclass = !empty($product ['category_id']) ? $product ['category_id'] : null;
+                if( $secondclass ) {
+                    $Category = new Category ;
+                    $category = $Category->get_category_info ( $secondclass ) ;
+                    $firstclass = $category ['parent'];
+                }
             }
     	}
-        View::share('fcategory', $fcategory );
+        View::share('firstclass', $firstclass );
+        View::share('secondclass', $secondclass );
         $this->_get_parent_category();
         View::share('product',$product);
     	return view('admin@manage/product');
@@ -841,7 +847,7 @@ class Manage extends Common
 
     public function edit_homeproduct( $id = 0) {
         $product = null;
-        $fcategory = 0;
+        $secondclass = $firstclass = 0;
         if( $id ) {
             $Homeproduct = new Homeproduct;
             $product = $Homeproduct->get_homeproduct_by_id($id) ;
@@ -857,10 +863,16 @@ class Manage extends Common
                     $product ['description_en'] = $i18ninfo ['text'];
                 }
                 // 归类
-                $fcategory = !empty($product ['category_id']) ? $product ['category_id'] : null;
+                $secondclass = !empty($product ['category_id']) ? $product ['category_id'] : null;
+                if( $secondclass ) {
+                    $Category = new Category ;
+                    $category = $Category->get_category_info ( $secondclass ) ;
+                    $firstclass = $category ['parent'];
+                }
             }
         }
-        View::share('fcategory', $fcategory );
+        View::share('firstclass', $firstclass );
+        View::share('secondclass', $secondclass );
         View::share('product',$product);
         $this->_get_parent_category();
         return view('admin@manage/homeproduct');

@@ -70,7 +70,7 @@
 			{foreach name="categorys" item="category" key="k" }
 			  {if condition="$category['parent'] eq 2"}
 			  <option value="{$category['id']}" 
-			  {if condition="$fcategory == $k"}selected{/if}
+			  {if condition="$firstclass == $k"}selected{/if}
 			  >{$category['title']}</option>
 			  {/if}
 			{/foreach}
@@ -127,20 +127,10 @@
 </form>
 <br />
 <hr />
-<div class='row form-group'>
-		<label for="text_uploadimg" class="col-sm-1 control-label text-right">图片</label>
-		<div class="col-sm-8">
-			<input class="btn btn-primary" type="file" id="text_uploadimg" multiple 
-				accept="*.gif, *.jpeg, *.png, *.jpg, *.bmp " />
-			<label for="text_uploadimg" class="col-sm-1 control-label" >地址</label>
-			<input type="text" name="text_img_url" style="margin-left: 10px;width: 500px;" value=""><br /><br />
-			<img wdith="300" height="200" name="text_img_url" src="">
-			
-		</div>
-	</div>
-</div>
 <br /><br /><br /><br />
 <script type="text/javascript">
+var init_secondclass = false;
+var secondclass = "" ;
 $(document).ready( function(){
 	$("#product_uploadimg").change(function(){
 	    var formData = new FormData();
@@ -151,17 +141,13 @@ $(document).ready( function(){
 	    	$("input[name='img_url']").val(data.obj.url);
 	    } );
 	});
-
-	// 富文本编辑图片
-	$("#text_uploadimg").change(function(){
-	    var formData = new FormData();
-	    var f = $('#text_uploadimg')[0].files[0];
-	    formData.append('file', f); // 固定格式
-	    uploadImg ( formData, function( data ) {
-	    	$("img[name='text_img_url']").attr("src",data.obj.url);
-	    	$("input[name='text_img_url']").val(data.obj.url);
-	    } );
-	});
+	
+	{notempty name="secondclass"}
+	init_secondclass = true ;
+	secondclass = {$secondclass};
+	{/notempty}
+	console.log("firstclass.change") ;
+	$("#firstclass").trigger("change");
 });
 
 function saveProduct() {
@@ -195,9 +181,18 @@ function delProduct( id ) {
   });
 }
 
+function initSecondClass() {
+	console.log (  "secondclass = " + secondclass ) ;
+	if( init_secondclass ) {
+		$("#secondclass").val( secondclass ) ;
+		init_secondclass = false ;
+	}
+}
+
 $("#firstclass").change(function (obj) {
 		var params = {};
 		params.firstclass = $("#firstclass").val();
+		console.log (  "params.firstclass = " + params.firstclass ) ;
 		$.post("/admin/manage/get_category_info", params , function(data){
         data = $.parseJSON(data);
         if( data.result ) {
@@ -207,12 +202,14 @@ $("#firstclass").change(function (obj) {
         		$.each( data.obj[1],function(index, item) {
         			$("#secondclass").append("<option value=" + item.id + ">" + item.title + "</option>") ;
         		});
+				initSecondClass();
         	}
         } else {
           bootbox.alert(data.message,function() {});
         }
   });
 });
+
 </script>
 </body>
 </html>
