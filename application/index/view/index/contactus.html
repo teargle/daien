@@ -41,14 +41,14 @@
 	<form id="mesageForm" class="form-horizontal msg_form">
 		<div ><h2>{$Think.lang.contact_message}</h3><div>
 		<div class="row form-group">
-			<input type="text" class="form-control" name="linkinfo" placeholder="{$Think.lang.contact_type_placeholder}" />
+			<input type="text" class="form-control contact-title" name="linkinfo" placeholder="{$Think.lang.contact_type_placeholder}" />
 		</div>
 		<div class="row form-group">
-			<textarea class="form-control col-sm-8" rows="3" name="msginfo" 
+			<textarea class="form-control col-sm-8 contact-content" rows="3" name="msginfo" 
 			placeholder="{$Think.lang.contact_message_placeholder}"></textarea>
 		</div>
 		<div>
-			<button type="button" class="btn btn-default" onclick="sendMessage();">{$Think.lang.contact_send}</button>
+			<button type="button" class="btn btn-default button-send" onclick="sendMessage();">{$Think.lang.contact_send}</button>
 		</div>
 	</form>
 </div>
