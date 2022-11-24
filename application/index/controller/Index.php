@@ -535,7 +535,7 @@ class Index extends Controller
             $Homeproduct = new Homeproduct;
             $homeproduct = $Homeproduct->get_homeproduct_by_category_id( $category_id );
             $homeproducts = [$homeproduct] ; 
-            if( $this->language != 'zh-cn' && $homeproducts ) {
+            if( $this->language != 'zh-cn' && $homeproduct ) {
                 $I18n->replace_info ( $homeproducts, 'dn_homeproduct', $this->language, 'title' ) ;
                 $I18n->replace_info ( $homeproducts, 'dn_homeproduct', $this->language, 'description' ) ;
             }
