@@ -24,6 +24,8 @@ use PHPMailer\PHPMailer\Exception;
 
 class Index extends Controller
 {
+    // 是否首页
+    private $homepage = 1;
     // 大分类
     private $cid = 2;
     // 小分类
@@ -63,6 +65,7 @@ class Index extends Controller
     }
 
     private function init() {
+        $this->homepage = empty($_GET['cid']) ? 1 : 0;
         $this->cid = !empty($_GET['cid']) ? $_GET['cid'] : 2 ;
         $this->tid = !empty($_GET['tid']) ? $_GET['tid'] : 0 ;
         $this->pid = !empty($_GET['pid']) ? $_GET['pid'] : 0 ;
@@ -72,9 +75,11 @@ class Index extends Controller
         $this->search = !empty($_GET['search']) ? $_GET['search'] : "" ;
 
         // 默认值
+        $this->assign('homepage' , $this->homepage );
         $this->assign('tid' , $this->tid );
         $this->assign('did' , $this->did );
         $this->assign('cid' , $this->cid );
+        $this->assign('page' , $this->page );
         $this->assign('search' , $this->search );
     }
 
@@ -192,6 +197,7 @@ class Index extends Controller
         }
         $I18n = new I18n;
         $Product = new Product ;
+        $offset = ($this->page - 1)  * $this->product_limit ;
         if( ! empty( $this->pid ) ) {
             $product_detail = $Product->get_product_by_id( $this->pid ) ;
             if( $this->language != 'zh-cn' && $product_detail ) {
@@ -209,10 +215,11 @@ class Index extends Controller
             $Product->update_product_pv( $this->pid ) ;
             $this->assign('product_detail' , $product_detail );
         } else {
-            $offset = ($this->page - 1)  * $this->product_limit ;
+            
             $category = new Category ;
             $cate = [] ;
-            if( !empty($this->did) && $this->did != 14 ){
+            if( !empty($this->did) && $this->did != 14 && $this->did != -1) {
+                // 14 表示首页， -1 表示推荐商品
                 $cate = $category->get_category_info( $this->did );
             }
 
@@ -274,6 +281,9 @@ class Index extends Controller
                 ] ;
                 $this->assign( 'homearea' , $homearea );
                 $products = [] ;
+            } else if( $this->did == -1 ) {
+                $products = $Product->get_product_by_recommend ( $offset , $this->product_limit );
+                $total = $Product->get_count ( ['status' => 'A'] );
             } else {
                 // 小分类 查询该类所有商品
                 $products = $Product->get_product_by_category ( $this->did, $offset , $this->product_limit );
@@ -281,7 +291,12 @@ class Index extends Controller
                 // 查询该类是否有介绍信息
                 $Homeproduct = new Homeproduct;
                 $homeproduct = $Homeproduct->get_homeproduct_by_category_id( $this->did );
-                $this->assign('homeproduct' , $homeproduct );
+                $homeproducts = [$homeproduct] ; 
+                if( $this->language != 'zh-cn' && $homeproducts ) {
+                    $I18n->replace_info ( $homeproducts, 'dn_homeproduct', $this->language, 'title' ) ;
+                    $I18n->replace_info ( $homeproducts, 'dn_homeproduct', $this->language, 'description' ) ;
+                }
+                $this->assign('homeproduct' , $homeproducts [0] );
             }
             
             if( $this->language != 'zh-cn' && $products ) {
@@ -487,7 +502,55 @@ class Index extends Controller
         }
     }
 
-    public function info() {
-        phpinfo() ;
+    public function get_products_by_cate_id (  ) {
+        $request = Request::instance();
+        $post = $request->post();
+
+        $category_id = $post ['did'];
+        $page = empty($post ['page']) ? $post ['page'] - 1 : 0;
+        if( empty($category_id) ) {
+            echo $this->output_json ( true , "没有分类", null) ;
+        }
+
+        $Category = new Category;
+        $Product = new Product;
+        $homeproduct = [] ;
+        if( $category_id == -1 ) {
+            $products = $Product->get_product_by_recommend( $page , $this->product_limit );
+            $total = $Product->get_count( ['status' => 'A'] );
+        } else if( $category_id ) {
+            $cates = $Category->get_category( $category_id ) ;
+            $cate_ids = array_column( $cates, "id" ) ;
+            
+            $products = [ ];
+            if( $cate_ids ) {
+                $products = $Product->get_product_by_categorys( $cate_ids, $page , $this->product_limit );
+                $total = $Product->get_product_num_by_categorys( $cate_ids );
+            } else {
+                $products = $Product->get_product_by_category ( $category_id, $page , $this->product_limit );
+                $total = $Product->get_product_num_by_category ( $category_id );
+            }
+
+            $Homeproduct = new Homeproduct;
+            $homeproduct = $Homeproduct->get_homeproduct_by_category_id( $category_id );
+            $homeproducts = [$homeproduct] ; 
+            if( $this->language != 'zh-cn' && $homeproducts ) {
+                $I18n->replace_info ( $homeproducts, 'dn_homeproduct', $this->language, 'title' ) ;
+                $I18n->replace_info ( $homeproducts, 'dn_homeproduct', $this->language, 'description' ) ;
+            }
+        }
+
+        if( $this->language != 'zh-cn' && $products ) {
+            $I18n->replace_info ($products, 'dn_product', $this->language, 'title' ) ;
+            $I18n->replace_info ($products, 'dn_product', $this->language, 'description' ) ;
+        }
+
+        echo $this->output_json ( true , "", [
+            'products' => $products,
+            'page' => $page,
+            'total' => $total,
+            'total_page' => ceil($total / $this->product_limit ),
+            'homeproduct' => $homeproduct
+        ]) ; 
     }
 }

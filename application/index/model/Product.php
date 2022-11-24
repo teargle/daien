@@ -111,8 +111,8 @@ class Product extends Model
         return Db::query( "update dn_product set recommend = {$v} where id = " . $id ) ;
     }
 
-    public function get_product_by_recommend( ) {
-        $list = Db::query('select * from dn_product where `status` = \'A\' and recommend = 1 order by pv desc, id asc' );
+    public function get_product_by_recommend( $offset, $limit ) {
+        $list = Db::query('select * from dn_product where `status` = \'A\' order by recommend desc, pv desc limit ' . $offset . "," . $limit );
         return $list ;
     }
 }

@@ -25,6 +25,7 @@
     padding-left: 30px;
     padding-top: 20px;
     list-style: none;
+    clear: both;
 }
 
 .layout .containerBox .container .contentBox .rightMain .list_row li {
@@ -87,7 +88,7 @@
     color: #333;
     border: 1px solid #FFBB55;
     padding: 0 4px;
-    margin-right: 1px;
+    margin-right: 5px;
 }
 
 .layout .containerBox .container .contentBox .rightMain .page .diy_page a.current {

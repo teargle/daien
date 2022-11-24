@@ -3,10 +3,10 @@
 		<h2 class="products">{$title}</h2>
 		{volist name="cates" id="data"}
 			{if condition="!empty($data.id)"}
-			<div class="product_title" data-id={$data.id}><a href="{$data.link}" >{$data.title}</a></div>
+			<div class="product_title level_1" data-id={$data.id} onclick="showMe({$data.id},{$data.id})"><a href="javascript:void(0)" >{$data.title}</a></div>
 			{if condition="($data.parent eq 2) and (!empty($data.sub))"}
 				{foreach name="data.sub" item="im"}
-				<div class="product_sub_title" data-id={$im.id}><a href="{$im.link}">{$im.title}</a></div>
+				<div class="product_sub_title level_{$data.id}" data-id={$im.id} onclick="showMe({$data.id},{$im.id})"><a href="javascript:void(0)">{$im.title}</a></div>
 				{/foreach}
 			{/if}
 			{/if}
@@ -32,3 +32,95 @@
 		<span><img class="sideqcode" src="{$home ['qcode']['value']}"/></span>
 	</div>
 </div>
+<script type="text/javascript">
+var homepage = {$homepage} ;
+$(function(){
+	{if condition="$homepage eq true"}
+	{volist name="cates" id="data" offset="0" length="1"}
+		showMe( {$data.id}, {$data.id} );
+	{/volist}
+	{elseif condition="$page eq 1"}
+	showProducts( -1, 1 ) ;
+	{/if}
+});
+function showMe( parent , cate_id) {
+	$.each( $(".level_1"), function(index,item){
+		var pid = $(item).data("id");
+		if( parent != pid ) {
+			$(".level_" + pid).hide() ;
+		} else {
+			$(".level_" + pid).show() ;
+		}	
+	});
+
+	if( homepage == 0 ) {
+		showProducts( cate_id, 1) ;
+	} 
+	homepage = 0;
+	return false ;
+}
+
+function showProducts( cate_id, page ) {
+	$.post("/index/index/get_products_by_cate_id", {
+		'did' : cate_id,
+		'page' : page
+	} , function (data){
+		data = $.parseJSON(data);
+		if( data.result ) {
+			// 销毁全部元素
+			$(".home-info").detach() ;
+			$(".home-product-category-info").detach() ;
+			$(".home-product-category-video").detach() ;
+			$(".list_products").detach() ;
+			$(".clear").detach() ;
+			$(".page").detach() ;
+
+			// 设置视频和描述
+			if( data.obj.homeproduct ) {
+				if( data.obj.homeproduct.img_url ) {
+					$(".rightMain").append("<div class='home-product-category-info'></div>");
+					$(".home-product-category-info").append("<img src='" + data.obj.homeproduct.img_url + "' />" ); 
+					$(".home-product-category-info").append("<div>" + data.obj.homeproduct.description + "</div>");
+				}
+
+				if( data.obj.homeproduct.video_url ) {
+					$(".rightMain").append("<div class='home-product-category-video'></div>");
+					$(".home-product-category-video").html("<video src='" + data.obj.homeproduct.video_url 
+							+ "' muted='muted' controls='controls' loop='loop'></video>") ;
+				}
+			} else {
+				$(".home-product-category-info").detach() ;
+				$(".home-product-category-video").detach() ;
+			}
+			
+			// 设置产品
+			$(".rightMain").append("<ul class='list_row list_products'></ul>");
+			$.each( data.obj.products, function(index,item){
+				$(".list_products").append("<li><a href='/?cid=2&did=" + cate_id 
+					+ '&pid=' + item.id + "'><img src='" + item.img_url + "'><span>" + item.title + "</span></a></li>") ;
+			} );
+			// 设置产品分页
+			$(".rightMain").append("<div class='clear'></div><div class='page'><div class='diy_page'></div></div>");
+			for( var i = 0; i < data.obj.total_page; i++) {
+				$(".diy_page").append("<a href='?page=" + (i + 1) + "&cid=2&did=" + cate_id + "'" 
+				+ ( data.obj.page == i ? " class='current'" : " " ) + ">" + (i+1) + "</a>");
+			}
+			var s = sprintf( "{$Think.lang.common_page}", data.obj.page + 1 , data.obj.total_page, data.obj.total ) ;
+			$(".diy_page").append( "<span disabled=''>" + s + "</span>");
+			
+
+		} else {
+			alert(data.message);
+		}
+	}) ;
+}
+
+function sprintf() {
+	let args = arguments, str = args [0];
+	for( let i = 1; i < args.length; i++) {
+		let item = arguments [i];
+		str = str.replace("%s", item);
+	}
+	return str ;
+}
+</script>
