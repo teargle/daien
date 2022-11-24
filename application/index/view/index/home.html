@@ -1,7 +1,7 @@
 <link rel="stylesheet" type="text/css" href="/static/css/homeproduct.css">
 {notempty name="homearea"}
 	{notempty name="homearea.news"}
-	<div class="home-info home-hr margintop--20">新闻-----------------------------------------------------------------------------------------------------------------------------------------------</div>
+	<div class="home-info home-hr margintop--20">{$Think.lang.home_news}-----------------------------------------------------------------------------------------------------------------------------------------------</div>
 	<div class="home-info homearea_news">
 		<ul class="news_row">
 			{volist name="homearea.news" id="n"}
@@ -15,7 +15,7 @@
 	{/notempty}
 
 	{notempty name="homearea.products"}
-	<div class="home-info home-hr margintop-100">推荐品牌------------------------------------------------------------------------------------------------------------------------------------------</div>
+	<div class="home-info home-hr margintop-100">{$Think.lang.home_recommend}------------------------------------------------------------------------------------------------------------------------------------------</div>
 	<div class="home-info homearea_products">
 		<div class="tabs">
 			{volist name="homearea.products" id="n"}

@@ -38,4 +38,7 @@ return [
 	'news_view' => '查看全文',
 	'search_placeholder' => '站内搜索',
 	'search_query' => "搜索",
+
+	'home_news' => "新闻",
+	'home_recommend' => "推荐产品",
 ];
