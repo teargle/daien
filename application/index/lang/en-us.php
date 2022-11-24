@@ -40,6 +40,6 @@ return [
 	'search_query' => "Query",
 
 	'home_news' => "News",
-	'home_recommend' => "Recommended Products",
+	'home_recommend' => "Recommended",
 ];
 
