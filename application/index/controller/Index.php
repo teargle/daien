@@ -514,6 +514,7 @@ class Index extends Controller
 
         $Category = new Category;
         $Product = new Product;
+        $I18n = new I18n;
         $homeproduct = [] ;
         if( $category_id == -1 ) {
             $products = $Product->get_product_by_recommend( $page , $this->product_limit );
