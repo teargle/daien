@@ -303,7 +303,7 @@ class Index extends Controller
                 if ( $homeproduct && $homeproducts ) {
                     $this->assign('homeproduct' , array_slice($homeproducts, 0, 1) );
                 } else {
-                    $this->assign('homeproduct' , $homeproduct );
+                    $this->assign('homeproduct' , [] );
                 }
             }
             
