@@ -226,7 +226,7 @@ class Index extends Controller
                 // 14 表示首页， -1 表示推荐商品
                 $cate = $category->get_category_info( $this->did );
             }
-            $homeproduct = [ 'img_url' => '' , 'description' => ''];
+            $homeproduct = [];
             $total = 0 ;
             if( $cate && $cate['parent'] == $this->product_category) {
                 $cates = $category->get_category( $this->did ) ;
