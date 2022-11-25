@@ -296,12 +296,14 @@ class Index extends Controller
                 $Homeproduct = new Homeproduct;
                 $homeproduct = $Homeproduct->get_homeproduct_by_category_id( $this->did );
                 $homeproducts = [$homeproduct] ; 
-                if( $this->language != 'zh-cn' && $homeproducts ) {
+                if( $this->language != 'zh-cn' && $homeproduct ) {
                     $I18n->replace_info ( $homeproducts, 'dn_homeproduct', $this->language, 'title' ) ;
                     $I18n->replace_info ( $homeproducts, 'dn_homeproduct', $this->language, 'description' ) ;
                 }
                 if ( $homeproduct && $homeproducts ) {
                     $this->assign('homeproduct' , array_slice($homeproducts, 0, 1) );
+                } else {
+                    $this->assign('homeproduct' , $homeproduct );
                 }
             }
             
