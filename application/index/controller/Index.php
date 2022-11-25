@@ -300,7 +300,7 @@ class Index extends Controller
                     $I18n->replace_info ( $homeproducts, 'dn_homeproduct', $this->language, 'title' ) ;
                     $I18n->replace_info ( $homeproducts, 'dn_homeproduct', $this->language, 'description' ) ;
                 }
-                if ( $homeproduct ) {
+                if ( $homeproduct && $homeproducts ) {
                     $this->assign('homeproduct' , $homeproducts [0] );
                 }
             }
