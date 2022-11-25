@@ -26,6 +26,8 @@ class Index extends Controller
 {
     // 是否首页
     private $homepage = 1;
+    // 是否是产品中心首页
+    private $product_center = 0 ;
     // 大分类
     private $cid = 2;
     // 小分类
@@ -66,6 +68,7 @@ class Index extends Controller
 
     private function init() {
         $this->homepage = empty($_GET['cid']) ? 1 : 0;
+        $this->product_center = !empty( $_GET['cid'] ) && $_GET['cid'] == 2 && empty($_GET['did']) ? 1 : 0;
         $this->cid = !empty($_GET['cid']) ? $_GET['cid'] : 2 ;
         $this->tid = !empty($_GET['tid']) ? $_GET['tid'] : 0 ;
         $this->pid = !empty($_GET['pid']) ? $_GET['pid'] : 0 ;
@@ -76,6 +79,7 @@ class Index extends Controller
 
         // 默认值
         $this->assign('homepage' , $this->homepage );
+        $this->assign('product_center' , $this->product_center );
         $this->assign('tid' , $this->tid );
         $this->assign('did' , $this->did );
         $this->assign('cid' , $this->cid );
@@ -243,6 +247,9 @@ class Index extends Controller
                 $products = $Product->get_product_by_ids ($ids, $offset , $this->product_limit) ;
 
                 $total = count($ids);
+            } else if( $this->product_center == 1 ) {
+                $products = $Product->get_product_by_recommend ( $offset , $this->product_limit );
+                $total = $Product->get_count ( ['status' => 'A'] );
             } else if ( $this->did == 14 ) {
                 // 约定： 产品分类不会小于45， 如果有那么一定是14. 即首页
                 $News = new News;
@@ -281,9 +288,6 @@ class Index extends Controller
                 ] ;
                 $this->assign( 'homearea' , $homearea );
                 $products = [] ;
-            } else if( $this->did == -1 ) {
-                $products = $Product->get_product_by_recommend ( $offset , $this->product_limit );
-                $total = $Product->get_count ( ['status' => 'A'] );
             } else {
                 // 小分类 查询该类所有商品
                 $products = $Product->get_product_by_category ( $this->did, $offset , $this->product_limit );
