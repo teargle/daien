@@ -441,8 +441,9 @@ class Manage extends Common
             if( $i18ninfo ) {
                 $news ['description_en'] = $i18ninfo ['text'];
             }
+            View::share('news',$news);
         }
-        View::share('news',$news);
+        
         return view('admin@manage/news');
     }
 
