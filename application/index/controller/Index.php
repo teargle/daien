@@ -68,15 +68,18 @@ class Index extends Controller
 
     private function init() {
         $this->homepage = empty($_GET['cid']) ? 1 : 0;
-        $this->product_center = !empty( $_GET['cid'] ) && $_GET['cid'] == 2 && empty($_GET['did']) ? 1 : 0;
+        $this->product_center = !empty( $_GET['cid'] ) && $_GET['cid'] == 2 && ( empty($_GET['did']) || $_GET['did'] == -1) ? 1 : 0;
         $this->cid = !empty($_GET['cid']) ? $_GET['cid'] : 2 ;
         $this->tid = !empty($_GET['tid']) ? $_GET['tid'] : 0 ;
         $this->pid = !empty($_GET['pid']) ? $_GET['pid'] : 0 ;
-        $this->did = !empty($_GET['did']) ? $_GET['did'] : 14 ;
+        if( $this->product_center == 1 ) {
+            $this->did = -1;
+        } else {
+            $this->did = !empty($_GET['did']) ? $_GET['did'] : 14 ;
+        }
         $this->page = !empty($_GET['page']) ? $_GET['page'] : 1 ;
 
         $this->search = !empty($_GET['search']) ? $_GET['search'] : "" ;
-
         // 默认值
         $this->assign('homepage' , $this->homepage );
         $this->assign('product_center' , $this->product_center );
