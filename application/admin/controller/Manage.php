@@ -48,7 +48,7 @@ class Manage extends Common
 		$limit = $request->get('pageSize');
 		$start = $request->get('offset') ; 
 		$product = new Product ;
-		$products = $product->get_product($where, "id asc", $start, $limit);
+		$products = $product->get_product($where, "id desc", $start, $limit);
 		$count = $product->get_count($where);
         $category = new Category;
         $cates = $category->get_all_with_products( ) ;

@@ -53,7 +53,7 @@ class Product extends Model
     }
 
     public function get_product( $where , $orderby, $offset, $limit ) {
-        $list = Db::query('select * from dn_product where status = \'A\' order by id asc limit ' . $offset . ',' . $limit);
+        $list = Db::query('select * from dn_product where status = \'A\' order by ' . $orderby . ' limit ' . $offset . ',' . $limit);
         return $list ;
     }
 
