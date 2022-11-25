@@ -226,7 +226,7 @@ class Index extends Controller
                 // 14 表示首页， -1 表示推荐商品
                 $cate = $category->get_category_info( $this->did );
             }
-
+            $homeproduct = [ 'img_url' => '' , 'description' => '']
             $total = 0 ;
             if( $cate && $cate['parent'] == $this->product_category) {
                 $cates = $category->get_category( $this->did ) ;
@@ -301,17 +301,15 @@ class Index extends Controller
                     $I18n->replace_info ( $homeproducts, 'dn_homeproduct', $this->language, 'description' ) ;
                 }
                 if ( $homeproduct && $homeproducts ) {
-                    $this->assign('homeproduct' , array_slice($homeproducts, 0, 1) );
-                } else {
-                    $this->assign('homeproduct' , [ 'img_url' => '' , 'description' => ''] );
-                }
+                    $homeproduct = array_slice($homeproducts, 0, 1);
+                } 
             }
             
             if( $this->language != 'zh-cn' && $products ) {
                 $I18n->replace_info ($products, 'dn_product', $this->language, 'title' ) ;
                 $I18n->replace_info ($products, 'dn_product', $this->language, 'description' ) ;
             }
-
+            $this->assign('homeproduct' , $homeproduct );
             $total_page = ceil($total / $this->product_limit );
             $this->assign('products' , $products );
             $this->assign('page' , $this->page );
