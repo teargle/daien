@@ -1,5 +1,5 @@
 {notempty name="news_detail"}
-<h1 style="text-align:center;font-size: 16px;font-weight: 900;">{$news_detail.title}</h1>
+<h1 class="news_title" style="">{$news_detail.title}</h1>
 <div class="content-detail">
 {$news_detail.description}
 </div>
@@ -9,7 +9,7 @@
 <ul class="news_center">
 	{volist name="news" id="n"}
 	<li>
-		<a href="/?cid=3&pid={$n.id}"><h4>{$n.title}</h4></a>
+		<a href="/?cid=3&pid={$n.id}"><h1 class="news_title news_align">{$n.title}</h1></a>
 		<a href="/?cid=3&pid={$n.id}"><div>{$n.description}</div></a>
 	</li>
 	{/volist}

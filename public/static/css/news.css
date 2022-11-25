@@ -36,3 +36,13 @@
     font-size: 16px;
     margin-top:14px;
 }
+
+.news_title {
+	text-align:center;
+	font-size: 16px;
+	font-weight: 900;
+}
+
+.news_align {
+	text-align: left;
+}
