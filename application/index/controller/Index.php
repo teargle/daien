@@ -40,7 +40,7 @@ class Index extends Controller
     private $page = 0;
 
     // 产品每页展示个数
-    private $product_limit = 20;
+    private $product_limit = 4;
     // 工程案例每页展示个数
     private $project_limit = 9;
     // 新闻展示数量
@@ -295,14 +295,15 @@ class Index extends Controller
                 // 查询该类是否有介绍信息
                 $Homeproduct = new Homeproduct;
                 $homeproduct = $Homeproduct->get_homeproduct_by_category_id( $this->did );
-                $homeproducts = [$homeproduct] ; 
+                $homeproducts = [ $homeproduct ] ;
                 if( $this->language != 'zh-cn' && $homeproduct ) {
                     $I18n->replace_info ( $homeproducts, 'dn_homeproduct', $this->language, 'title' ) ;
                     $I18n->replace_info ( $homeproducts, 'dn_homeproduct', $this->language, 'description' ) ;
                 }
-                if ( $homeproduct && $homeproducts ) {
-                    $homeproduct = array_slice($homeproducts, 0, 1);
-                } 
+                
+                if ( !empty( $homeproduct ) ) {
+                    $homeproduct = $homeproducts [0];
+                }
             }
             
             if( $this->language != 'zh-cn' && $products ) {
