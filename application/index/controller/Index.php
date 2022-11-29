@@ -484,7 +484,10 @@ class Index extends Controller
     }
 
     public function _send_email($content) {
-        $mail = new PHPMailer(true);
+        require EXTEND_PATH . 'PHPMailer/src/Exception.php';
+        require EXTEND_PATH . 'PHPMailer/src/PHPMailer.php';
+        require EXTEND_PATH . 'PHPMailer/src/SMTP.php';
+        $mail = new PHPMailer(false);
         try {
             //Server settings
             $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
