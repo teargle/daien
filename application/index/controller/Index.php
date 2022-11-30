@@ -257,7 +257,7 @@ class Index extends Controller
                 // 约定： 产品分类不会小于45， 如果有那么一定是14. 即首页
                 $News = new News;
                 $where = ['status' => 'A' ] ;
-                $news = $News->get_news($where, '', 0, 2 ) ;
+                $news = $News->get_news($where, '', 0, 3 ) ;
                 if( $this->language != 'zh-cn' && $news ) {
                     $I18n->replace_info ($news, 'dn_news', $this->language, 'title' ) ;
                     $I18n->replace_info ($news, 'dn_news', $this->language, 'description' ) ;
