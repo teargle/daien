@@ -506,12 +506,12 @@ class Index extends Controller
 
             //Content
             $mail->isHTML(true);                                  //Set email format to HTML
-            $mail->Subject = '[important] a carstom from web';
+            $mail->Subject = '[important] a customer from web';
             $mail->Body    = $content;
 
             $mail->send();
         } catch (Exception $e) {
-            return print_r( $e );
+            
         }
     }
 
