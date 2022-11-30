@@ -490,7 +490,7 @@ class Index extends Controller
         $mail = new PHPMailer(false);
         try {
             //Server settings
-            $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+            $mail->SMTPDebug = SMTP::DEBUG_OFF;                      //Enable verbose debug output
             $mail->isSMTP();                                            //Send using SMTP
             $mail->Host       = 'smtp.163.com';                         //Set the SMTP server to send through
             $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
@@ -511,8 +511,9 @@ class Index extends Controller
 
             $mail->send();
         } catch (Exception $e) {
-            
+            return "FAILED";
         }
+        return "SUCCESS";
     }
 
     public function get_products_by_cate_id (  ) {
