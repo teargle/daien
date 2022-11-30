@@ -254,10 +254,10 @@ class Index extends Controller
                 $products = $Product->get_product_by_recommend ( $offset , $this->product_limit );
                 $total = $Product->get_count ( ['status' => 'A'] );
             } else if ( $this->did == 14 ) {
-                // 约定： 产品分类不会小于45， 如果有那么一定是14. 即首页
+                // 约定： 分类14 一定是首页
                 $News = new News;
                 $where = ['status' => 'A' ] ;
-                $news = $News->get_news($where, '', 0, 3 ) ;
+                $news = $News->get_news($where, 'totop desc', 0, 3 ) ;
                 if( $this->language != 'zh-cn' && $news ) {
                     $I18n->replace_info ($news, 'dn_news', $this->language, 'title' ) ;
                     $I18n->replace_info ($news, 'dn_news', $this->language, 'description' ) ;

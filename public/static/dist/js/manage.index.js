@@ -402,6 +402,15 @@ $("#manage_list").bootstrapTable({ // 对应table标签的id
               title: '名称',
               align: 'left',
               valign: 'middle'
+          },{
+              field : "top",
+              title : "置顶",
+              width: 100,
+              valign: 'middle',
+              formatter: function (value, row, index) {
+                return "<input type='checkbox' id='totop_" + row.id + "' " 
+                        + " onclick='totop(this," + row.id + ")' />";
+              }
           }, {
                title: "操作",
               align: 'center',
@@ -420,6 +429,24 @@ $("#manage_list").bootstrapTable({ // 对应table标签的id
       }
 
 }) ;
+}
+
+function totop( obj, news_id ) {
+  var $v = $("#totop_" + news_id).prop("checked");
+  var $value = $v === true ? false : true ;
+  $("#totop_" + news_id).attr("checked", $value );
+  
+  $.post("/admin/manage/news_totop", {
+    'id' : news_id,
+    'v' : $v
+  } , function(data){
+        data = $.parseJSON(data);
+        if( data.result ) {
+           console.log( "OK" ) ;
+        } else {
+           $("#totop_" + news_id).attr("checked", $v == true ? false : true);
+        }
+  });
 }
 
 /**

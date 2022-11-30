@@ -44,7 +44,10 @@ class News extends Model
     }
 
     public function get_news( $where , $orderby, $offset, $limit ) {
-        $list = Db::query('select * from dn_news where status = \'A\' order by create_time desc limit ' . $offset . ',' . $limit);
+        if( empty($orderby) ) {
+            $orderby = "create_time desc" ;
+        }
+        $list = Db::query('select * from dn_news where status = \'A\' order by ' . $orderby . ' limit ' . $offset . ',' . $limit);
         return $list ;
     }
 
@@ -72,5 +75,9 @@ class News extends Model
 
     public function delete_news($id) {
         return Db::query( "update dn_news set `status` = 'X' where id = " . $id ) ;
+    }
+
+    public function update_news_totop( $id , $v ) {
+        return Db::query( "update dn_news set totop = {$v} where id = " . $id ) ;
     }
 }

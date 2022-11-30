@@ -925,4 +925,24 @@ class Manage extends Common
         echo $this->output_json ( true , "OK" , null);
     }
 
+
+    public function news_totop() {
+        $request = Request::instance();
+        $id = $request->post ('id') ;
+        $v = $request->post ('v') ;
+
+        $News = new News;
+        $news = $News->get_news_by_id ( $id ) ;
+        $totop = $news ['totop'] == 0 ? 'false' : 'true';
+        if( $totop == $v ) {
+            echo $this->output_json ( true , "OK" , null );
+            exit ;
+        }
+        $result = $News->update_news_totop( $id , $v );
+        if( $result ) {
+            echo $this->output_json ( true , "OK" , null);
+        } else {
+            echo $this->output_json ( false , "更新失败" , $request->post ());
+        }
+    }
 }
