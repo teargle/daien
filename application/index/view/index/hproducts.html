@@ -1,0 +1,38 @@
+{notempty name="hproduct_detail"}
+<div class="hproduct">
+	<div class="hproduct-title"><h2>{$hproduct_detail.title}</h2></div>
+	<div class="home-product-category-info">
+		<img src="{$hproduct_detail.img_url}" /> 
+		<div style="">{$hproduct_detail.description}</div>
+	</div>
+	{notempty name="hproduct_detail.video_url"}
+	<div class="home-product-category-video">
+		<video src="{$hproduct_detail.video_url}" muted="muted" controls="controls" loop="loop"></video>
+	</div>
+	{/notempty}
+</div>
+{/notempty}
+
+
+
+{notempty name="hproducts"}
+<div class="hproduct">
+	<ul class="hproducts-center">
+		{volist name="hproducts" id="n"}
+		<li>
+			<a href="/?cid=4&pid={$n.id}"><h3 class="hproduct-title">{$n.title}</h3></a>
+			<a href="/?cid=4&pid={$n.id}"><div class="hproduct-desc">{$n.description}</div></a>
+		</li>
+		{/volist}
+	</ul>
+	<div class="clear"></div>
+	<div class="page">
+	<div class="diy_page">
+		{for start = "0" end="$total_page"}
+		<a href="?page={$i+1}&amp;cid={$cid}&amp;did={$did}" {if condition="$page eq $i + 1"}class="current"{/if}>{$i+1}</a>
+		{/for}
+		<span disabled="">{$Think.lang.common_page|sprintf=$page, $total_page, $total}</span>
+	</div>
+	</div>
+</div>
+{/notempty}

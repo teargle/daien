@@ -5,7 +5,7 @@ return [
 	'category_company_profile' =>  'Profile',
 	'category_product_center' =>  'Product',
 	'category_news_center' =>  'News',
-	'category_engineering_case' =>  'Case',
+	'category_brand_intro' =>  'Brand',
 	'category_contact_us' =>  'Contact Us',
 	'category_corporate_culture' =>  'Corporate Culture',
 	'category_talent_recruitment' =>  'Recruitment',

@@ -5,7 +5,7 @@ return [
 	'category_company_profile' =>  '公司简介',
 	'category_product_center' =>  '产品中心',
 	'category_news_center' =>  '新闻中心',
-	'category_engineering_case' =>  '工程案例',
+	'category_brand_intro' =>  '品牌介绍',
 	'category_contact_us' =>  '联系我们',
 	'category_corporate_culture' =>  '企业文化',
 	'category_talent_recruitment' =>  '人才招聘',

@@ -1,0 +1,28 @@
+.hproduct .hproduct-title {
+	text-align: center;
+}
+
+.hproduct .hproducts-center a {
+	text-decoration: none;
+	color: #000000;
+}
+
+.hproduct .hproducts-center li {
+	margin-top: 10px;
+}
+
+.hproduct .hproducts-center .hproduct-title {
+	text-align: left;
+}
+
+.hproduct .hproducts-center .hproduct-desc {
+	width: 600px;
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    text-decoration: none;
+    font-size: 16px;
+    margin-top:14px;
+}

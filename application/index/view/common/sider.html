@@ -3,10 +3,12 @@
 		<h2 class="products">{$title}</h2>
 		{volist name="cates" id="data"}
 			{if condition="!empty($data.id)"}
-			<div class="product_title level_1" data-id={$data.id} onclick="showMe({$data.id},{$data.id})"><a href="javascript:void(0)" >{$data.title}</a></div>
+			<div class="product_title level_1" data-id={$data.id} onclick="showMe({$data.id},{$data.id})"><a href="{if condition='$cid==4'}?cid=4&pid={$data.id}{else}javascript:void(0){/if}" >{$data.title}</a></div>
 			{if condition="($data.parent eq 2) and (!empty($data.sub))"}
 				{foreach name="data.sub" item="im"}
-				<div class="product_sub_title level_{$data.id}" data-id={$im.id} onclick="showMe({$data.id},{$im.id})"><a href="javascript:void(0)">{$im.title}</a></div>
+				<div class="product_sub_title level_{$data.id}" data-id={$im.id} onclick="showMe({$data.id},{$im.id})">
+					<a href="javascript:void(0)">{$im.title}</a>
+				</div>
 				{/foreach}
 			{/if}
 			{/if}

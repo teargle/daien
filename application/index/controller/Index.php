@@ -42,7 +42,7 @@ class Index extends Controller
     // 产品每页展示个数
     private $product_limit = 20;
     // 工程案例每页展示个数
-    private $project_limit = 9;
+    private $homeproduct_limit = 9;
     // 新闻展示数量
     private $news_limit = 5;
     // 当前语言
@@ -106,7 +106,7 @@ class Index extends Controller
         $this->_get_product_by_category() ;
         $this->_get_intro_info() ;
 
-        $this->_get_project_info() ;
+        $this->_get_homeproduct_info() ;
         $this->_get_news_info() ;
         $this->_get_cooperate_info() ;
         return $this->fetch('index');
@@ -354,47 +354,57 @@ class Index extends Controller
         $this->assign('category' , $category);
     }
 
-    private function _get_project_info() {
+    private function _get_homeproduct_info() {
         if( $this->cid != 4 ) {
             return true ;
         }
 
         $this->did = empty($this->did) ? 45 : $this->did;
 
-        $project = new Project ;
+        $Homeproduct = new Homeproduct ;
         if( ! empty( $this->pid ) ) {
-            $project_detail = $project->get_project_by_id( $this->pid ) ;
+            $hproduct_detail = $Homeproduct->get_homeproduct_by_id ( $this->pid ) ;
             if( $this->language != 'zh-cn' ) {
                 $I18n = new I18n;
-                $i18ninfo = $I18n->get_info( 'dn_project', $this->language, 'title', $this->pid );
+                $i18ninfo = $I18n->get_info( 'dn_homeproduct', $this->language, 'title', $this->pid );
                 if( $i18ninfo ) {
                     $project_detail ['title'] = $i18ninfo ['text'];
                 }
-                $i18ninfo = $I18n->get_info( 'dn_project', $this->language, 'description', $this->pid );
+                $i18ninfo = $I18n->get_info( 'dn_homeproduct', $this->language, 'description', $this->pid );
                 if( $i18ninfo ) {
                     $project_detail ['description'] = $i18ninfo ['text'];
                 }
             }
-            $this->assign('project_detail' , $project_detail );
+            $this->assign('hproduct_detail' , $hproduct_detail );
         } else {
 
-            $offset = ($this->page - 1)  * $this->project_limit ;
-            $projects = $project->get_project_by_category( $this->did, $offset , $this->project_limit );
+            $offset = ($this->page - 1)  * $this->homeproduct_limit ;
+            $homeproducts = $Homeproduct->get_homeproduct ( $offset , $this->homeproduct_limit );
 
-            $total = $project->get_project_num_by_category( $this->did );
+            $total = $Homeproduct->get_count ( );
         
-            if( $this->language != 'zh-cn' && !empty($projects) ) {
+            if( $this->language != 'zh-cn' && !empty($homeproducts) ) {
                 $I18n = new I18n;
-                $I18n->replace_info ($projects, 'dn_project', $this->language, 'title' ) ;
-                $I18n->replace_info ($projects, 'dn_project', $this->language, 'description' ) ;
+                $I18n->replace_info ($homeproducts, 'dn_homeproduct', $this->language, 'title' ) ;
+                $I18n->replace_info ($homeproducts, 'dn_homeproduct', $this->language, 'description' ) ;
             }
             
-            $total_page = ceil($total / $this->project_limit );
-            $this->assign('projects' , $projects );
+            $total_page = ceil($total / $this->homeproduct_limit );
+            $this->assign('hproducts' , $homeproducts );
             $this->assign('page' , $this->page );
             $this->assign('total' , $total );
             $this->assign('total_page' , $total_page );
         }
+
+        $cations = $Homeproduct->get_homeproduct ( 0, 100 );
+        if( $this->language != 'zh-cn' && !empty($cations) ) {
+            $I18n = new I18n;
+            $I18n->replace_info ($cations, 'dn_homeproduct', $this->language, 'title' ) ;
+        }
+        foreach( $cations as &$c ) {
+            $c ['parent'] = 2 ;
+        }
+        $this->assign('cates' , $cations );
     }
 
     public function _get_news_info() {
