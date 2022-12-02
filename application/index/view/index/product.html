@@ -7,18 +7,6 @@
 {/notempty}
 
 {notempty name="products"}
-	{notempty name="homeproduct"}
-	<div class="home-product-category-info">
-		<img src="{$homeproduct.img_url}" /> 
-		<div style="">{$homeproduct.description}</div>
-	</div>
-	{notempty name="homeproduct.video_url"}
-	<div class="home-product-category-video">
-		<video src="{$homeproduct.video_url}" muted="muted" controls="controls" loop="loop"></video>
-	</div>
-	{/notempty}
-	{/notempty}
-
 	<ul class="list_row list_products">
 		{volist name="products" id="product"}
 		<li><a href="/?cid=2&did={$did}&pid={$product.id}"><img src="{$product.img_url}"><span>{$product.title}</span></a></li>

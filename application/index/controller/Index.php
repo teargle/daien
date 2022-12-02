@@ -295,18 +295,6 @@ class Index extends Controller
                 // 小分类 查询该类所有商品
                 $products = $Product->get_product_by_category ( $this->did, $offset , $this->product_limit );
                 $total = $Product->get_product_num_by_category ( $this->did );
-                // 查询该类是否有介绍信息
-                $Homeproduct = new Homeproduct;
-                $homeproduct = $Homeproduct->get_homeproduct_by_category_id( $this->did );
-                $homeproducts = [ $homeproduct ] ;
-                if( $this->language != 'zh-cn' && $homeproduct ) {
-                    $I18n->replace_info ( $homeproducts, 'dn_homeproduct', $this->language, 'title' ) ;
-                    $I18n->replace_info ( $homeproducts, 'dn_homeproduct', $this->language, 'description' ) ;
-                }
-                
-                if ( !empty( $homeproduct ) ) {
-                    $homeproduct = $homeproducts [0];
-                }
             }
             
             if( $this->language != 'zh-cn' && $products ) {
