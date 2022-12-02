@@ -42,7 +42,7 @@ class Index extends Controller
     // 产品每页展示个数
     private $product_limit = 20;
     // 工程案例每页展示个数
-    private $homeproduct_limit = 9;
+    private $homeproduct_limit = 2;
     // 新闻展示数量
     private $news_limit = 5;
     // 当前语言
