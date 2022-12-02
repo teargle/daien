@@ -71,21 +71,6 @@ function showProducts( cate_id, page ) {
 		if( data.result ) {
 			// 销毁全部元素
 			$(".main-content").html("") ;
-			console.log( "detach main-content ") ;
-			// 设置视频和描述
-			if( data.obj.homeproduct ) {
-				if( data.obj.homeproduct.img_url ) {
-					$(".main-content").append("<div class='home-product-category-info'></div>");
-					$(".home-product-category-info").append("<img src='" + data.obj.homeproduct.img_url + "' />" ); 
-					$(".home-product-category-info").append("<div>" + data.obj.homeproduct.description + "</div>");
-				}
-
-				if( data.obj.homeproduct.video_url ) {
-					$(".main-content").append("<div class='home-product-category-video'></div>");
-					$(".home-product-category-video").html("<video src='" + data.obj.homeproduct.video_url 
-							+ "' muted='muted' controls='controls' loop='loop'></video>") ;
-				}
-			}
 			
 			// 设置产品
 			$(".main-content").append("<ul class='list_row list_products'></ul>");
