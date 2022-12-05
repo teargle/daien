@@ -892,11 +892,8 @@ class Manage extends Common
         } 
         $Homeproduct = new Homeproduct;
         $data ['category_id'] = $data ['secondclass'];
-        if( $data ['category_id'] ) {
-            $data ['url'] = $request->domain() . "?cid=2&did=" . $data ['category_id'] ;
-        } else {
-            $data ['url'] = "" ;
-        }
+        $data ['url'] = "" ;
+        
         if(array_key_exists('id', $data)) {
             $Homeproduct->update_homeproduct($data ['id'], 'A', $data ['title'], $data ['img_url'], 
                 $data ['description'], $data ['url'], $data ['product_ids'], $data ['category_id'], $data ['rank']);
@@ -906,6 +903,9 @@ class Manage extends Common
                 $data ['description'], $data ['url'], $data ['product_ids'], $data ['category_id'], $data ['rank']);
             $id = $homeproduct ['id'] ;
         }
+
+        $data ['url'] = $request->domain() . "?cid=4&pid=" . $id ;
+        $Homeproduct->update_homeproduct( $id , '', '', '', '', $data ['url']) ;
 
         // 多语言
         $this->saveI18n( 'dn_homeproduct', 'en-us', 'description',  $id, $data ['description_en'] ) ;
