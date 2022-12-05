@@ -103,6 +103,11 @@
 .homearea_products .content-slide .tabs_right {
   float: right;
   width: 450px;
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 7;
+  -webkit-box-orient: vertical;
 }
 
 .homearea_products .content-slide .product-imgs {
