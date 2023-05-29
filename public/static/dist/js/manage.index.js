@@ -13,10 +13,14 @@ function resetTable(href) {
   $(".setting_content").addClass('hidden');
   $("#content").addClass("col-md-10");
   $("#home-setting").addClass('hidden');
+
+  // table-query need to satisfy by seft
+  $("#table-query").addClass("hidden");
 }
 
 function resetContent( content ) {
   $("#btn-new").addClass('hidden');
+  $("#table-query").addClass("hidden");
   $("#manage_list").bootstrapTable('destroy');
   $("#manage_list").html('');
 
@@ -574,7 +578,8 @@ function uploadImg( formData, cb) {
 
 
 function revertPictureList() {
-  resetContent( "PictureList" ) ;
+  resetContent( "homeproduct_limit" ) ;
+  console.log( "date = " + $("#date-select").find("option:selected").val() ) ;
   $("#manage_list").bootstrapTable({ // 对应table标签的id
         url: "/admin/manage/pictureList", // 获取表格数据的url
         cache: false, // 设置为 false 禁用 AJAX 数据缓存， 默认为true
@@ -586,11 +591,13 @@ function revertPictureList() {
         sidePagination: 'server', // 设置为服务器端分页
         queryParams: function (params) { // 请求服务器数据时发送的参数，可以在这里添加额外的查询参数，返回false则终止请求
          // Add params
+
          return {
                 pageSize: params.limit, // 每页要显示的数据条数
                 offset: params.offset, // 每页显示数据的开始行号
                 sort: params.sort, // 要排序的字段
-                sortOrder: params.order, // 排序规则
+                sortOrder: params.order, // 排序规则,
+                dd: $("#date-select").find("option:selected").val()
             }
         },
         sortName: 'id', // 要排序的字段
@@ -625,14 +632,37 @@ function revertPictureList() {
                 }
             }
         ],
-        onLoadSuccess: function(){  //加载成功时执行
-              console.info("加载成功");
-        },
+        onLoadSuccess: function( data ){  //加载成功时执行
+              $("#table-query").html("");
+              var op = "" ;
+              $.each(data.options,function(key,value){
+                op = op + "<option value='" + value + "' " + (data.dd == value ? "selected" : "") + " >" + value + "</option>";
+              });
+              var str =   "<div class='row form-group'>" 
+                        +   "<div class='col-sm-4'>"
+                        +       "<select class='form-control' id='date-select'>"
+                        +       op
+                        +       "</select>"
+                        +   "</div>"
+                        +   "<div class='col-sm-2'>"
+                        +       "<button type='button' class='btn btn-primary' onclick='checkpic()'>查詢</button>"
+                        +   "</div>"
+                        + "</div>";
+
+              $("#table-query").append(str);
+
+              $("#table-query").removeClass("hidden");
+          },
         onLoadError: function(){  //加载失败时执行
               console.info("加载数据失败");
         }
 
   }) ;
+}
+
+
+function checkpic() {
+  revertPictureList();
 }
 
 function deletpic( d, img ) {

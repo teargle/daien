@@ -541,6 +541,17 @@ class Manage extends Common
     public function saveNews() {
         $request = Request::instance();
         $data = $request->post();
+
+        //处理标题中的时间
+        $reg = "/\<[\s\S]*?\>/";
+        preg_match_all($reg,$data ['title'],$arr);
+        if( empty($arr [0]) && !empty($data ['title']) ) {
+            $data ['title'] = $data ['title'] . "<" . date("Y-m-d") . ">";
+        }
+        preg_match_all($reg,$data ['title_en'],$arr);
+        if( empty($arr [0]) && !empty($data ['title_en']) ) {
+            $data ['title_en'] = $data ['title_en'] . "<" . date("Y-m-d") . ">";
+        }
         $News = new News;
         if(array_key_exists('id', $data)) {
             $News->update_news($data ['id'], 'A', $data ['title'], $data ['img_url'], NEWS_CATEGORY, $data ['description'] );
@@ -751,51 +762,69 @@ class Manage extends Common
 
     public function pictureList() {
         $request = Request::instance();
-        $start = $request->get('offset') / 10 ;
+        $offset = $request->get('offset') ? $request->get('offset') : 0 ;
+        $dd = $request->get("dd") ;
         
         $dirs = scandir( UPLOAD_IMAGE_PATH ) ;
 
-        $section = $dirs;
-        foreach( $section as $k => $v ) {
-            $section [$k] = date("Y-m", strtotime($v) );
+        $usection = [] ;
+        foreach( $dirs as $k => $v ) {
+            if($v == "." || $v == "..") {
+                continue;
+            }
+            $usection [$k] = date("Y-m", strtotime($v) );
         }
-        $usection = array_unique( $section );
-        rsort( $usection );
-        if( empty($usection [$start]) ) {
+        $usection = array_unique( $usection );
+        sort( $usection );
+        $dd = $dd ? $dd : $usection [count($usection) - 1] ;
+        
+        if( !in_array( $dd, $usection ) ) {
             $data = [
                 'total' => 1, 
                 'rows' => [],
-            ]; exit ;
+                'options' => []
+            ]; 
+            echo json_encode($data);
+            exit ;
         }
-        $month = $usection [$start];
-
+        $month = $dd ;
+        
         $imgs = [] ;
         $imgs_num = 1 ;
         $total = 0;
+        $options = [];
+        $tempnum = 0 ;
         foreach( $dirs as $key => $dir ) {
             if($dir == "." || $dir == "..") {
                 continue;
             }
-            if( date("Y-m", strtotime($dir) ) != $month  ) { 
-                $imgfiles = scandir( UPLOAD_IMAGE_PATH . $dir );
-                $total += count($imgfiles) - 2 ;
+            array_push(  $options, date("Y-m", strtotime( $dir ) ) );
+            if( date("Y-m", strtotime($dir) ) != $month ) {   
                 continue;
             }
             $imgfiles = scandir( UPLOAD_IMAGE_PATH . $dir );
+            
             foreach( $imgfiles as $imgfile ) {
                 if($imgfile == "." || $imgfile == "..") {
                     continue;
-                } else {
-                    $total++;
+                } 
+                $tempnum ++;
+                $total++;
+                if( $tempnum > $offset && $tempnum < $offset + 10 ) {
                     $img ['url'] = $request->domain() . "/img/" . $dir . "/" . $imgfile;
                     $img ['id'] = $imgs_num++ ;
                     array_push(  $imgs, $img );
                 }
             }
         }
+
+        $options = array_unique( $options );
+        rsort( $options );
         $data = [
                 'total' => $total, 
                 'rows' => $imgs,
+                'options' => $options,
+                'dd' => $dd
         ] ;
         echo json_encode($data) ;
         exit;
