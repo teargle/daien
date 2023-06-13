@@ -16,8 +16,8 @@
 <hr class="category-hr">
 {/notempty}
 
-{if condition="$cid eq 2" }
-{if condition="$pid == 0 AND $did == 0"}
+{if condition="$cid == 2" }
+{if condition="$pid == 0 AND $did == 0 OR $c ['parent'] == 2"}
 <div class="product_category">
 	<ul class="product_cate_list">
 		{volist name="cates" id="cate"}

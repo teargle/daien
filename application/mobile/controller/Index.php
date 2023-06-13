@@ -86,6 +86,15 @@ class Index extends Controller
         $cates = $category->get_category( $this->cid ) ;
         $this->assign('cates' , $cates);
 
+        if( $this->did ) {
+           $c = $category->get_category_info( $this->did ) ;
+           $this->assign('c' , $c);
+           if( $c ['parent'] == 2 ) {
+                $cates = $category->get_category( $this->did );
+                $this->assign('cates' , $cates);
+           }
+        }
+
         
         $category_title = $category->get_main_category( $this->cid );
         $this->assign('crumbs_title' , $category_title [0] ['title']);
