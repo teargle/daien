@@ -65,7 +65,7 @@ class Category extends Model
     public function modifyCategory($id, $title, $rank, $img_url, $description) {
         $title = addslashes($title) ;
         $description = addslashes($description) ;
-        $str = "" ;
+        $str = " id = " . $id ;
         if( $title ) $str .= ", title = '" . $title . "'" ;
         if( $rank ) $str .= ", rank = " . $rank ;
         if( $img_url ) $str .= ", img_url = '" . $img_url . "'";
