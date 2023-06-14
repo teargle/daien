@@ -66,10 +66,10 @@ class Category extends Model
         $title = addslashes($title) ;
         $description = addslashes($description) ;
         $str = " id = " . $id ;
-        if( $title ) $str .= ", title = '" . $title . "'" ;
-        if( $rank ) $str .= ", rank = " . $rank ;
-        if( $img_url ) $str .= ", img_url = '" . $img_url . "'";
-        if( $description ) $str .= ", description = '" . $description . "'";
+        if( !empty($title) ) $str .= ", title = '" . $title . "'" ;
+        if( !empty($rank) ) $str .= ", rank = " . $rank ;
+        if( !empty($img_url) ) $str .= ", img_url = '" . $img_url . "'";
+        if( !empty($description) ) $str .= ", description = '" . $description . "'";
         return Db::query( "update dn_category set {$str} where id = " . $id ) ;
     }
 
