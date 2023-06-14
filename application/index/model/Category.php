@@ -63,8 +63,14 @@ class Category extends Model
     }
 
     public function modifyCategory($id, $title, $rank, $img_url, $description) {
-        return Db::query('update dn_category set title=:title, `rank`=:rank , img_url=:img_url, `description`=:description where id=:id', 
-                ['id' => $id, 'title'=>$title, 'rank'=>$rank, 'img_url'=>$img_url, 'description'=>$description] );
+        $title = addslashes($title) ;
+        $description = addslashes($description) ;
+        $str = "" ;
+        if( $title ) $str .= ", title = '" . $title . "'" ;
+        if( $rank ) $str .= ", rank = " . $rank ;
+        if( $img_url ) $str .= ", img_url = '" . $img_url . "'";
+        if( $description ) $str .= ", description = '" . $description . "'";
+        return Db::query( "update dn_category set {$str} where id = " . $id ) ;
     }
 
     public function get_category_by_product() {
