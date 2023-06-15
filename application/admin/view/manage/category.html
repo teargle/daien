@@ -76,10 +76,10 @@
 
 <script type="text/javascript">
 function saveCategory() {
-	var params = {};
-  params = $("#category_form").serialize();
-  params.description = $("#description_mobile").trumbowyg('html');
-  params.description_en = $("#description_mobile_en").trumbowyg('html');
+	var params = $.param({
+    'description' : $("#description_mobile").val(),
+    'description_en' : $("#description_mobile_en").val()
+  }) + '&' + $("#category_form").serialize();
   $.post("/admin/manage/saveCategoryProduct", params , function(data){
         data = $.parseJSON(data);
         if( data.result ) {
@@ -91,14 +91,15 @@ function saveCategory() {
 }
 
 function updateCategory() {
-	var params = {};
-  params.rank = $("#rank").val();
-  params.title = $("#title").val();
-  params.title_en = $("#title_en").val();
-  params.first = $("#firstclass").find("option:selected").val() ;
-  params.img_url = $("input[name='img_url']").val();
-  params.description = $("#description_mobile").trumbowyg('html');
-  params.description_en = $("#description_mobile_en").trumbowyg('html');
+  var params = $.param({
+    'rank' : $("#rank").val(),
+    'title' : $("#title").val(),
+    'title_en' : $("#title_en").val(),
+    'first' : $("#firstclass").find("option:selected").val(),
+    'img_url' : $("input[name='img_url']").val(),
+    'description' : $("#description_mobile").val(),
+    'description_en' : $("#description_mobile_en").val()
+  }) + '&' + $("#category_form").serialize();
   $.post("/admin/manage/updateCategoryProduct", params , function(data){
         data = $.parseJSON(data);
         if( data.result ) {
