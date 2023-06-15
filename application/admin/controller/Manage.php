@@ -15,8 +15,8 @@ use app\index\model\Cooperate;
 use app\index\model\I18n;
 use app\index\model\Homeproduct;
 
-//define("UPLOAD_IMAGE_PATH", "/home/daien/imgs/") ;
-define("UPLOAD_IMAGE_PATH", "E:/wnmp/www/uploads/") ;
+define("UPLOAD_IMAGE_PATH", "/home/daien/imgs/") ;
+//define("UPLOAD_IMAGE_PATH", "D:/wnmp/www/uploads/") ;
 define("PRODUCT_CATEGORY" , 2);
 define("NEWS_CATEGORY" , 3);
 define("PROJECT_CATEGORY" , 4);
