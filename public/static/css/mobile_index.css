@@ -98,6 +98,16 @@
 	margin-bottom: 5px;
 }
 
+.product_category .product_cate_list .product_cate_pot .category_text .category_description {
+	width: 100%;
+	display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    text-decoration: none;
+}
+
 .product-subCate .list_row {
 	margin-bottom: 30px;
     padding-left: 20px;
