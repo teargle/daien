@@ -83,16 +83,19 @@ class Index extends Controller
     private function _get_category_info() {
         $category = new Category ;
 
-        $cates = $category->get_category( $this->cid ) ;
+
+        $cates = $category->get_category_by_2( ) ;
         $this->assign('cates' , $cates);
+        // $cates = $category->get_category( $this->cid ) ;
+        // $this->assign('cates' , $cates);
 
         if( $this->did ) {
            $c = $category->get_category_info( $this->did ) ;
            $this->assign('c' , $c);
-           if( $c ['parent'] == 2 ) {
-                $cates = $category->get_category( $this->did );
-                $this->assign('cates' , $cates);
-           }
+           // if( $c ['parent'] == 2 ) {
+           //      $cates = $category->get_category( $this->did );
+           //      $this->assign('cates' , $cates);
+           // }
         }
 
         

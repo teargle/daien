@@ -34,6 +34,12 @@ class Category extends Model
         return Db::query('select * from dn_category where parent=:parent', ['parent' => $parent]);
     }
 
+    public function get_category_by_2() {
+        return Db::query('select c1.* from dn_category c1 
+                            join dn_category c2 on c1.parent = c2.id 
+                    where c2.parent = 2');
+    }
+
     public function get_category_by_parents( $ids ) {
         return Db::query('select * from dn_category where parent in (' + implode(',', $ids) + ') ');
     }

@@ -33,8 +33,14 @@
 		{volist name="cates" id="cate"}
 		<li class="product_cate_pot">
 			<a href="/mobile/index?cid=2&did={$cate ['id']}">
+			{notempty name="$cate ['img_url']"}
 			<div class="category_img"><img src="{$cate ['img_url']}"></div>
-			<div class="category_text">
+			{/notempty}
+			<div class="category_text"
+				{empty name="$cate ['img_url']"}
+				style="float:none;"
+				{/empty}
+			>
 				<div class="category_title"><h5>{$cate ['title']}</h5></div>
 				<div class="category_description">{$cate ['description']}</div>
 				<div>查看更多>></div>
@@ -48,7 +54,12 @@
 <div class="product-subCate">
 	<ul class="list_row">
 	{volist name="products" id="product"}
-		<li ><a href="/mobile/index?cid=2&did={$did}&pid={$product ['id']}"><img src="{$product ['img_url']}"><span>{$product ['title']}</span></a></li>
+		<li >
+			<a href="/mobile/index?cid=2&did={$did}&pid={$product ['id']}">
+				<img src="{$product ['img_url']}">
+				<span>{$product ['title']}</span>
+			</a>
+		</li>
 	{/volist}
 	</ul>
 	<div class="clear"></div>
