@@ -217,6 +217,7 @@ class Manage extends Common
         $rank = $request->post('rank');
         $img_url = $request->post('img_url');
         $description = $request->post('description');
+        $isshow = $request->post('isshow');
         if( empty($title) || empty($rank) ) {
             echo $this->output_json(false, "请输入标题和排序" ) ;
             exit ;
@@ -224,7 +225,7 @@ class Manage extends Common
 
         $parent_id = empty($firstclass) || $firstclass == -1 ? PRODUCT_CATEGORY : $firstclass;
         $category = new Category ;
-        $result = $category->saveCategory($parent_id, $title, $rank, $img_url, $description) ;
+        $result = $category->saveCategory($parent_id, $title, $rank, $img_url, $description, $isshow) ;
         
         $id = $result ['id'];
         $link = "/?cid=" . PRODUCT_CATEGORY . "&did=" . $id ;
@@ -243,17 +244,18 @@ class Manage extends Common
         $request = Request::instance();
         $secondclass = $request->post('secondclass');
         $firstclass = $request->post('firstclass') ;
-        $id = empty($secondclass) ? $firstclass : $secondclass ;
+        $id = empty($secondclass) || $secondclass == -1 ? $firstclass : $secondclass ;
         $title = $request->post('title');
         $rank = $request->post('rank');
         $img_url = $request->post('img_url');
         $description = $request->post('description');
+        $isshow = $request->post('isshow');
         if( $id == PRODUCT_CATEGORY || empty($title) || empty($rank) ) {
             echo $this->output_json(false, "请输入标题和排序,或者选择种类" ) ;
             exit ;
         }
         $category = new Category ;
-        $category->modifyCategory( $id, $title, $rank, $img_url, $description ) ;
+        $category->modifyCategory( $id, $title, $rank, $img_url, $description, $isshow ) ;
 
         // 多语言
         $title_en = $request->post('title_en');

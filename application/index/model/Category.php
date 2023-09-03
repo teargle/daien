@@ -58,8 +58,8 @@ class Category extends Model
             ['id' => $id, 'title'=>$title, 'rank'=>$rank, 'img_url'=>$img_url, 'description'=>$description]);
     }
 
-    public function saveCategory($parent, $title, $rank, $img_url, $description) {
-        Db::query("insert into dn_category (`parent`,`title`,`rank`,`img_url`,`description`) values ({$parent},'{$title}',{$rank},'{$img_url}','{$description}') ");
+    public function saveCategory($parent, $title, $rank, $img_url, $description, $isshow) {
+        Db::query("insert into dn_category (`parent`,`title`,`rank`,`img_url`,`description`,`isshow`) values ({$parent},'{$title}',{$rank},'{$img_url}','{$description}', {$isshow}) ");
         $id = Db::name("dn_category")->getLastInsID();
         return $this->get_category_info($id) ;
     }
@@ -68,7 +68,7 @@ class Category extends Model
         return Db::query('update dn_category set link=:link where id=:id', ['id' => $id, 'link' => $link]);
     }
 
-    public function modifyCategory($id, $title, $rank, $img_url, $description) {
+    public function modifyCategory($id, $title, $rank, $img_url, $description, $isshow) {
         $title = addslashes($title) ;
         $description = addslashes($description) ;
         $str = " id = " . $id ;
@@ -76,6 +76,11 @@ class Category extends Model
         if( !empty($rank) ) $str .= ", `rank` = " . $rank ;
         if( !empty($img_url) ) $str .= ", img_url = '" . $img_url . "'";
         if( !empty($description) ) $str .= ", description = '" . $description . "'";
+        if( $isshow == 1 ) {
+            $str .= ", isshow = 1";
+        } else {
+            $str .= ", isshow = 0";
+        }
         return Db::query( "update dn_category set {$str} where id = " . $id ) ;
     }
 

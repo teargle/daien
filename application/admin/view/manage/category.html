@@ -27,9 +27,16 @@
 		</div>
 		<div class="row form-group">
 			<label for="rank" class="col-sm-2 control-label text-right">排序：</label>
-			<div class="col-sm-8">
+			<div class="col-sm-3">
 				<input type="text" class="form-control" name="rank" id="rank" placeholder="请输入排序" value='' >
 			</div>
+            <label for="isshow" class="col-sm-2 control-label text-right">展示：</label>
+            <div class="col-sm-3">
+                <select name="isshow" id="isshow" class="form-control" >
+                    <option value=1>展示</option>
+                    <option value=0>隐藏</option>
+                </select>
+            </div>
 		</div>
 		<div class="row form-group">
 			<label for="description_mobile" class="col-sm-2 control-label text-right">简描述For手机(zh)：</label>
@@ -98,7 +105,8 @@ function updateCategory() {
     'first' : $("#firstclass").find("option:selected").val(),
     'img_url' : $("input[name='img_url']").val(),
     'description' : $("#description_mobile").val(),
-    'description_en' : $("#description_mobile_en").val()
+    'description_en' : $("#description_mobile_en").val(),
+    'isshow' : $("#isshow").find("option:selected").val()
   }) + '&' + $("#category_form").serialize();
   $.post("/admin/manage/updateCategoryProduct", params , function(data){
         data = $.parseJSON(data);
@@ -148,6 +156,7 @@ $("#firstclass").change(function (obj) {
         	$("input[name='img_url']").val( data.obj[0].img_url );
         	$("#description_mobile").val( data.obj[0].description );
         	$("#description_mobile_en").val( data.obj[0].description_en );
+            $("#isshow").val( data.obj[0].isshow );
         } else {
           bootbox.alert(data.message,function() {});
         }
@@ -179,6 +188,7 @@ $("#secondclass").change(function (obj) {
         	$("input[name='img_url']").val( data.obj[0].img_url );
         	$("#description_mobile").val( data.obj[0].description );
         	$("#description_mobile_en").val( data.obj[0].description_en );
+            $("#isshow").val( data.obj[0].isshow );
         } else {
           bootbox.alert(data.message,function() {});
         }

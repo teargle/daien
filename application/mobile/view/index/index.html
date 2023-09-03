@@ -31,6 +31,7 @@
 <div class="product_category">
 	<ul class="product_cate_list">
 		{volist name="cates" id="cate"}
+		{if condition="$cate ['isshow'] eq 1"}
 		<li class="product_cate_pot">
 			<a href="/mobile/index?cid=2&did={$cate ['id']}">
 			{notempty name="$cate ['img_url']"}
@@ -47,6 +48,7 @@
 			</div>
 			</a>
 		</li>
+		{/if}
 		{/volist}
 	</ul>
 </div>
