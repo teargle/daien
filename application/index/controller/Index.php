@@ -391,6 +391,7 @@ class Index extends Controller
         }
         foreach( $cations as &$c ) {
             $c ['parent'] = 2 ;
+            $c ['isshow'] = $c ['status'] == "A" ;
         }
         $this->assign('cates' , $cations );
     }
